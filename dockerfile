@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:25-alpine
 
 WORKDIR /app
 
@@ -8,8 +8,8 @@ RUN npm install
 
 COPY . .
 
+RUN npx prisma generate
+
 ENV PORT 3000
 
 EXPOSE ${PORT}
-
-CMD ["npm", "run", "start:dev"]
