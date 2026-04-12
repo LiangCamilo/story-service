@@ -7,3 +7,75 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Story{
+  id String @id @default(uuid()) @db.Uuid
+  title String @unique
+  description String
+  rating Float
+  userId String @db.Uuid
+
+  genreId String @db.Uuid
+  subgenreId String? @db.Uuid
+  chapters Chapter[]
+
+  genre Genre @relation("MainGenre", fields: [genreId], references: [id] )
+  subGenre Genre? @relation("SecondaryGenre", fields: [subgenreId], references: [id])
+
+  tags Tag[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Genre {
+  id String @id @default(uuid()) @db.Uuid
+  name String @unique
+
+  storiesAsMain Story[] @relation("MainGenre")
+  storiesAsSub Story[] @relation("SecondaryGenre")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tag { 
+  id String @id @default(uuid()) @db.Uuid
+  name String @unique
+
+  stories Story[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Chapter {
+  id String @id @default(uuid()) @db.Uuid
+  title String
+  order Int
+
+  storyId String @db.Uuid
+  @@unique([storyId, order])
+
+  story Story @relation(fields: [storyId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  paragraphs Paragraph[]
+}
+
+model Paragraph {
+  id String @id @default(uuid()) @db.Uuid
+  content String
+  order Int
+
+  chapterId String @db.Uuid
+  @@unique([chapterId, order])
+
+  chapter Chapter @relation(fields: [chapterId], references: [id])
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
