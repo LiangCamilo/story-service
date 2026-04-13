@@ -1,11 +1,15 @@
+import { DomainValidationError } from '../../errors/DomainValidationError';
+
 export class GenreName {
   constructor(public value: string) {
     this.isValid(value);
   }
 
   isValid(value: string) {
-    if (value.trim().length <= 1) {
-      throw new Error('Genre name must be at least 1 character long');
+    if (value.trim().length < 1) {
+      throw new DomainValidationError(
+        'El nombre del genero debe poseer una longitud de 1 letra o más',
+      );
     }
   }
 }

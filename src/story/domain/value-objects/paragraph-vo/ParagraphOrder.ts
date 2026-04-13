@@ -1,3 +1,5 @@
+import { DomainValidationError } from '../../errors/DomainValidationError';
+
 export class ParagraphOrder {
   constructor(public value: number) {
     this.isValid(value);
@@ -5,7 +7,9 @@ export class ParagraphOrder {
 
   isValid(value: number) {
     if (value < 1) {
-      throw new Error('Paragraph order must be equal or greater than 1');
+      throw new DomainValidationError(
+        'El orden del parrafo debe ser mayor o igual a 1',
+      );
     }
   }
 }

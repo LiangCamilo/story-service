@@ -1,3 +1,5 @@
+import { DomainValidationError } from '../../errors/DomainValidationError';
+
 export class RatingScore {
   constructor(public value: number) {
     this.isValid(value);
@@ -5,7 +7,9 @@ export class RatingScore {
 
   isValid(value: number) {
     if (value < 0 || value > 10) {
-      throw new Error('Rating must be greather than 0 and less than 10');
+      throw new DomainValidationError(
+        'La calificación debe ser igual o mayor a 0 y debe ser menor a 10',
+      );
     }
   }
 }
