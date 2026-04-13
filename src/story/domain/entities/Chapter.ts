@@ -8,6 +8,6 @@ export class Chapter {
     public title: ChapterTitle,
     public order: ChapterOrder,
     public storyId: string,
-    public paragraphs: Paragraph[],
+    public paragraphs: Paragraph[] = [],
   ) {}
 }

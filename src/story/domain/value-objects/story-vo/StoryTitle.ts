@@ -4,7 +4,7 @@ export class StoryTitle {
   }
 
   isValid(value: string) {
-    if (value.length >= 3) {
+    if (value.trim().length >= 3) {
       throw new Error('Title must be at least 3 characters long');
     }
   }

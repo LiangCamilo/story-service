@@ -85,7 +85,7 @@ model Rating {
   id String @id @default(uuid()) @db.Uuid
   storyId String @db.Uuid
   userId String @db.Uuid
-  number Float
+  score Float
 
   story Story @relation(fields: [storyId], references: [id])
 

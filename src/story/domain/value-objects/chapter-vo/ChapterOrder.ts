@@ -1,5 +1,7 @@
 export class ChapterOrder {
-  constructor(public value: number) {}
+  constructor(public value: number) {
+    this.isValid(value);
+  }
 
   isValid(value: number) {
     if (value < 1) {

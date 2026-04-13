@@ -4,7 +4,7 @@ export class StoryDescription {
   }
 
   isValid(value: string) {
-    if (value.length >= 3) {
+    if (value.trim().length <= 1) {
       throw new Error('Story description must be at least 1 character long');
     }
   }
