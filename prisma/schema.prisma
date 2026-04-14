@@ -17,11 +17,11 @@ model Story{
   userId String @db.Uuid
 
   genreId String @db.Uuid
-  subgenreId String? @db.Uuid
+  secondaryGenreId  String? @db.Uuid
   chapters Chapter[]
 
   genre Genre @relation("MainGenre", fields: [genreId], references: [id] )
-  subGenre Genre? @relation("SecondaryGenre", fields: [subgenreId], references: [id])
+  secondaryGenre Genre? @relation("SecondaryGenre", fields: [secondaryGenreId], references: [id])
 
   tags Tag[]
 
