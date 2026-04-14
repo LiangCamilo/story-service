@@ -8,7 +8,7 @@ export class StoryTitle {
   isValid(value: string) {
     if (value.trim().length < 3) {
       throw new DomainValidationError(
-        'El titulo del capitulo debe poseer una longitud de 3 letras o más',
+        'El titulo de la historia debe poseer una longitud de 3 letras o más',
       );
     }
   }

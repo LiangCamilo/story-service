@@ -1,4 +1,4 @@
-import { RatingScore } from '../value-objects/rating-vo/RatingScore';
+import { RatingScore } from '../value-objects/rating-vo/rating-score.vo';
 
 export class Rating {
   constructor(

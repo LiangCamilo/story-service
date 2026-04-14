@@ -1,4 +1,4 @@
-import { TagName } from '../value-objects/tag-vo/TagName';
+import { TagName } from '../value-objects/tag-vo/tag-name.vo';
 
 export class Tag {
   constructor(

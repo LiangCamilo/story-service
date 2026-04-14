@@ -8,7 +8,7 @@ export class RatingScore {
   isValid(value: number) {
     if (value < 0 || value > 10) {
       throw new DomainValidationError(
-        'La calificación debe ser igual o mayor a 0 y debe ser menor a 10',
+        'La calificación debe estar entre 0 y 10',
       );
     }
   }

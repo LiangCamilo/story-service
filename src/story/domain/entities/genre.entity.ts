@@ -1,4 +1,4 @@
-import { GenreName } from '../value-objects/genre-vo/GenreName';
+import { GenreName } from '../value-objects/genre-vo/genre-name.vo';
 
 export class Genre {
   constructor(

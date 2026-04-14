@@ -1,5 +1,5 @@
-import { ParagraphContent } from '../value-objects/paragraph-vo/ParagraphContent';
-import { ParagraphOrder } from '../value-objects/paragraph-vo/ParagraphOrder';
+import { ParagraphContent } from '../value-objects/paragraph-vo/paragraph-content.vo';
+import { ParagraphOrder } from '../value-objects/paragraph-vo/paragraph-order.vo';
 
 export class Paragraph {
   constructor(

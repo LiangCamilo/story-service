@@ -8,7 +8,7 @@ export class ChapterOrder {
   isValid(value: number) {
     if (value < 1) {
       throw new DomainValidationError(
-        'El orden de los capitulos no puede ser menor a 0',
+        'El orden de los capitulos no puede ser menor a 1',
       );
     }
   }
