@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import appConfig from '../config/app.config';
-import dbConfig from '../config/db.config';
-import { validate } from '../config/env.validate';
+import { CreateStoryUseCase } from './application/use-cases/story-use-cases/create-story.use-case';
+import { STORY_REPOSITORY } from './application/ports/story.repository';
+import { PrismaStoryRepository } from './infrastructure/adapters/prisma-story.repository';
+
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [appConfig, dbConfig],
-      cache: true,
-      validate,
-    }),
+  imports: [],
+  providers: [
+    CreateStoryUseCase,
+    {
+      provide: STORY_REPOSITORY,
+      useClass: PrismaStoryRepository,
+    },
   ],
 })
 export class StoryModule {}
