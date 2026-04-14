@@ -3,11 +3,11 @@ import { ParagraphOrder } from '../value-objects/paragraph-vo/paragraph-order.vo
 
 export class Paragraph {
   constructor(
-    public id: string,
-    public content: ParagraphContent,
-    public order: ParagraphOrder,
-    public chapterId: string,
-    public createdAt?: Date,
-    public updatedAt?: Date,
+    private id: string,
+    private content: ParagraphContent,
+    private order: ParagraphOrder,
+    private chapterId: string,
+    private createdAt?: Date,
+    private updatedAt?: Date,
   ) {}
 }

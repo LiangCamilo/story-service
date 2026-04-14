@@ -4,10 +4,10 @@ import { Paragraph } from './paragraph.entity';
 
 export class Chapter {
   constructor(
-    public id: string,
-    public title: ChapterTitle,
-    public order: ChapterOrder,
-    public storyId: string,
-    public paragraphs: Paragraph[] = [],
+    private id: string,
+    private title: ChapterTitle,
+    private order: ChapterOrder,
+    private storyId: string,
+    private paragraphs: Paragraph[] = [],
   ) {}
 }

@@ -6,14 +6,14 @@ import { Tag } from './tag.entity';
 
 export class Story {
   constructor(
-    public id: string,
-    public title: StoryTitle,
-    public description: StoryDescription,
-    public ratings: Rating[] = [],
-    public userId: string,
-    public genreId: string,
-    public chapters: Chapter[] = [],
-    public tags: Tag[] = [],
-    public subgenreId?: string,
+    private id: string,
+    private title: StoryTitle,
+    private description: StoryDescription,
+    private ratings: Rating[] = [],
+    private userId: string,
+    private genreId: string,
+    private chapters: Chapter[] = [],
+    private tags: Tag[] = [],
+    private subgenreId?: string,
   ) {}
 }

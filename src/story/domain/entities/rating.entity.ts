@@ -2,9 +2,9 @@ import { RatingScore } from '../value-objects/rating-vo/rating-score.vo';
 
 export class Rating {
   constructor(
-    public id: string,
-    public storyId: string,
-    public userId: string,
-    public score: RatingScore,
+    private id: string,
+    private storyId: string,
+    private userId: string,
+    private score: RatingScore,
   ) {}
 }
