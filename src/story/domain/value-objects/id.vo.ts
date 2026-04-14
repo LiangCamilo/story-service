@@ -1,4 +1,4 @@
-export class StoryId {
+export class Id {
   private value: string;
 
   constructor(public id?: string) {
