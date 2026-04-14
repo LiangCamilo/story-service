@@ -12,6 +12,7 @@ model Story{
   id String @id @default(uuid()) @db.Uuid
   title String
   description String
+  totalRating Decimal @default(0) @db.Decimal(4, 2)
   ratings Rating[]
   hidden Boolean @default(true)
   userId String @db.Uuid
@@ -85,7 +86,7 @@ model Rating {
   id String @id @default(uuid()) @db.Uuid
   storyId String @db.Uuid
   userId String @db.Uuid
-  score Float
+  score Decimal @db.Decimal(4, 2)
 
   story Story @relation(fields: [storyId], references: [id])
 
