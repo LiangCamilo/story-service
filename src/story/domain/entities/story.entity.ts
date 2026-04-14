@@ -1,12 +1,11 @@
+import { Id } from '../value-objects/id.vo';
 import { StoryDescription } from '../value-objects/story-vo/story-description.vo';
-import { StoryId } from '../value-objects/story-vo/story-id.vo';
 import { StoryTitle } from '../value-objects/story-vo/story-title.vo';
 import { Chapter } from './chapter.entity';
-import { Rating } from './rating.entity';
 
 export class Story {
   constructor(
-    private id: StoryId,
+    private id: Id,
     private title: StoryTitle,
     private description: StoryDescription,
     private hidden: boolean = true,
@@ -14,28 +13,76 @@ export class Story {
     private genreId: string,
     private chapters: Chapter[] = [],
     private tagIds: string[] = [],
-    private subgenreId?: string,
+    private secondaryGenreId?: string,
   ) {}
 
   static create(params: {
     title: string;
     description: string;
-    hidden: boolean;
     userId: string;
     genreId: string;
-    subgenreId?: string;
+    secondaryGenreId?: string;
     tagIds?: string[];
   }): Story {
     return new Story(
-      new StoryId(),
+      new Id(),
       new StoryTitle(params.title),
       new StoryDescription(params.description),
-      params.hidden,
+      true,
       params.userId,
       params.genreId,
       [], // chapters
-      params.tagIds,
-      params.subgenreId,
+      params.tagIds ? params.tagIds : [],
+      params?.secondaryGenreId,
     );
+  }
+
+  addChapter(chapter: Chapter) {
+    this.chapters = [...this.chapters, chapter];
+  }
+
+  get getId(): Id {
+    return this.id;
+  }
+
+  get getTitle(): StoryTitle {
+    return this.title;
+  }
+
+  get getDescription(): StoryDescription {
+    return this.description;
+  }
+
+  get getHidden(): boolean {
+    return this.hidden;
+  }
+
+  get getUserId(): string {
+    return this.userId;
+  }
+
+  get getGenreId(): string {
+    return this.genreId;
+  }
+
+  get getSecondaryGenreId(): string | undefined {
+    return this.secondaryGenreId;
+  }
+
+  get getTagIds(): string[] {
+    return this.tagIds;
+  }
+
+  toPrimitives() {
+    return {
+      id: this.id.getValue,
+      title: this.title.getValue,
+      description: this.description.getValue,
+      hidden: this.hidden,
+      userId: this.userId,
+      genreId: this.genreId,
+      secondaryGenreId: this.secondaryGenreId ?? null,
+      tagIds: this.tagIds,
+    };
   }
 }
