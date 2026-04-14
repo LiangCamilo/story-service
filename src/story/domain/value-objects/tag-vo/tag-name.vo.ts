@@ -1,8 +1,19 @@
 import { DomainValidationError } from '../../errors/DomainValidationError';
 
 export class TagName {
-  constructor(public value: string) {
-    this.isValid(value);
+  private value: string;
+
+  constructor(name: string) {
+    this.value = name;
+    this.isValid(this.value);
+  }
+
+  get getValue(): string {
+    return this.value;
+  }
+
+  set setValue(name: string) {
+    this.value = name;
   }
 
   isValid(value: string) {

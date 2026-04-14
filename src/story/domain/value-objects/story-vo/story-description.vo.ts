@@ -1,8 +1,19 @@
 import { DomainValidationError } from '../../errors/DomainValidationError';
 
 export class StoryDescription {
-  constructor(public value: string) {
-    this.isValid(value);
+  private value: string;
+
+  constructor(description: string) {
+    this.value = description;
+    this.isValid(this.value);
+  }
+
+  get getValue(): string {
+    return this.value;
+  }
+
+  set setValue(description: string) {
+    this.value = description;
   }
 
   isValid(value: string) {

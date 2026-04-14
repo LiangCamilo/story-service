@@ -1,8 +1,19 @@
 import { DomainValidationError } from '../../errors/DomainValidationError';
 
 export class ChapterOrder {
-  constructor(public value: number) {
-    this.isValid(value);
+  private value: number;
+
+  constructor(order: number) {
+    this.value = order;
+    this.isValid(this.value);
+  }
+
+  get getValue(): number {
+    return this.value;
+  }
+
+  set setValue(order: number) {
+    this.value = order;
   }
 
   isValid(value: number) {

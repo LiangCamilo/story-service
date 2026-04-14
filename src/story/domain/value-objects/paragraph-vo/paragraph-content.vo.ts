@@ -1,8 +1,19 @@
 import { DomainValidationError } from '../../errors/DomainValidationError';
 
 export class ParagraphContent {
-  constructor(public value: string) {
-    this.isValid(value);
+  private value: string;
+
+  constructor(content: string) {
+    this.value = content;
+    this.isValid(this.value);
+  }
+
+  get getValue(): string {
+    return this.value;
+  }
+
+  set setValue(content: string) {
+    this.value = content;
   }
 
   isValid(value: string) {

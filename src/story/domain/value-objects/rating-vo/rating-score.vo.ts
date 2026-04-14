@@ -1,8 +1,19 @@
 import { DomainValidationError } from '../../errors/DomainValidationError';
 
 export class RatingScore {
-  constructor(public value: number) {
-    this.isValid(value);
+  private value: number;
+
+  constructor(score: number) {
+    this.value = score;
+    this.isValid(this.value);
+  }
+
+  get getValue(): number {
+    return this.value;
+  }
+
+  set setValue(score: number) {
+    this.value = score;
   }
 
   isValid(value: number) {
