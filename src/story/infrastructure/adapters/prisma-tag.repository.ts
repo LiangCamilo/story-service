@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { TagRepositoryPort } from 'src/story/application/ports/tag.repository';
 import { Tag } from 'src/story/domain/entities/tag.entity';
@@ -10,17 +10,15 @@ export class PrismaTagRepository implements TagRepositoryPort {
   constructor(private prisma: PrismaService) {}
 
   async findTagsByName(tagNames: string[]): Promise<Tag[]> {
-    const rawTags = await this.prisma.tag.findMany({
+    const existingRawTags = await this.prisma.tag.findMany({
       where: {
-        name: { in: tagNames.map((x) => x) },
+        name: { in: tagNames.map((tagName) => tagName) },
       },
     });
 
-    const notExistingTags = tagNames.map(x => )
-
-    const tags = rawTags.map((x) => new Tag(new Id(x.id), new TagName(x.name)));
-
-    return tags;
+    return existingRawTags.map(
+      (tag) => new Tag(new Id(tag.id), new TagName(tag.name)),
+    );
   }
 
   async createTag(name: string): Promise<Tag> {
@@ -34,6 +32,18 @@ export class PrismaTagRepository implements TagRepositoryPort {
     return tag;
   }
 
+  async createMultipleTags(tags: Tag[]): Promise<Tag[]> {
+    const rawTags = tags.map((tag) => tag.toPrimitives());
+
+    const createdTags = await this.prisma.tag.createManyAndReturn({
+      data: rawTags,
+    });
+
+    return createdTags.map(
+      (tag) => new Tag(new Id(tag.id), new TagName(tag.name)),
+    );
+  }
+
   async deleteTagById(id: string): Promise<void | null> {
     const findTag = await this.prisma.tag.findUnique({ where: { id } });
     if (!findTag) {
@@ -43,14 +53,12 @@ export class PrismaTagRepository implements TagRepositoryPort {
     await this.prisma.tag.delete({ where: { id } });
   }
 
-  async deleteTagByName(name: string): Promise<void> {
-    const deletedTag = await this.prisma.tag.delete({ where: { name } });
-
-    if (!deletedTag) {
-      throw new HttpException(
-        'No se pudo eliminar correctamente el tag seleccionado',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+  async deleteTagByName(name: string): Promise<void | null> {
+    const findTag = await this.prisma.tag.findUnique({ where: { name } });
+    if (!findTag) {
+      return null;
     }
+
+    await this.prisma.tag.delete({ where: { name } });
   }
 }

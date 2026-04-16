@@ -30,7 +30,9 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       },
     });
 
-    return new Story();
+    return new Story({
+      id: Id(),
+    });
   }
 
   async findByName(title: string): Promise<Story | null> {
