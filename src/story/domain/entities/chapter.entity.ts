@@ -11,10 +11,10 @@ export class Chapter {
     private paragraphs: Paragraph[] = [],
   ) {}
 
-  static create(params: {
-    title: string;
-    order: Number;
-    storyId: string
-    paragraphs?:
-  })
+  // static create(params: {
+  //   title: string;
+  //   order: Number;
+  //   storyId: string
+  //   paragraphs?:
+  // })
 }
