@@ -14,6 +14,8 @@ export class Story {
     private chapters: Chapter[] = [],
     private tagIds: string[] = [],
     private secondaryGenreId?: string,
+    private createdAt?: Date,
+    private updatedAt?: Date,
   ) {}
 
   static create(params: {

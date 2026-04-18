@@ -9,7 +9,7 @@ datasource db {
 }
 
 model Story{
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @db.Uuid
   title String
   description String
   totalRating Decimal @default(0) @db.Decimal(4, 2)
@@ -31,7 +31,7 @@ model Story{
 }
 
 model Genre {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @db.Uuid
   name String @unique
 
   storiesAsMain Story[] @relation("MainGenre")
@@ -42,7 +42,7 @@ model Genre {
 }
 
 model Tag { 
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @db.Uuid
   name String @unique
 
   stories Story[]
@@ -52,7 +52,7 @@ model Tag {
 }
 
 model Chapter {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @db.Uuid
   title String
   order Int
 
@@ -68,7 +68,7 @@ model Chapter {
 }
 
 model Paragraph {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @db.Uuid
   content String
   order Int
 
@@ -83,7 +83,7 @@ model Paragraph {
 }
 
 model Rating {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @db.Uuid
   storyId String @db.Uuid
   userId String @db.Uuid
   score Decimal @db.Decimal(4, 2)
