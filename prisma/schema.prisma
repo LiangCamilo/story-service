@@ -10,7 +10,7 @@ datasource db {
 
 model Story{
   id String @id @db.Uuid
-  title String
+  title String @unique
   description String
   totalRating Decimal @default(0) @db.Decimal(4, 2)
   ratings Rating[]
