@@ -75,6 +75,14 @@ export class Story {
     return this.tagIds;
   }
 
+  get getCreatedAt(): Date | undefined {
+    return this.createdAt;
+  }
+
+  get getUpdatedAt(): Date | undefined {
+    return this.updatedAt;
+  }
+
   toPrimitives() {
     return {
       id: this.id.getValue,
