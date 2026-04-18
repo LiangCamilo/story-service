@@ -28,10 +28,12 @@ export type AggregateStory = {
 
 export type StoryAvgAggregateOutputType = {
   totalRating: runtime.Decimal | null
+  totalChapters: number | null
 }
 
 export type StorySumAggregateOutputType = {
   totalRating: runtime.Decimal | null
+  totalChapters: number | null
 }
 
 export type StoryMinAggregateOutputType = {
@@ -39,6 +41,7 @@ export type StoryMinAggregateOutputType = {
   title: string | null
   description: string | null
   totalRating: runtime.Decimal | null
+  totalChapters: number | null
   hidden: boolean | null
   userId: string | null
   genreId: string | null
@@ -52,6 +55,7 @@ export type StoryMaxAggregateOutputType = {
   title: string | null
   description: string | null
   totalRating: runtime.Decimal | null
+  totalChapters: number | null
   hidden: boolean | null
   userId: string | null
   genreId: string | null
@@ -65,6 +69,7 @@ export type StoryCountAggregateOutputType = {
   title: number
   description: number
   totalRating: number
+  totalChapters: number
   hidden: number
   userId: number
   genreId: number
@@ -77,10 +82,12 @@ export type StoryCountAggregateOutputType = {
 
 export type StoryAvgAggregateInputType = {
   totalRating?: true
+  totalChapters?: true
 }
 
 export type StorySumAggregateInputType = {
   totalRating?: true
+  totalChapters?: true
 }
 
 export type StoryMinAggregateInputType = {
@@ -88,6 +95,7 @@ export type StoryMinAggregateInputType = {
   title?: true
   description?: true
   totalRating?: true
+  totalChapters?: true
   hidden?: true
   userId?: true
   genreId?: true
@@ -101,6 +109,7 @@ export type StoryMaxAggregateInputType = {
   title?: true
   description?: true
   totalRating?: true
+  totalChapters?: true
   hidden?: true
   userId?: true
   genreId?: true
@@ -114,6 +123,7 @@ export type StoryCountAggregateInputType = {
   title?: true
   description?: true
   totalRating?: true
+  totalChapters?: true
   hidden?: true
   userId?: true
   genreId?: true
@@ -214,6 +224,7 @@ export type StoryGroupByOutputType = {
   title: string
   description: string
   totalRating: runtime.Decimal
+  totalChapters: number
   hidden: boolean
   userId: string
   genreId: string
@@ -250,6 +261,7 @@ export type StoryWhereInput = {
   title?: Prisma.StringFilter<"Story"> | string
   description?: Prisma.StringFilter<"Story"> | string
   totalRating?: Prisma.DecimalFilter<"Story"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFilter<"Story"> | number
   hidden?: Prisma.BoolFilter<"Story"> | boolean
   userId?: Prisma.UuidFilter<"Story"> | string
   genreId?: Prisma.UuidFilter<"Story"> | string
@@ -268,6 +280,7 @@ export type StoryOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   totalRating?: Prisma.SortOrder
+  totalChapters?: Prisma.SortOrder
   hidden?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
@@ -283,12 +296,13 @@ export type StoryOrderByWithRelationInput = {
 
 export type StoryWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  title?: string
   AND?: Prisma.StoryWhereInput | Prisma.StoryWhereInput[]
   OR?: Prisma.StoryWhereInput[]
   NOT?: Prisma.StoryWhereInput | Prisma.StoryWhereInput[]
-  title?: Prisma.StringFilter<"Story"> | string
   description?: Prisma.StringFilter<"Story"> | string
   totalRating?: Prisma.DecimalFilter<"Story"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFilter<"Story"> | number
   hidden?: Prisma.BoolFilter<"Story"> | boolean
   userId?: Prisma.UuidFilter<"Story"> | string
   genreId?: Prisma.UuidFilter<"Story"> | string
@@ -300,13 +314,14 @@ export type StoryWhereUniqueInput = Prisma.AtLeast<{
   genre?: Prisma.XOR<Prisma.GenreScalarRelationFilter, Prisma.GenreWhereInput>
   secondaryGenre?: Prisma.XOR<Prisma.GenreNullableScalarRelationFilter, Prisma.GenreWhereInput> | null
   tags?: Prisma.TagListRelationFilter
-}, "id">
+}, "id" | "title">
 
 export type StoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   totalRating?: Prisma.SortOrder
+  totalChapters?: Prisma.SortOrder
   hidden?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
@@ -328,6 +343,7 @@ export type StoryScalarWhereWithAggregatesInput = {
   title?: Prisma.StringWithAggregatesFilter<"Story"> | string
   description?: Prisma.StringWithAggregatesFilter<"Story"> | string
   totalRating?: Prisma.DecimalWithAggregatesFilter<"Story"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntWithAggregatesFilter<"Story"> | number
   hidden?: Prisma.BoolWithAggregatesFilter<"Story"> | boolean
   userId?: Prisma.UuidWithAggregatesFilter<"Story"> | string
   genreId?: Prisma.UuidWithAggregatesFilter<"Story"> | string
@@ -337,10 +353,11 @@ export type StoryScalarWhereWithAggregatesInput = {
 }
 
 export type StoryCreateInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   createdAt?: Date | string
@@ -353,10 +370,11 @@ export type StoryCreateInput = {
 }
 
 export type StoryUncheckedCreateInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   genreId: string
@@ -373,6 +391,7 @@ export type StoryUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -389,6 +408,7 @@ export type StoryUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -401,10 +421,11 @@ export type StoryUncheckedUpdateInput = {
 }
 
 export type StoryCreateManyInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   genreId: string
@@ -418,6 +439,7 @@ export type StoryUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -429,6 +451,7 @@ export type StoryUncheckedUpdateManyInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -442,6 +465,7 @@ export type StoryCountOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   totalRating?: Prisma.SortOrder
+  totalChapters?: Prisma.SortOrder
   hidden?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
@@ -452,6 +476,7 @@ export type StoryCountOrderByAggregateInput = {
 
 export type StoryAvgOrderByAggregateInput = {
   totalRating?: Prisma.SortOrder
+  totalChapters?: Prisma.SortOrder
 }
 
 export type StoryMaxOrderByAggregateInput = {
@@ -459,6 +484,7 @@ export type StoryMaxOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   totalRating?: Prisma.SortOrder
+  totalChapters?: Prisma.SortOrder
   hidden?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
@@ -472,6 +498,7 @@ export type StoryMinOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   totalRating?: Prisma.SortOrder
+  totalChapters?: Prisma.SortOrder
   hidden?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
@@ -482,6 +509,7 @@ export type StoryMinOrderByAggregateInput = {
 
 export type StorySumOrderByAggregateInput = {
   totalRating?: Prisma.SortOrder
+  totalChapters?: Prisma.SortOrder
 }
 
 export type StoryListRelationFilter = {
@@ -509,6 +537,14 @@ export type DecimalFieldUpdateOperationsInput = {
   decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
   multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type BoolFieldUpdateOperationsInput = {
@@ -674,10 +710,11 @@ export type StoryUpdateOneRequiredWithoutRatingsNestedInput = {
 }
 
 export type StoryCreateWithoutGenreInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   createdAt?: Date | string
@@ -689,10 +726,11 @@ export type StoryCreateWithoutGenreInput = {
 }
 
 export type StoryUncheckedCreateWithoutGenreInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   secondaryGenreId?: string | null
@@ -714,10 +752,11 @@ export type StoryCreateManyGenreInputEnvelope = {
 }
 
 export type StoryCreateWithoutSecondaryGenreInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   createdAt?: Date | string
@@ -729,10 +768,11 @@ export type StoryCreateWithoutSecondaryGenreInput = {
 }
 
 export type StoryUncheckedCreateWithoutSecondaryGenreInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   genreId: string
@@ -777,6 +817,7 @@ export type StoryScalarWhereInput = {
   title?: Prisma.StringFilter<"Story"> | string
   description?: Prisma.StringFilter<"Story"> | string
   totalRating?: Prisma.DecimalFilter<"Story"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFilter<"Story"> | number
   hidden?: Prisma.BoolFilter<"Story"> | boolean
   userId?: Prisma.UuidFilter<"Story"> | string
   genreId?: Prisma.UuidFilter<"Story"> | string
@@ -802,10 +843,11 @@ export type StoryUpdateManyWithWhereWithoutSecondaryGenreInput = {
 }
 
 export type StoryCreateWithoutTagsInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   createdAt?: Date | string
@@ -817,10 +859,11 @@ export type StoryCreateWithoutTagsInput = {
 }
 
 export type StoryUncheckedCreateWithoutTagsInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   genreId: string
@@ -853,10 +896,11 @@ export type StoryUpdateManyWithWhereWithoutTagsInput = {
 }
 
 export type StoryCreateWithoutChaptersInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   createdAt?: Date | string
@@ -868,10 +912,11 @@ export type StoryCreateWithoutChaptersInput = {
 }
 
 export type StoryUncheckedCreateWithoutChaptersInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   genreId: string
@@ -903,6 +948,7 @@ export type StoryUpdateWithoutChaptersInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -918,6 +964,7 @@ export type StoryUncheckedUpdateWithoutChaptersInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -929,10 +976,11 @@ export type StoryUncheckedUpdateWithoutChaptersInput = {
 }
 
 export type StoryCreateWithoutRatingsInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   createdAt?: Date | string
@@ -944,10 +992,11 @@ export type StoryCreateWithoutRatingsInput = {
 }
 
 export type StoryUncheckedCreateWithoutRatingsInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   genreId: string
@@ -979,6 +1028,7 @@ export type StoryUpdateWithoutRatingsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -994,6 +1044,7 @@ export type StoryUncheckedUpdateWithoutRatingsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1005,10 +1056,11 @@ export type StoryUncheckedUpdateWithoutRatingsInput = {
 }
 
 export type StoryCreateManyGenreInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   secondaryGenreId?: string | null
@@ -1017,10 +1069,11 @@ export type StoryCreateManyGenreInput = {
 }
 
 export type StoryCreateManySecondaryGenreInput = {
-  id?: string
+  id: string
   title: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: number
   hidden?: boolean
   userId: string
   genreId: string
@@ -1033,6 +1086,7 @@ export type StoryUpdateWithoutGenreInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1048,6 +1102,7 @@ export type StoryUncheckedUpdateWithoutGenreInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryGenreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1063,6 +1118,7 @@ export type StoryUncheckedUpdateManyWithoutGenreInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryGenreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1075,6 +1131,7 @@ export type StoryUpdateWithoutSecondaryGenreInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1090,6 +1147,7 @@ export type StoryUncheckedUpdateWithoutSecondaryGenreInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1105,6 +1163,7 @@ export type StoryUncheckedUpdateManyWithoutSecondaryGenreInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1117,6 +1176,7 @@ export type StoryUpdateWithoutTagsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1132,6 +1192,7 @@ export type StoryUncheckedUpdateWithoutTagsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1147,6 +1208,7 @@ export type StoryUncheckedUpdateManyWithoutTagsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1209,6 +1271,7 @@ export type StorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   title?: boolean
   description?: boolean
   totalRating?: boolean
+  totalChapters?: boolean
   hidden?: boolean
   userId?: boolean
   genreId?: boolean
@@ -1228,6 +1291,7 @@ export type StorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   title?: boolean
   description?: boolean
   totalRating?: boolean
+  totalChapters?: boolean
   hidden?: boolean
   userId?: boolean
   genreId?: boolean
@@ -1243,6 +1307,7 @@ export type StorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   title?: boolean
   description?: boolean
   totalRating?: boolean
+  totalChapters?: boolean
   hidden?: boolean
   userId?: boolean
   genreId?: boolean
@@ -1258,6 +1323,7 @@ export type StorySelectScalar = {
   title?: boolean
   description?: boolean
   totalRating?: boolean
+  totalChapters?: boolean
   hidden?: boolean
   userId?: boolean
   genreId?: boolean
@@ -1266,7 +1332,7 @@ export type StorySelectScalar = {
   updatedAt?: boolean
 }
 
-export type StoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "totalRating" | "hidden" | "userId" | "genreId" | "secondaryGenreId" | "createdAt" | "updatedAt", ExtArgs["result"]["story"]>
+export type StoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "totalRating" | "totalChapters" | "hidden" | "userId" | "genreId" | "secondaryGenreId" | "createdAt" | "updatedAt", ExtArgs["result"]["story"]>
 export type StoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ratings?: boolean | Prisma.Story$ratingsArgs<ExtArgs>
   chapters?: boolean | Prisma.Story$chaptersArgs<ExtArgs>
@@ -1298,6 +1364,7 @@ export type $StoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     title: string
     description: string
     totalRating: runtime.Decimal
+    totalChapters: number
     hidden: boolean
     userId: string
     genreId: string
@@ -1736,6 +1803,7 @@ export interface StoryFieldRefs {
   readonly title: Prisma.FieldRef<"Story", 'String'>
   readonly description: Prisma.FieldRef<"Story", 'String'>
   readonly totalRating: Prisma.FieldRef<"Story", 'Decimal'>
+  readonly totalChapters: Prisma.FieldRef<"Story", 'Int'>
   readonly hidden: Prisma.FieldRef<"Story", 'Boolean'>
   readonly userId: Prisma.FieldRef<"Story", 'String'>
   readonly genreId: Prisma.FieldRef<"Story", 'String'>

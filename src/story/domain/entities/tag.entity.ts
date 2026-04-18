@@ -15,8 +15,8 @@ export class Tag {
     return this.name;
   }
 
-  static create(param: { name: string }) {
-    return new Tag(new Id(), new TagName(param.name));
+  static create(param: { name: string; id?: string }) {
+    return new Tag(new Id(param.id), new TagName(param.name));
   }
 
   toPrimitives() {

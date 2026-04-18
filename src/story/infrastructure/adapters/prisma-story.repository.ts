@@ -24,19 +24,31 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
             connect: data.tagIds.map((id) => ({ id })),
           },
         }),
+        totalRating: data.totalRating,
+        totalChapters: data.totalChapters,
       },
       include: {
         tags: true,
       },
     });
 
-    return new Story({
-      id: Id(),
+    return Story.create({
+      title: newStory.title,
+      description: newStory.description,
+      userId: newStory.userId,
+      genreId: newStory.genreId,
+      secondaryGenreId: newStory.secondaryGenreId ?? undefined,
+      tagIds: data.tagIds,
+      totalRating: Number(newStory.totalRating),
+      totalChapters: Number(newStory.totalChapters),
+      id: newStory.id,
+      createdAt: newStory.createdAt,
+      updatedAt: newStory.updatedAt,
     });
   }
 
   async findByName(title: string): Promise<Story | null> {
-    const story: Story = await this.prisma.story.findUnique({
+    const story = await this.prisma.story.findUnique({
       where: { title: title },
     });
 
@@ -44,6 +56,18 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       return null;
     }
 
-    return story;
+    return Story.create({
+      id: story.id,
+      title: story.title,
+      description: story.description,
+      userId: story.userId,
+      genreId: story.genreId,
+      secondaryGenreId: story.secondaryGenreId ?? undefined,
+      tagIds: [],
+      totalRating: story.totalRating.toNumber(),
+      totalChapters: story.totalChapters,
+      createdAt: story.createdAt,
+      updatedAt: story.updatedAt,
+    });
   }
 }

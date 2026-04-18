@@ -13,6 +13,7 @@ model Story{
   title String @unique
   description String
   totalRating Decimal @default(0) @db.Decimal(4, 2)
+  totalChapters Int @default(0) 
   ratings Rating[]
   hidden Boolean @default(true)
   userId String @db.Uuid

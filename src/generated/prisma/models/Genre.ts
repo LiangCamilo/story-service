@@ -220,7 +220,7 @@ export type GenreScalarWhereWithAggregatesInput = {
 }
 
 export type GenreCreateInput = {
-  id?: string
+  id: string
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -229,7 +229,7 @@ export type GenreCreateInput = {
 }
 
 export type GenreUncheckedCreateInput = {
-  id?: string
+  id: string
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -256,7 +256,7 @@ export type GenreUncheckedUpdateInput = {
 }
 
 export type GenreCreateManyInput = {
-  id?: string
+  id: string
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -338,7 +338,7 @@ export type GenreUpdateOneWithoutStoriesAsSubNestedInput = {
 }
 
 export type GenreCreateWithoutStoriesAsMainInput = {
-  id?: string
+  id: string
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -346,7 +346,7 @@ export type GenreCreateWithoutStoriesAsMainInput = {
 }
 
 export type GenreUncheckedCreateWithoutStoriesAsMainInput = {
-  id?: string
+  id: string
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -359,7 +359,7 @@ export type GenreCreateOrConnectWithoutStoriesAsMainInput = {
 }
 
 export type GenreCreateWithoutStoriesAsSubInput = {
-  id?: string
+  id: string
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -367,7 +367,7 @@ export type GenreCreateWithoutStoriesAsSubInput = {
 }
 
 export type GenreUncheckedCreateWithoutStoriesAsSubInput = {
-  id?: string
+  id: string
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string

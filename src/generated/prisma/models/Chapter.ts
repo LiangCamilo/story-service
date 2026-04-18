@@ -281,7 +281,7 @@ export type ChapterScalarWhereWithAggregatesInput = {
 }
 
 export type ChapterCreateInput = {
-  id?: string
+  id: string
   title: string
   order: number
   createdAt?: Date | string
@@ -291,7 +291,7 @@ export type ChapterCreateInput = {
 }
 
 export type ChapterUncheckedCreateInput = {
-  id?: string
+  id: string
   title: string
   order: number
   storyId: string
@@ -321,7 +321,7 @@ export type ChapterUncheckedUpdateInput = {
 }
 
 export type ChapterCreateManyInput = {
-  id?: string
+  id: string
   title: string
   order: number
   storyId: string
@@ -443,14 +443,6 @@ export type ChapterUncheckedUpdateManyWithoutStoryNestedInput = {
   deleteMany?: Prisma.ChapterScalarWhereInput | Prisma.ChapterScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type ChapterCreateNestedOneWithoutParagraphsInput = {
   create?: Prisma.XOR<Prisma.ChapterCreateWithoutParagraphsInput, Prisma.ChapterUncheckedCreateWithoutParagraphsInput>
   connectOrCreate?: Prisma.ChapterCreateOrConnectWithoutParagraphsInput
@@ -466,7 +458,7 @@ export type ChapterUpdateOneRequiredWithoutParagraphsNestedInput = {
 }
 
 export type ChapterCreateWithoutStoryInput = {
-  id?: string
+  id: string
   title: string
   order: number
   createdAt?: Date | string
@@ -475,7 +467,7 @@ export type ChapterCreateWithoutStoryInput = {
 }
 
 export type ChapterUncheckedCreateWithoutStoryInput = {
-  id?: string
+  id: string
   title: string
   order: number
   createdAt?: Date | string
@@ -522,7 +514,7 @@ export type ChapterScalarWhereInput = {
 }
 
 export type ChapterCreateWithoutParagraphsInput = {
-  id?: string
+  id: string
   title: string
   order: number
   createdAt?: Date | string
@@ -531,7 +523,7 @@ export type ChapterCreateWithoutParagraphsInput = {
 }
 
 export type ChapterUncheckedCreateWithoutParagraphsInput = {
-  id?: string
+  id: string
   title: string
   order: number
   storyId: string
@@ -574,7 +566,7 @@ export type ChapterUncheckedUpdateWithoutParagraphsInput = {
 }
 
 export type ChapterCreateManyStoryInput = {
-  id?: string
+  id: string
   title: string
   order: number
   createdAt?: Date | string

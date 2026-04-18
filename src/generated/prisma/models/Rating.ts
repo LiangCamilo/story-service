@@ -254,14 +254,14 @@ export type RatingScalarWhereWithAggregatesInput = {
 }
 
 export type RatingCreateInput = {
-  id?: string
+  id: string
   userId: string
   score: runtime.Decimal | runtime.DecimalJsLike | number | string
   story: Prisma.StoryCreateNestedOneWithoutRatingsInput
 }
 
 export type RatingUncheckedCreateInput = {
-  id?: string
+  id: string
   storyId: string
   userId: string
   score: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -282,7 +282,7 @@ export type RatingUncheckedUpdateInput = {
 }
 
 export type RatingCreateManyInput = {
-  id?: string
+  id: string
   storyId: string
   userId: string
   score: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -388,13 +388,13 @@ export type RatingUncheckedUpdateManyWithoutStoryNestedInput = {
 }
 
 export type RatingCreateWithoutStoryInput = {
-  id?: string
+  id: string
   userId: string
   score: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type RatingUncheckedCreateWithoutStoryInput = {
-  id?: string
+  id: string
   userId: string
   score: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
@@ -436,7 +436,7 @@ export type RatingScalarWhereInput = {
 }
 
 export type RatingCreateManyStoryInput = {
-  id?: string
+  id: string
   userId: string
   score: runtime.Decimal | runtime.DecimalJsLike | number | string
 }

@@ -278,7 +278,7 @@ export type ParagraphScalarWhereWithAggregatesInput = {
 }
 
 export type ParagraphCreateInput = {
-  id?: string
+  id: string
   content: string
   order: number
   createdAt?: Date | string
@@ -287,7 +287,7 @@ export type ParagraphCreateInput = {
 }
 
 export type ParagraphUncheckedCreateInput = {
-  id?: string
+  id: string
   content: string
   order: number
   chapterId: string
@@ -314,7 +314,7 @@ export type ParagraphUncheckedUpdateInput = {
 }
 
 export type ParagraphCreateManyInput = {
-  id?: string
+  id: string
   content: string
   order: number
   chapterId: string
@@ -432,7 +432,7 @@ export type ParagraphUncheckedUpdateManyWithoutChapterNestedInput = {
 }
 
 export type ParagraphCreateWithoutChapterInput = {
-  id?: string
+  id: string
   content: string
   order: number
   createdAt?: Date | string
@@ -440,7 +440,7 @@ export type ParagraphCreateWithoutChapterInput = {
 }
 
 export type ParagraphUncheckedCreateWithoutChapterInput = {
-  id?: string
+  id: string
   content: string
   order: number
   createdAt?: Date | string
@@ -486,7 +486,7 @@ export type ParagraphScalarWhereInput = {
 }
 
 export type ParagraphCreateManyChapterInput = {
-  id?: string
+  id: string
   content: string
   order: number
   createdAt?: Date | string

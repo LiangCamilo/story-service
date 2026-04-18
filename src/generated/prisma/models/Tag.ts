@@ -217,7 +217,7 @@ export type TagScalarWhereWithAggregatesInput = {
 }
 
 export type TagCreateInput = {
-  id?: string
+  id: string
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -225,7 +225,7 @@ export type TagCreateInput = {
 }
 
 export type TagUncheckedCreateInput = {
-  id?: string
+  id: string
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -249,7 +249,7 @@ export type TagUncheckedUpdateInput = {
 }
 
 export type TagCreateManyInput = {
-  id?: string
+  id: string
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -339,14 +339,14 @@ export type TagUncheckedUpdateManyWithoutStoriesNestedInput = {
 }
 
 export type TagCreateWithoutStoriesInput = {
-  id?: string
+  id: string
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type TagUncheckedCreateWithoutStoriesInput = {
-  id?: string
+  id: string
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
