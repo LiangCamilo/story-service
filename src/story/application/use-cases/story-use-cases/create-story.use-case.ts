@@ -32,6 +32,8 @@ export class CreateStoryUseCase {
     //Tags Creation Logic (By liang, this is not ChatGPT, I swear)
     const existingTags = await this.tagRepository.findTagsByName(dto.tagNames);
 
+    console.log(`Deberia estar VACIO: ${JSON.stringify(existingTags)}`);
+
     if (existingTags.length !== 0) {
       const existingTagsIds = existingTags.map((tag) => {
         return tag.getId.getValue;
