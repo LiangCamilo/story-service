@@ -5,11 +5,22 @@ import { PrismaStoryRepository } from './infrastructure/adapters/prisma-story.re
 import { PrismaTagRepository } from './infrastructure/adapters/prisma-tag.repository';
 import { TAG_REPOSITORY } from './application/ports/tag.repository';
 import { PrismaModule } from 'src/prisma/prisma.module';
+import { StoryController } from './presentation/story.controller';
+import { PrismaGenreRepository } from './infrastructure/adapters/prisma-genre.repository';
+import { GENRE_REPOSITORY } from './application/ports/genre.repository';
+import { FindGenresUseCase } from './application/use-cases/genre-use-cases/find-genres.use-case';
+import { GenreController } from './presentation/genre.controller';
+import { FindGenreByNameUseCase } from './application/use-cases/genre-use-cases/find-genre-by-name.use-case';
+import { FindGenreByIdUseCase } from './application/use-cases/genre-use-cases/find-genre-by-id.use-case ';
 
 @Module({
   imports: [PrismaModule],
+  controllers: [StoryController, GenreController],
   providers: [
     CreateStoryUseCase,
+    FindGenresUseCase,
+    FindGenreByNameUseCase,
+    FindGenreByIdUseCase,
     {
       provide: STORY_REPOSITORY,
       useClass: PrismaStoryRepository,
@@ -17,6 +28,10 @@ import { PrismaModule } from 'src/prisma/prisma.module';
     {
       provide: TAG_REPOSITORY,
       useClass: PrismaTagRepository,
+    },
+    {
+      provide: GENRE_REPOSITORY,
+      useClass: PrismaGenreRepository,
     },
   ],
 })
