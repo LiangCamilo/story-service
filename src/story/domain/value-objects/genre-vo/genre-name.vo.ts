@@ -1,26 +1,25 @@
+import {
+  AllowedGenre,
+  GenreNameConstants,
+} from '../../constants/genre-constants/genre-name.constants';
 import { DomainValidationError } from '../../errors/DomainValidationError';
-
 export class GenreName {
-  private value: string;
+  private value: AllowedGenre;
 
-  constructor(name: string) {
+  constructor(name: AllowedGenre) {
     this.value = name;
-    this.isValid(this.value);
+    this.validate(this.value);
   }
 
-  get getValue(): string {
-    return this.value;
-  }
-
-  set setValue(name: string) {
-    this.value = name;
-  }
-
-  isValid(value: string) {
-    if (value.trim().length < 1) {
+  private validate(value: string): void {
+    if (!(GenreNameConstants as readonly string[]).includes(value)) {
       throw new DomainValidationError(
-        'El nombre del genero debe poseer una longitud de 1 letra o más',
+        `El género '${value}' no existe en el sistema. Los permitidos son: ${GenreNameConstants.join(', ')}`,
       );
     }
+  }
+
+  get getValue(): AllowedGenre {
+    return this.value;
   }
 }
