@@ -12,6 +12,8 @@ import { FindGenresUseCase } from './application/use-cases/genre-use-cases/find-
 import { GenreController } from './presentation/genre.controller';
 import { FindGenreByNameUseCase } from './application/use-cases/genre-use-cases/find-genre-by-name.use-case';
 import { FindGenreByIdUseCase } from './application/use-cases/genre-use-cases/find-genre-by-id.use-case ';
+import { FindStoryByIdUseCase } from './application/use-cases/story-use-cases/find-story-by-id.use-case';
+import { FindStoryByTitleUseCase } from './application/use-cases/story-use-cases/find-story-by-title.use-case';
 
 @Module({
   imports: [PrismaModule],
@@ -21,6 +23,8 @@ import { FindGenreByIdUseCase } from './application/use-cases/genre-use-cases/fi
     FindGenresUseCase,
     FindGenreByNameUseCase,
     FindGenreByIdUseCase,
+    FindStoryByTitleUseCase,
+    FindStoryByIdUseCase,
     {
       provide: STORY_REPOSITORY,
       useClass: PrismaStoryRepository,

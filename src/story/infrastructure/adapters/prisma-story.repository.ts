@@ -17,8 +17,18 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         description: data.description,
         hidden: data.hidden,
         userId: data.userId,
-        genreId: data.genreId,
-        secondaryGenreId: data.secondaryGenreId,
+        genre: {
+          connect: {
+            id: data.genreId,
+          },
+        },
+        ...(data.secondaryGenreId && {
+          secondaryGenre: {
+            connect: {
+              id: data.secondaryGenreId,
+            },
+          },
+        }),
         ...(data.tagIds.length > 0 && {
           tags: {
             connect: data.tagIds.map((id) => ({ id })),
@@ -47,9 +57,33 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     });
   }
 
-  async findByName(title: string): Promise<Story | null> {
+  async findByTitle(title: string): Promise<Story | null> {
     const story = await this.prisma.story.findUnique({
       where: { title: title },
+    });
+
+    if (!story) {
+      return null;
+    }
+
+    return Story.create({
+      id: story.id,
+      title: story.title,
+      description: story.description,
+      userId: story.userId,
+      genreId: story.genreId,
+      secondaryGenreId: story.secondaryGenreId ?? undefined,
+      tagIds: [],
+      totalRating: story.totalRating.toNumber(),
+      totalChapters: story.totalChapters,
+      createdAt: story.createdAt,
+      updatedAt: story.updatedAt,
+    });
+  }
+
+  async findById(id: string): Promise<Story | null> {
+    const story = await this.prisma.story.findUnique({
+      where: { id: id },
     });
 
     if (!story) {

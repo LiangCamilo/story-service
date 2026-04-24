@@ -23,7 +23,7 @@ export class CreateStoryUseCase {
     let tagIds: string[] = [];
     let createdTags: Tag[] = [];
 
-    const existingStory = await this.storyRepository.findByName(dto.title);
+    const existingStory = await this.storyRepository.findByTitle(dto.title);
 
     if (existingStory) {
       throw new StoryAlreadyExistsError(existingStory.getTitle.getValue);
@@ -77,10 +77,10 @@ export class CreateStoryUseCase {
     //Story Creation Logic (By liang, this is not ChatGPT, I swear)
 
     const story = Story.create({
-      description: dto.description,
-      genreId: dto.genreId,
       title: dto.title,
+      description: dto.description,
       userId: dto.userId,
+      genreId: dto.genreId,
       secondaryGenreId: dto.secondaryGenreId,
       tagIds,
     });
