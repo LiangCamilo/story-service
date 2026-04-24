@@ -10,18 +10,27 @@ import { Tag } from 'src/story/domain/entities/tag.entity';
 import { Id } from 'src/story/domain/value-objects/id.vo';
 import { TagName } from 'src/story/domain/value-objects/tag-vo/tag-name.vo';
 import { Story } from 'src/story/domain/entities/story.entity';
+import {
+  GENRE_REPOSITORY,
+  GenreRepositoryPort,
+} from '../../ports/genre.repository';
+import { capitalizeString } from 'src/utils/capitalize-string';
+import { GenreNotFoundError } from '../../errors/genre-errors/genre-not-found.error';
+import { Genre } from 'src/story/domain/entities/genre.entity';
 
 @Injectable()
 export class CreateStoryUseCase {
   constructor(
     @Inject(STORY_REPOSITORY) private storyRepository: StoryRepositoryPort,
     @Inject(TAG_REPOSITORY) private tagRepository: TagRepositoryPort,
+    @Inject(GENRE_REPOSITORY) private genreRepository: GenreRepositoryPort,
   ) {}
 
   async execute(dto: CreateStoryDto): Promise<Story> {
     let notExistingTags: Tag[] = [];
     let tagIds: string[] = [];
     let createdTags: Tag[] = [];
+    let secondaryGenre: Genre | undefined = undefined;
 
     const existingStory = await this.storyRepository.findByTitle(dto.title);
 
@@ -74,14 +83,40 @@ export class CreateStoryUseCase {
       tagIds = [...tagIds, ...createdTagsIds];
     }
 
+    //Getting Genre
+    const formattedGenreName = capitalizeString(dto.genreName) ?? '';
+
+    const genre =
+      await this.genreRepository.findGenreByName(formattedGenreName);
+
+    if (!genre) {
+      throw new GenreNotFoundError(formattedGenreName);
+    }
+
+    //Getting Secondary Genre
+    if (dto.secondaryGenreName) {
+      const formattedSecondaryGenreName =
+        capitalizeString(dto.secondaryGenreName) ?? '';
+
+      secondaryGenre = await this.genreRepository.findGenreByName(
+        formattedSecondaryGenreName,
+      );
+
+      if (!secondaryGenre) {
+        throw new GenreNotFoundError(formattedSecondaryGenreName);
+      }
+    }
+
     //Story Creation Logic (By liang, this is not ChatGPT, I swear)
 
     const story = Story.create({
       title: dto.title,
       description: dto.description,
       userId: dto.userId,
-      genreId: dto.genreId,
-      secondaryGenreId: dto.secondaryGenreId,
+      genreId: genre.getId.getValue,
+      secondaryGenreId: secondaryGenre
+        ? secondaryGenre.getId.getValue
+        : undefined,
       tagIds,
     });
 
