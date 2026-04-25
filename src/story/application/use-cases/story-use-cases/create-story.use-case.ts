@@ -39,48 +39,44 @@ export class CreateStoryUseCase {
     }
 
     //Tags Creation Logic (By liang, this is not ChatGPT, I swear)
-    const existingTags = await this.tagRepository.findTagsByName(dto.tagNames);
 
-    console.log(`Deberia estar VACIO: ${JSON.stringify(existingTags)}`);
-
-    if (existingTags.length !== 0) {
-      const existingTagsIds = existingTags.map((tag) => {
-        return tag.getId.getValue;
-      });
-      tagIds = [...tagIds, ...existingTagsIds];
-
-      const notExistingRawTags = dto.tagNames.filter(
-        (tagName) =>
-          !existingTags.some((tag) => tag.getName.getValue === tagName),
+    if (dto.tagNames) {
+      //Busquemos primero los tags existentes
+      const existingTags = await this.tagRepository.findTagsByName(
+        dto.tagNames,
       );
 
-      if (notExistingRawTags.length !== 0) {
-        notExistingTags = notExistingRawTags.map(
-          (x) => new Tag(new Id(), new TagName(x)),
-        );
-
-        createdTags =
-          await this.tagRepository.createMultipleTags(notExistingTags);
-
-        const createdTagsIds = createdTags.map((tag) => {
+      //Si los hay tags en los tagName que existen, entonces entra al if
+      if (existingTags.length !== 0) {
+        //Sacame el id de los tags que ya existen
+        const existingTagsIds = existingTags.map((tag) => {
           return tag.getId.getValue;
         });
-        tagIds = [...tagIds, ...createdTagsIds];
+        tagIds = [...tagIds, ...existingTagsIds];
+
+        //Sacame el nombre de los tags que no existen
+        const notExistingRawTags = dto.tagNames.filter(
+          (tagName) =>
+            !existingTags.some((tag) => tag.getName.getValue === tagName),
+        );
+
+        //Si no existe algún tag, entonces CREALO
+        if (notExistingRawTags.length !== 0) {
+          notExistingTags = notExistingRawTags.map(
+            (x) => new Tag(new Id(), new TagName(x)),
+          );
+
+          createdTags =
+            await this.tagRepository.createMultipleTags(notExistingTags);
+
+          const createdTagsIds = createdTags.map((tag) => {
+            return tag.getId.getValue;
+          });
+
+          //Añademe el id de los tags recien creados a mi lista de ids
+          tagIds = [...tagIds, ...createdTagsIds];
+        }
       }
-    }
-
-    if (dto.tagNames.length !== 0) {
-      notExistingTags = dto.tagNames.map(
-        (x) => new Tag(new Id(), new TagName(x)),
-      );
-
-      createdTags =
-        await this.tagRepository.createMultipleTags(notExistingTags);
-
-      const createdTagsIds = createdTags.map((tag) => {
-        return tag.getId.getValue;
-      });
-      tagIds = [...tagIds, ...createdTagsIds];
     }
 
     //Getting Genre

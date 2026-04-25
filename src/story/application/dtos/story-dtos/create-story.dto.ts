@@ -24,5 +24,5 @@ export class CreateStoryDto {
   @IsString({ each: true, message: 'Cada tag debe ser un texto' })
   @MaxLength(50)
   secondaryGenreName?: string;
-  tagNames!: string[];
+  tagNames!: string[] | undefined;
 }
