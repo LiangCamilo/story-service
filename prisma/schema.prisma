@@ -8,14 +8,22 @@ datasource db {
   provider = "postgresql"
 }
 
+enum StoryStatus {
+  IN_PROGRESS
+  COMPLETED
+  ABANDONED
+  PAUSED
+}
+
 model Story{
   id String @id @db.Uuid
   title String @unique
   description String
   totalRating Decimal @default(0) @db.Decimal(4, 2)
   totalChapters Int @default(0) 
-  ratings Rating[]
   hidden Boolean @default(true)
+  status StoryStatus @default(IN_PROGRESS)
+  totalViews Int @default(0)
   userId String @db.Uuid
 
   genreId String @db.Uuid
@@ -26,6 +34,8 @@ model Story{
   secondaryGenre Genre? @relation("SecondaryGenre", fields: [secondaryGenreId], references: [id])
 
   tags Tag[]
+  ratings Rating[]
+  views View[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -88,6 +98,16 @@ model Rating {
   storyId String @db.Uuid
   userId String @db.Uuid
   score Decimal @db.Decimal(4, 2)
+
+  story Story @relation(fields: [storyId], references: [id])
+
+  @@unique([storyId, userId])
+}
+
+model View {
+  id String @id @db.Uuid
+  storyId String @db.Uuid
+  userId String @db.Uuid
 
   story Story @relation(fields: [storyId], references: [id])
 
