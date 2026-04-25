@@ -3,6 +3,7 @@ import { StoryDescription } from '../value-objects/story-vo/story-description.vo
 import { StoryTitle } from '../value-objects/story-vo/story-title.vo';
 import { StoryTotalChapters } from '../value-objects/story-vo/story-total-chapters.vo';
 import { StoryTotalRating } from '../value-objects/story-vo/story-total-rating.vo';
+import { StoryTotalViews } from '../value-objects/story-vo/story-total-views.vo';
 
 export class Story {
   constructor(
@@ -15,6 +16,7 @@ export class Story {
     private tagIds: string[] = [],
     private totalRating?: StoryTotalRating,
     private totalChapters?: StoryTotalChapters,
+    private totalViews?: StoryTotalViews,
     private secondaryGenreId?: string,
     private createdAt?: Date,
     private updatedAt?: Date,
@@ -43,6 +45,7 @@ export class Story {
       params.tagIds ? params.tagIds : [],
       new StoryTotalRating(params.totalRating),
       new StoryTotalChapters(params.totalChapters),
+      new StoryTotalViews(0),
       params?.secondaryGenreId,
       params.createdAt,
       params.updatedAt,
