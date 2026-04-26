@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { title } from 'process';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { FilterMultipleStoryDto } from 'src/story/application/dtos/story-dtos/filter-multilple-story.dto';
+import { FindMultipleStoryDto } from 'src/story/application/dtos/story-dtos/find-multiple-story.dto';
 import { StoryRepositoryPort } from 'src/story/application/ports/story.repository';
 import { Story } from 'src/story/domain/entities/story.entity';
 
@@ -103,5 +106,36 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       createdAt: story.createdAt,
       updatedAt: story.updatedAt,
     });
+  }
+
+  async findAndFilterMultiple(
+    findMultiple: FindMultipleStoryDto,
+    filterMultiple: FilterMultipleStoryDto,
+  ): Promise<Story[] | null> {
+    let stories: Story[] | null = null;
+
+    if (!filterMultiple) {
+      const rawStories = await this.prisma.story.findMany({
+        skip: findMultiple.offset,
+        take: findMultiple.limit,
+      });
+
+      stories = rawStories.map((story) => {
+        return Story.create({
+          id: story.id,
+          title: story.title,
+          description: story.description,
+          userId: story.userId,
+          genreId: story.genreId,
+          secondaryGenreId: story.secondaryGenreId ?? undefined,
+          totalRating: Number(story.totalRating),
+          totalChapters: story.totalChapters,
+          createdAt: story.createdAt,
+          updatedAt: story.updatedAt,
+        });
+      });
+    }
+
+    return stories;
   }
 }

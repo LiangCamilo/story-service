@@ -1,9 +1,20 @@
-import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { CreateStoryUseCase } from '../application/use-cases/story-use-cases/create-story.use-case';
 import { CreateStoryDto } from '../application/dtos/story-dtos/create-story.dto';
 import { Story } from '../domain/entities/story.entity';
 import { FindStoryByTitleUseCase } from '../application/use-cases/story-use-cases/find-story-by-title.use-case';
 import { FindStoryByIdUseCase } from '../application/use-cases/story-use-cases/find-story-by-id.use-case';
+import { FindMultipleStoryDto } from '../application/dtos/story-dtos/find-multiple-story.dto';
+import { FilterMultipleStoryDto } from '../application/dtos/story-dtos/filter-multilple-story.dto';
+import { FindAndFilterMultipleStoryUseCase } from '../application/use-cases/story-use-cases/find-and-filter-multiple-story.use-case';
 
 @Controller('api/story')
 export class StoryController {
@@ -11,6 +22,7 @@ export class StoryController {
     private createStoryUseCase: CreateStoryUseCase,
     private findStoryByTitleUseCase: FindStoryByTitleUseCase,
     private findStoryByIdUseCase: FindStoryByIdUseCase,
+    private findAndFilterMultipleStoryUseCase: FindAndFilterMultipleStoryUseCase,
   ) {}
 
   @Post('create')
@@ -33,16 +45,41 @@ export class StoryController {
     return this.mapStoryToResponse(story);
   }
 
+  @Post('filter')
+  async findAndFilterMultiple(
+    @Query() findMultipleStoryDto: FindMultipleStoryDto,
+    filterMultipleStoryDto: FilterMultipleStoryDto,
+  ) {
+    console.log(findMultipleStoryDto);
+
+    const stories = await this.findAndFilterMultipleStoryUseCase.execute(
+      findMultipleStoryDto,
+      filterMultipleStoryDto,
+    );
+
+    if (!stories) {
+      return {
+        message: 'No se han encontrado historias con los filtros especificados',
+      };
+    } else {
+      return stories.map((story) => {
+        return this.mapStoryToResponse(story);
+      });
+    }
+  }
+
   private mapStoryToResponse = (story: Story) => {
     return {
       id: story.getId.getValue,
       title: story.getTitle.getValue,
       description: story.getDescription.getValue,
+      hidden: story.getHidden,
       userId: story.getUserId,
       genreId: story.getGenreId,
       totalRating: story.getTotalRating?.getValue,
       totalChapters: story.getTotalChapters?.getValue,
       secondaryGenreId: story?.getSecondaryGenreId,
+      totalViews: story?.getTotalViews?.getValue,
       createdAt: story.getCreatedAt?.getDate(),
       updatedAt: story.getUpdatedAt?.getDate(),
     };

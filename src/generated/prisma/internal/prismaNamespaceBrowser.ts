@@ -56,7 +56,8 @@ export const ModelName = {
   Tag: 'Tag',
   Chapter: 'Chapter',
   Paragraph: 'Paragraph',
-  Rating: 'Rating'
+  Rating: 'Rating',
+  View: 'View'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -82,6 +83,8 @@ export const StoryScalarFieldEnum = {
   totalRating: 'totalRating',
   totalChapters: 'totalChapters',
   hidden: 'hidden',
+  status: 'status',
+  totalViews: 'totalViews',
   userId: 'userId',
   genreId: 'genreId',
   secondaryGenreId: 'secondaryGenreId',
@@ -144,6 +147,15 @@ export const RatingScalarFieldEnum = {
 } as const
 
 export type RatingScalarFieldEnum = (typeof RatingScalarFieldEnum)[keyof typeof RatingScalarFieldEnum]
+
+
+export const ViewScalarFieldEnum = {
+  id: 'id',
+  storyId: 'storyId',
+  userId: 'userId'
+} as const
+
+export type ViewScalarFieldEnum = (typeof ViewScalarFieldEnum)[keyof typeof ViewScalarFieldEnum]
 
 
 export const SortOrder = {

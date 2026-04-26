@@ -2,10 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module.js';
 import { PrismaService } from './prisma/prisma.service.js';
 import genreSeeder from './seeder/genre.seeder.js';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const prismaService = app.get(PrismaService);
+  app.useGlobalPipes(new ValidationPipe());
 
   await genreSeeder(prismaService);
 

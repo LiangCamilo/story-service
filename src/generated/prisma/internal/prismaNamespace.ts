@@ -389,7 +389,8 @@ export const ModelName = {
   Tag: 'Tag',
   Chapter: 'Chapter',
   Paragraph: 'Paragraph',
-  Rating: 'Rating'
+  Rating: 'Rating',
+  View: 'View'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "story" | "genre" | "tag" | "chapter" | "paragraph" | "rating"
+    modelProps: "story" | "genre" | "tag" | "chapter" | "paragraph" | "rating" | "view"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -853,6 +854,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    View: {
+      payload: Prisma.$ViewPayload<ExtArgs>
+      fields: Prisma.ViewFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ViewFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ViewPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ViewFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ViewPayload>
+        }
+        findFirst: {
+          args: Prisma.ViewFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ViewPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ViewFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ViewPayload>
+        }
+        findMany: {
+          args: Prisma.ViewFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ViewPayload>[]
+        }
+        create: {
+          args: Prisma.ViewCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ViewPayload>
+        }
+        createMany: {
+          args: Prisma.ViewCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ViewCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ViewPayload>[]
+        }
+        delete: {
+          args: Prisma.ViewDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ViewPayload>
+        }
+        update: {
+          args: Prisma.ViewUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ViewPayload>
+        }
+        deleteMany: {
+          args: Prisma.ViewDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ViewUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ViewUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ViewPayload>[]
+        }
+        upsert: {
+          args: Prisma.ViewUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ViewPayload>
+        }
+        aggregate: {
+          args: Prisma.ViewAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateView>
+        }
+        groupBy: {
+          args: Prisma.ViewGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ViewGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ViewCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ViewCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -899,6 +974,8 @@ export const StoryScalarFieldEnum = {
   totalRating: 'totalRating',
   totalChapters: 'totalChapters',
   hidden: 'hidden',
+  status: 'status',
+  totalViews: 'totalViews',
   userId: 'userId',
   genreId: 'genreId',
   secondaryGenreId: 'secondaryGenreId',
@@ -961,6 +1038,15 @@ export const RatingScalarFieldEnum = {
 } as const
 
 export type RatingScalarFieldEnum = (typeof RatingScalarFieldEnum)[keyof typeof RatingScalarFieldEnum]
+
+
+export const ViewScalarFieldEnum = {
+  id: 'id',
+  storyId: 'storyId',
+  userId: 'userId'
+} as const
+
+export type ViewScalarFieldEnum = (typeof ViewScalarFieldEnum)[keyof typeof ViewScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1039,6 +1125,20 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'StoryStatus'
+ */
+export type EnumStoryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StoryStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'StoryStatus[]'
+ */
+export type ListEnumStoryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StoryStatus[]'>
     
 
 
@@ -1170,6 +1270,7 @@ export type GlobalOmitConfig = {
   chapter?: Prisma.ChapterOmit
   paragraph?: Prisma.ParagraphOmit
   rating?: Prisma.RatingOmit
+  view?: Prisma.ViewOmit
 }
 
 /* Types for Logging */

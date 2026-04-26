@@ -3,26 +3,26 @@ import { IsString, Max, Min } from 'class-validator';
 export class FilterMultipleStoryDto {
   @IsString()
   @Max(120)
-  title!: string;
+  title?: string;
 
   @IsString()
   @Max(50)
-  genreName!: string;
+  genreName?: string;
 
   @IsString()
   @Max(50)
-  secondaryGenreName!: string;
+  secondaryGenreName?: string;
 
   @IsString()
   @Max(10)
   @Min(0)
-  totalRating!: number;
+  totalRating?: number;
 
   @IsString()
   @Min(1)
   @Max(999999)
-  totalChapters!: number;
+  totalChapters?: number;
 
   @IsString()
-  status!: string;
+  status?: string;
 }

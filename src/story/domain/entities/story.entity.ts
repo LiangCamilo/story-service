@@ -100,6 +100,10 @@ export class Story {
     return this.totalChapters;
   }
 
+  get getTotalViews(): StoryTotalViews | undefined {
+    return this.totalViews;
+  }
+
   toPrimitives() {
     return {
       id: this.id.getValue,

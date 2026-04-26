@@ -14,6 +14,13 @@ export class FindAndFilterMultipleStoryUseCase {
 
   async execute(
     findDto: FindMultipleStoryDto,
-    filterDto: FilterMultipleStoryDto,
-  ) {}
+    filterDto?: FilterMultipleStoryDto,
+  ) {
+    if (!filterDto) {
+      return await this.storyRepository.findAndFilterMultiple(
+        findDto,
+        filterDto,
+      );
+    }
+  }
 }

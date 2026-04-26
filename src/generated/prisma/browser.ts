@@ -47,3 +47,8 @@ export type Paragraph = Prisma.ParagraphModel
  * 
  */
 export type Rating = Prisma.RatingModel
+/**
+ * Model View
+ * 
+ */
+export type View = Prisma.ViewModel
