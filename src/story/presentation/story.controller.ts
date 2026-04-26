@@ -52,19 +52,23 @@ export class StoryController {
   ) {
     console.log(findMultipleStoryDto);
 
-    const stories = await this.findAndFilterMultipleStoryUseCase.execute(
-      findMultipleStoryDto,
-      filterMultipleStoryDto,
-    );
+    const { stories, meta } =
+      await this.findAndFilterMultipleStoryUseCase.execute(
+        findMultipleStoryDto,
+        filterMultipleStoryDto,
+      );
 
     if (!stories) {
       return {
         message: 'No se han encontrado historias con los filtros especificados',
       };
     } else {
-      return stories.map((story) => {
-        return this.mapStoryToResponse(story);
-      });
+      return {
+        data: stories.map((story: Story) => {
+          return this.mapStoryToResponse(story);
+        }),
+        meta,
+      };
     }
   }
 

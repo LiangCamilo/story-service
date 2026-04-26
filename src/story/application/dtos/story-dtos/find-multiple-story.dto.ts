@@ -1,12 +1,14 @@
-import { IsEmpty, IsNumber, Max } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsNumber, IsPositive, Max } from 'class-validator';
 
 export class FindMultipleStoryDto {
   @IsNumber()
-  @IsEmpty()
-  offset!: number;
+  @Type(() => Number)
+  offset: number = 0;
 
   @IsNumber()
+  @IsPositive()
+  @Type(() => Number)
   @Max(50)
-  @IsEmpty()
-  limit!: number;
+  limit: number = 20;
 }
