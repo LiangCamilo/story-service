@@ -70,7 +70,7 @@ export class CreateStoryUseCase {
       await this.genreRepository.findGenreByName(formattedGenreName);
 
     if (!genre) {
-      throw new GenreNotFoundError(formattedGenreName);
+      throw new GenreNotFoundError(formattedGenreName, 404);
     }
 
     //Getting Secondary Genre
@@ -83,7 +83,7 @@ export class CreateStoryUseCase {
       );
 
       if (!secondaryGenre) {
-        throw new GenreNotFoundError(formattedSecondaryGenreName);
+        throw new GenreNotFoundError(formattedSecondaryGenreName, 404);
       }
     }
 

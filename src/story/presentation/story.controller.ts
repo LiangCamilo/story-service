@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Query,
+  UseFilters,
 } from '@nestjs/common';
 import { CreateStoryUseCase } from '../application/use-cases/story-use-cases/create-story.use-case';
 import { CreateStoryDto } from '../application/dtos/story-dtos/create-story.dto';
@@ -15,7 +16,10 @@ import { FindStoryByIdUseCase } from '../application/use-cases/story-use-cases/f
 import { FindMultipleStoryDto } from '../application/dtos/story-dtos/find-multiple-story.dto';
 import { FilterMultipleStoryDto } from '../application/dtos/story-dtos/filter-multilple-story.dto';
 import { FindAndFilterMultipleStoryUseCase } from '../application/use-cases/story-use-cases/find-and-filter-multiple-story.use-case';
+import { StoryExceptionFilter } from './filters/story-exception.filter';
+import { GenreExceptionFilter } from './filters/genre-exception.filter';
 
+@UseFilters(StoryExceptionFilter, GenreExceptionFilter)
 @Controller('api/story')
 export class StoryController {
   constructor(

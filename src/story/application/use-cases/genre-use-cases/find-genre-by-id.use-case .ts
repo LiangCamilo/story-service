@@ -15,7 +15,7 @@ export class FindGenreByIdUseCase {
     const genre = await this.genreRepository.findGenreById(id);
 
     if (!genre) {
-      throw new GenreNotFoundError(id);
+      throw new GenreNotFoundError(id, 404);
     }
 
     return genre.toPrimitives();

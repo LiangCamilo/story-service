@@ -15,7 +15,7 @@ export class FindGenreByNameUseCase {
     const genre = await this.genreRepository.findGenreByName(name);
 
     if (!genre) {
-      throw new GenreNotFoundError(name);
+      throw new GenreNotFoundError(name, 404);
     }
 
     return genre.toPrimitives();
