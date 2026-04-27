@@ -27,7 +27,7 @@ export const GenreNameConstants = [
   'Histórico',
   'Horror',
   'Juvenil',
-  'LGBTQ+',
+  'Lgbtq+',
   'Magia',
   'Misterio',
   'Mitológico',

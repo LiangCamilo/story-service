@@ -33,7 +33,6 @@ export class CreateStoryDto {
 
   @IsArray()
   @IsString({ each: true, message: 'Cada tag debe ser un texto' })
-  @MaxLength(50)
   @IsOptional()
   tagNames!: string[] | undefined;
 }
