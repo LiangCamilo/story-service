@@ -27,9 +27,7 @@ export class CreateStoryUseCase {
   ) {}
 
   async execute(dto: CreateStoryDto): Promise<Story> {
-    let notExistingTags: Tag[] = [];
-    let tagIds: string[] = [];
-    let createdTags: Tag[] = [];
+    const tagIds: string[] = [];
     let secondaryGenre: Genre | undefined = undefined;
 
     const existingStory = await this.storyRepository.findByTitle(dto.title);
@@ -38,44 +36,30 @@ export class CreateStoryUseCase {
       throw new StoryAlreadyExistsError(existingStory.getTitle.getValue);
     }
 
-    //Tags Creation Logic (By liang, this is not ChatGPT, I swear)
-
-    if (dto.tagNames) {
-      //Busquemos primero los tags existentes
+    if (dto.tagNames && dto.tagNames.length > 0) {
+      // 1. Buscamos los que existen
       const existingTags = await this.tagRepository.findTagsByName(
         dto.tagNames,
       );
 
-      //Si los hay tags en los tagName que existen, entonces entra al if
-      if (existingTags.length !== 0) {
-        //Sacame el id de los tags que ya existen
-        const existingTagsIds = existingTags.map((tag) => {
-          return tag.getId.getValue;
-        });
-        tagIds = [...tagIds, ...existingTagsIds];
+      // 2. Extraemos IDs de los existentes (si no hay, arranca vacío)
+      tagIds.push(...existingTags.map((tag) => tag.getId.getValue));
 
-        //Sacame el nombre de los tags que no existen
-        const notExistingRawTags = dto.tagNames.filter(
-          (tagName) =>
-            !existingTags.some((tag) => tag.getName.getValue === tagName),
+      // 3. Calculamos cuáles faltan por crear
+      const existingNames = existingTags.map((tag) => tag.getName.getValue);
+      const notExistingRawTags = dto.tagNames.filter(
+        (name) => !existingNames.includes(name),
+      );
+
+      // 4. Si faltan algunos, los creamos incondicionalmente
+      if (notExistingRawTags.length > 0) {
+        const newTags = notExistingRawTags.map(
+          (name) => new Tag(new Id(), new TagName(name)),
         );
+        const createdTags =
+          await this.tagRepository.createMultipleTags(newTags);
 
-        //Si no existe algún tag, entonces CREALO
-        if (notExistingRawTags.length !== 0) {
-          notExistingTags = notExistingRawTags.map(
-            (x) => new Tag(new Id(), new TagName(x)),
-          );
-
-          createdTags =
-            await this.tagRepository.createMultipleTags(notExistingTags);
-
-          const createdTagsIds = createdTags.map((tag) => {
-            return tag.getId.getValue;
-          });
-
-          //Añademe el id de los tags recien creados a mi lista de ids
-          tagIds = [...tagIds, ...createdTagsIds];
-        }
+        tagIds.push(...createdTags.map((tag) => tag.getId.getValue));
       }
     }
 
