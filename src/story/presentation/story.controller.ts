@@ -48,10 +48,8 @@ export class StoryController {
   @Post('filter')
   async findAndFilterMultiple(
     @Query() findMultipleStoryDto: FindMultipleStoryDto,
-    filterMultipleStoryDto: FilterMultipleStoryDto,
+    @Body() filterMultipleStoryDto: FilterMultipleStoryDto,
   ) {
-    console.log(findMultipleStoryDto);
-
     const { stories, meta } =
       await this.findAndFilterMultipleStoryUseCase.execute(
         findMultipleStoryDto,

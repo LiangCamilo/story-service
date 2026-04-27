@@ -1,31 +1,49 @@
 import { Type } from 'class-transformer';
-import { IsString, Max, Min } from 'class-validator';
+import {
+  IsBoolean,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Max,
+  MaxLength,
+  Min,
+} from 'class-validator';
+import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
 
 export class FilterMultipleStoryDto {
   @IsString()
-  @Max(120)
+  @MaxLength(120)
+  @IsOptional()
   title?: string;
 
   @IsString()
-  @Max(50)
-  genreName?: string;
+  @MaxLength(50)
+  @IsOptional()
+  genreId?: string;
 
   @IsString()
-  @Max(50)
-  secondaryGenreName?: string;
+  @IsOptional()
+  @MaxLength(50)
+  secondaryGenreId?: string;
 
-  @IsString()
-  @Max(10)
-  @Min(0)
-  @Type(() => Number)
-  totalRating?: number;
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  totalRating?: boolean;
 
-  @IsString()
+  @IsBoolean()
+  @IsOptional()
+  @Type(() => Boolean)
+  totalViews?: boolean;
+
+  @IsNumber()
+  @IsOptional()
   @Min(1)
   @Max(999999)
   @Type(() => Number)
   totalChapters?: number;
 
+  @IsOptional()
   @IsString()
-  status?: string;
+  status?: AllowedStatus;
 }

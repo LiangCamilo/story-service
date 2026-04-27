@@ -1,3 +1,4 @@
+import { AllowedStatus } from '../constants/story-constants/story-status.constants';
 import { Id } from '../value-objects/id.vo';
 import { StoryDescription } from '../value-objects/story-vo/story-description.vo';
 import { StoryTitle } from '../value-objects/story-vo/story-title.vo';
@@ -18,6 +19,7 @@ export class Story {
     private totalChapters?: StoryTotalChapters,
     private totalViews?: StoryTotalViews,
     private secondaryGenreId?: string,
+    private status?: AllowedStatus,
     private createdAt?: Date,
     private updatedAt?: Date,
   ) {}
@@ -32,6 +34,7 @@ export class Story {
     totalRating?: number;
     totalChapters?: number;
     id?: string;
+    status?: AllowedStatus;
     createdAt?: Date;
     updatedAt?: Date;
   }): Story {
@@ -47,6 +50,7 @@ export class Story {
       new StoryTotalChapters(params.totalChapters),
       new StoryTotalViews(0),
       params?.secondaryGenreId,
+      params?.status,
       params.createdAt,
       params.updatedAt,
     );
@@ -102,6 +106,10 @@ export class Story {
 
   get getTotalViews(): StoryTotalViews | undefined {
     return this.totalViews;
+  }
+
+  get getStatus(): AllowedStatus | undefined {
+    return this.status;
   }
 
   toPrimitives() {

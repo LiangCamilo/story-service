@@ -1,4 +1,10 @@
-import { IsArray, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateStoryDto {
   @IsString()
@@ -20,9 +26,14 @@ export class CreateStoryDto {
   @MaxLength(50)
   userId!: string;
 
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(50)
+  secondaryGenreName?: string;
+
   @IsArray()
   @IsString({ each: true, message: 'Cada tag debe ser un texto' })
   @MaxLength(50)
-  secondaryGenreName?: string;
+  @IsOptional()
   tagNames!: string[] | undefined;
 }

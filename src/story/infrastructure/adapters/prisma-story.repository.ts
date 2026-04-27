@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { Decimal } from '@prisma/client/runtime/client';
+import { StoryStatus } from 'src/generated/prisma/enums';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { FilterMultipleStoryDto } from 'src/story/application/dtos/story-dtos/filter-multilple-story.dto';
 import { FindMultipleStoryDto } from 'src/story/application/dtos/story-dtos/find-multiple-story.dto';
@@ -113,27 +115,64 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
   ): Promise<Story[] | null> {
     let stories: Story[] | null = null;
 
-    if (!filterMultiple) {
-      const rawStories = await this.prisma.story.findMany({
-        skip: findMultiple.offset,
-        take: findMultiple.limit,
-      });
+    const {
+      genreId,
+      secondaryGenreId,
+      status,
+      title,
+      totalChapters,
+      totalRating,
+      totalViews,
+    } = filterMultiple;
 
-      stories = rawStories.map((story) => {
-        return Story.create({
-          id: story.id,
-          title: story.title,
-          description: story.description,
-          userId: story.userId,
-          genreId: story.genreId,
-          secondaryGenreId: story.secondaryGenreId ?? undefined,
-          totalRating: Number(story.totalRating),
-          totalChapters: story.totalChapters,
-          createdAt: story.createdAt,
-          updatedAt: story.updatedAt,
-        });
+    const rawStories = await this.prisma.story.findMany({
+      skip: findMultiple.offset,
+      take: findMultiple.limit,
+      where: {
+        // hidden: false,
+        ...(title && {
+          title: {
+            contains: title,
+            mode: 'insensitive',
+          },
+        }),
+        ...(status && {
+          status,
+        }),
+        ...(genreId && {
+          genreId: genreId,
+        }),
+        ...(secondaryGenreId && {
+          secondaryGenreId,
+        }),
+      },
+      orderBy: [
+        {
+          totalViews: totalViews ? 'desc' : 'asc',
+        },
+        {
+          totalChapters: totalChapters ? 'desc' : 'asc',
+        },
+        {
+          totalRating: totalRating ? 'desc' : 'asc',
+        },
+      ],
+    });
+
+    stories = rawStories.map((story) => {
+      return Story.create({
+        id: story.id,
+        title: story.title,
+        description: story.description,
+        userId: story.userId,
+        genreId: story.genreId,
+        secondaryGenreId: story.secondaryGenreId ?? undefined,
+        totalRating: Number(story.totalRating),
+        totalChapters: story.totalChapters,
+        createdAt: story.createdAt,
+        updatedAt: story.updatedAt,
       });
-    }
+    });
 
     return stories;
   }
