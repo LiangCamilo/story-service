@@ -80,7 +80,7 @@ export class StoryController {
       title: story.getTitle.getValue,
       description: story.getDescription.getValue,
       hidden: story.getHidden,
-      userId: story.getUserId,
+      author: story.getUserId,
       genreId: story.getGenreId,
       totalRating: story.getTotalRating?.getValue,
       totalChapters: story.getTotalChapters?.getValue,
