@@ -84,7 +84,7 @@ model Rating {
   userId String @db.Uuid
   score Decimal @db.Decimal(4, 2)
 
-  story Story @relation(fields: [storyId], references: [id])
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
 
   @@unique([storyId, userId])
 }
@@ -94,7 +94,7 @@ model View {
   storyId String @db.Uuid
   userId String @db.Uuid
 
-  story Story @relation(fields: [storyId], references: [id])
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
 
   @@unique([storyId, userId])
 }

@@ -15,6 +15,7 @@ import { FindGenreByIdUseCase } from './application/use-cases/genre-use-cases/fi
 import { FindStoryByIdUseCase } from './application/use-cases/story-use-cases/find-story-by-id.use-case';
 import { FindStoryByTitleUseCase } from './application/use-cases/story-use-cases/find-story-by-title.use-case';
 import { FindAndFilterMultipleStoryUseCase } from './application/use-cases/story-use-cases/find-and-filter-multiple-story.use-case';
+import { DeleteStoryByIdUseCase } from './application/use-cases/story-use-cases/delete-story-by-id.use-case';
 
 @Module({
   imports: [PrismaModule],
@@ -27,6 +28,7 @@ import { FindAndFilterMultipleStoryUseCase } from './application/use-cases/story
     FindStoryByTitleUseCase,
     FindStoryByIdUseCase,
     FindAndFilterMultipleStoryUseCase,
+    DeleteStoryByIdUseCase,
     {
       provide: STORY_REPOSITORY,
       useClass: PrismaStoryRepository,

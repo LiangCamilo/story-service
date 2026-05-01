@@ -10,6 +10,7 @@ export interface StoryRepositoryPort {
     findMultiple: FindMultipleStoryDto,
     filterMultiple: FilterMultipleStoryDto | undefined,
   ): Promise<Story[] | null>;
+  deleteStoryById(id: string): Promise<void>;
 }
 
 export const STORY_REPOSITORY = Symbol('STORY_REPOSITORY');

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -18,6 +19,7 @@ import { FilterMultipleStoryDto } from '../application/dtos/story-dtos/filter-mu
 import { FindAndFilterMultipleStoryUseCase } from '../application/use-cases/story-use-cases/find-and-filter-multiple-story.use-case';
 import { StoryExceptionFilter } from './filters/story-exception.filter';
 import { GenreExceptionFilter } from './filters/genre-exception.filter';
+import { DeleteStoryByIdUseCase } from '../application/use-cases/story-use-cases/delete-story-by-id.use-case';
 
 @UseFilters(StoryExceptionFilter, GenreExceptionFilter)
 @Controller('api/story')
@@ -27,6 +29,7 @@ export class StoryController {
     private findStoryByTitleUseCase: FindStoryByTitleUseCase,
     private findStoryByIdUseCase: FindStoryByIdUseCase,
     private findAndFilterMultipleStoryUseCase: FindAndFilterMultipleStoryUseCase,
+    private deleteStoryByIdUseCase: DeleteStoryByIdUseCase,
   ) {}
 
   @Post('create')
@@ -72,6 +75,15 @@ export class StoryController {
         meta,
       };
     }
+  }
+
+  @Delete('delete/:id')
+  async deleteStoryById(@Param('id') id: string) {
+    const deletedStory = await this.deleteStoryByIdUseCase.execute(id);
+
+    return {
+      message: `Se eliminó de manera exitosa la historia con id: ${deletedStory.getId.getValue}`,
+    };
   }
 
   private mapStoryToResponse = (story: Story) => {
