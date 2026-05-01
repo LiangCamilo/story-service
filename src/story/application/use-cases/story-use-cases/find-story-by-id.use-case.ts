@@ -15,7 +15,7 @@ export class FindStoryByIdUseCase {
     const story = await this.storyRepository.findById(id);
 
     if (!story) {
-      throw new StoryNotFoundError('', id);
+      throw new StoryNotFoundError(404, undefined, id);
     }
 
     return story;

@@ -16,21 +16,16 @@ export class FindAndFilterMultipleStoryUseCase {
     findDto: FindMultipleStoryDto,
     filterDto?: FilterMultipleStoryDto,
   ) {
-    console.log(findDto);
-    console.log(filterDto);
-
-    let numberPage: number = 0;
     const pageSize: number = findDto.limit;
-    let totalItems: number = 0;
-    let totalPages: number = 0;
 
-    const stories =
-      (await this.storyRepository.findAndFilterMultiple(findDto, filterDto)) ??
-      [];
+    const stories = await this.storyRepository.findAndFilterMultiple(
+      findDto,
+      filterDto,
+    );
 
-    totalItems = stories?.length;
-    totalPages = Math.ceil(totalItems / pageSize);
-    numberPage = Math.floor(findDto.offset / findDto.limit) + 1;
+    const totalItems = stories.length;
+    const totalPages = Math.ceil(totalItems / pageSize);
+    const numberPage = Math.floor(findDto.offset / findDto.limit) + 1;
 
     return {
       stories,
@@ -43,3 +38,4 @@ export class FindAndFilterMultipleStoryUseCase {
     };
   }
 }
+

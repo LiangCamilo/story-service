@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { FilterMultipleStoryDto } from 'src/story/application/dtos/story-dtos/filter-multilple-story.dto';
 import { FindMultipleStoryDto } from 'src/story/application/dtos/story-dtos/find-multiple-story.dto';
+import { StoryWithDetails } from 'src/story/application/read-models/story-with-details.read-model';
 import { StoryRepositoryPort } from 'src/story/application/ports/story.repository';
 import { Story } from 'src/story/domain/entities/story.entity';
 
@@ -59,60 +60,44 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     });
   }
 
-  async findByTitle(title: string): Promise<Story | null> {
+  async findByTitle(title: string): Promise<StoryWithDetails | null> {
     const story = await this.prisma.story.findUnique({
-      where: { title: title },
+      where: { title },
+      include: {
+        genre: true,
+        secondaryGenre: true,
+        tags: true,
+      },
     });
 
     if (!story) {
       return null;
     }
 
-    return Story.create({
-      id: story.id,
-      title: story.title,
-      description: story.description,
-      userId: story.userId,
-      genreId: story.genreId,
-      secondaryGenreId: story.secondaryGenreId ?? undefined,
-      tagIds: [],
-      totalRating: story.totalRating.toNumber(),
-      totalChapters: story.totalChapters,
-      createdAt: story.createdAt,
-      updatedAt: story.updatedAt,
-    });
+    return this.mapToStoryWithDetails(story);
   }
 
-  async findById(id: string): Promise<Story | null> {
+  async findById(id: string): Promise<StoryWithDetails | null> {
     const story = await this.prisma.story.findUnique({
-      where: { id: id },
+      where: { id },
+      include: {
+        genre: true,
+        secondaryGenre: true,
+        tags: true,
+      },
     });
 
     if (!story) {
       return null;
     }
 
-    return Story.create({
-      id: story.id,
-      title: story.title,
-      description: story.description,
-      userId: story.userId,
-      genreId: story.genreId,
-      secondaryGenreId: story.secondaryGenreId ?? undefined,
-      tagIds: [],
-      totalRating: story.totalRating.toNumber(),
-      totalChapters: story.totalChapters,
-      createdAt: story.createdAt,
-      updatedAt: story.updatedAt,
-    });
+    return this.mapToStoryWithDetails(story);
   }
 
   async findAndFilterMultiple(
     findMultiple: FindMultipleStoryDto,
     filterMultiple: FilterMultipleStoryDto,
-  ): Promise<Story[] | null> {
-    let stories: Story[] | null = null;
-
+  ): Promise<StoryWithDetails[]> {
     const {
       genreId,
       secondaryGenreId,
@@ -144,6 +129,11 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
           secondaryGenreId,
         }),
       },
+      include: {
+        genre: true,
+        secondaryGenre: true,
+        tags: true,
+      },
       orderBy: [
         {
           totalViews: totalViews ? 'desc' : 'asc',
@@ -157,27 +147,51 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       ],
     });
 
-    stories = rawStories.map((story) => {
-      return Story.create({
-        id: story.id,
-        title: story.title,
-        description: story.description,
-        userId: story.userId,
-        genreId: story.genreId,
-        secondaryGenreId: story.secondaryGenreId ?? undefined,
-        totalRating: Number(story.totalRating),
-        totalChapters: story.totalChapters,
-        createdAt: story.createdAt,
-        updatedAt: story.updatedAt,
-      });
-    });
-
-    return stories;
+    return rawStories.map((story) => this.mapToStoryWithDetails(story));
   }
 
   async deleteStoryById(id: string): Promise<void> {
     await this.prisma.story.delete({
       where: { id },
     });
+  }
+
+  private mapToStoryWithDetails(story: {
+    id: string;
+    title: string;
+    description: string;
+    hidden: boolean;
+    userId: string;
+    genre: { id: string; name: string };
+    secondaryGenre: { id: string; name: string } | null;
+    tags: { id: string; name: string }[];
+    totalRating: any;
+    totalChapters: number;
+    totalViews: number;
+    status: string;
+    createdAt: Date;
+    updatedAt: Date;
+  }): StoryWithDetails {
+    return {
+      id: story.id,
+      title: story.title,
+      description: story.description,
+      hidden: story.hidden,
+      userId: story.userId,
+      genre: { id: story.genre.id, name: story.genre.name },
+      ...(story.secondaryGenre && {
+        secondaryGenre: {
+          id: story.secondaryGenre.id,
+          name: story.secondaryGenre.name,
+        },
+      }),
+      tags: story.tags.map((tag) => ({ id: tag.id, name: tag.name })),
+      totalRating: Number(story.totalRating),
+      totalChapters: story.totalChapters,
+      totalViews: story.totalViews,
+      status: story.status,
+      createdAt: story.createdAt,
+      updatedAt: story.updatedAt,
+    };
   }
 }

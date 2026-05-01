@@ -15,7 +15,7 @@ export class FindStoryByTitleUseCase {
     const story = await this.storyRepository.findByTitle(title);
 
     if (!story) {
-      throw new StoryNotFoundError(title);
+      throw new StoryNotFoundError(404, title);
     }
 
     return story;

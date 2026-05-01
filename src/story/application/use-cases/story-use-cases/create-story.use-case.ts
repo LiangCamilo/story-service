@@ -33,7 +33,7 @@ export class CreateStoryUseCase {
     const existingStory = await this.storyRepository.findByTitle(dto.title);
 
     if (existingStory) {
-      throw new StoryAlreadyExistsError(existingStory.getTitle.getValue);
+      throw new StoryAlreadyExistsError(existingStory.title);
     }
 
     if (dto.tagNames && dto.tagNames.length > 0) {

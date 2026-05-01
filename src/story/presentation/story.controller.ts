@@ -42,14 +42,12 @@ export class StoryController {
 
   @Get('title/:title')
   async findByTitle(@Param('title') title: string) {
-    const story = await this.findStoryByTitleUseCase.execute(title);
-    return this.mapStoryToResponse(story);
+    return this.findStoryByTitleUseCase.execute(title);
   }
 
   @Get('id/:id')
   async findById(@Param('id') id: string) {
-    const story = await this.findStoryByIdUseCase.execute(id);
-    return this.mapStoryToResponse(story);
+    return this.findStoryByIdUseCase.execute(id);
   }
 
   @Post('filter')
@@ -63,18 +61,16 @@ export class StoryController {
         filterMultipleStoryDto,
       );
 
-    if (!stories) {
+    if (stories.length === 0) {
       return {
         message: 'No se han encontrado historias con los filtros especificados',
       };
-    } else {
-      return {
-        data: stories.map((story: Story) => {
-          return this.mapStoryToResponse(story);
-        }),
-        meta,
-      };
     }
+
+    return {
+      data: stories,
+      meta,
+    };
   }
 
   @Delete('delete/:id')
@@ -82,7 +78,7 @@ export class StoryController {
     const deletedStory = await this.deleteStoryByIdUseCase.execute(id);
 
     return {
-      message: `Se eliminó de manera exitosa la historia con id: ${deletedStory.getId.getValue}`,
+      message: `Se eliminó de manera exitosa la historia con id: ${deletedStory.id}`,
     };
   }
 
