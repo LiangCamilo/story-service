@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { FilterMultipleStoryDto } from 'src/story/application/dtos/story-dtos/filter-multilple-story.dto';
 import { FindMultipleStoryDto } from 'src/story/application/dtos/story-dtos/find-multiple-story.dto';
-import { StoryNotFoundError } from 'src/story/application/errors/story-errors/story-not-found.error';
 import { StoryRepositoryPort } from 'src/story/application/ports/story.repository';
 import { Story } from 'src/story/domain/entities/story.entity';
 
