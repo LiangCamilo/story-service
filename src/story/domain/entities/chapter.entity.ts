@@ -1,6 +1,5 @@
 import { ChapterOrder } from '../value-objects/chapter-vo/chapter-order.vo';
 import { ChapterTitle } from '../value-objects/chapter-vo/chapter-title.vo';
-import { Paragraph } from './paragraph.entity';
 
 export class Chapter {
   constructor(
@@ -8,7 +7,7 @@ export class Chapter {
     private title: ChapterTitle,
     private order: ChapterOrder,
     private storyId: string,
-    private paragraphs: Paragraph[] = [],
+    private content: string,
   ) {}
 
   // static create(params: {

@@ -66,31 +66,16 @@ model Chapter {
   id String @id @db.Uuid
   title String
   order Int
+  content String @db.Text
 
   storyId String @db.Uuid
   @@unique([storyId, order])
 
-  story Story @relation(fields: [storyId], references: [id])
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  paragraphs Paragraph[]
-}
-
-model Paragraph {
-  id String @id @db.Uuid
-  content String
-  order Int
-
-  chapterId String @db.Uuid
-  @@unique([chapterId, order])
-
-  chapter Chapter @relation(fields: [chapterId], references: [id])
-
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Rating {

@@ -388,7 +388,6 @@ export const ModelName = {
   Genre: 'Genre',
   Tag: 'Tag',
   Chapter: 'Chapter',
-  Paragraph: 'Paragraph',
   Rating: 'Rating',
   View: 'View'
 } as const
@@ -406,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "story" | "genre" | "tag" | "chapter" | "paragraph" | "rating" | "view"
+    modelProps: "story" | "genre" | "tag" | "chapter" | "rating" | "view"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -706,80 +705,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Paragraph: {
-      payload: Prisma.$ParagraphPayload<ExtArgs>
-      fields: Prisma.ParagraphFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ParagraphFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParagraphPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ParagraphFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParagraphPayload>
-        }
-        findFirst: {
-          args: Prisma.ParagraphFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParagraphPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ParagraphFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParagraphPayload>
-        }
-        findMany: {
-          args: Prisma.ParagraphFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParagraphPayload>[]
-        }
-        create: {
-          args: Prisma.ParagraphCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParagraphPayload>
-        }
-        createMany: {
-          args: Prisma.ParagraphCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ParagraphCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParagraphPayload>[]
-        }
-        delete: {
-          args: Prisma.ParagraphDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParagraphPayload>
-        }
-        update: {
-          args: Prisma.ParagraphUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParagraphPayload>
-        }
-        deleteMany: {
-          args: Prisma.ParagraphDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ParagraphUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ParagraphUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParagraphPayload>[]
-        }
-        upsert: {
-          args: Prisma.ParagraphUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ParagraphPayload>
-        }
-        aggregate: {
-          args: Prisma.ParagraphAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateParagraph>
-        }
-        groupBy: {
-          args: Prisma.ParagraphGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ParagraphGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ParagraphCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ParagraphCountAggregateOutputType> | number
-        }
-      }
-    }
     Rating: {
       payload: Prisma.$RatingPayload<ExtArgs>
       fields: Prisma.RatingFieldRefs
@@ -1010,24 +935,13 @@ export const ChapterScalarFieldEnum = {
   id: 'id',
   title: 'title',
   order: 'order',
+  content: 'content',
   storyId: 'storyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ChapterScalarFieldEnum = (typeof ChapterScalarFieldEnum)[keyof typeof ChapterScalarFieldEnum]
-
-
-export const ParagraphScalarFieldEnum = {
-  id: 'id',
-  content: 'content',
-  order: 'order',
-  chapterId: 'chapterId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ParagraphScalarFieldEnum = (typeof ParagraphScalarFieldEnum)[keyof typeof ParagraphScalarFieldEnum]
 
 
 export const RatingScalarFieldEnum = {
@@ -1268,7 +1182,6 @@ export type GlobalOmitConfig = {
   genre?: Prisma.GenreOmit
   tag?: Prisma.TagOmit
   chapter?: Prisma.ChapterOmit
-  paragraph?: Prisma.ParagraphOmit
   rating?: Prisma.RatingOmit
   view?: Prisma.ViewOmit
 }
