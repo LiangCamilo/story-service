@@ -1,19 +1,73 @@
 import { ChapterOrder } from '../value-objects/chapter-vo/chapter-order.vo';
 import { ChapterTitle } from '../value-objects/chapter-vo/chapter-title.vo';
+import { Id } from '../value-objects/id.vo';
 
 export class Chapter {
   constructor(
-    private id: string,
+    private id: Id,
     private title: ChapterTitle,
     private order: ChapterOrder,
     private storyId: string,
     private content: string,
+    private createdAt?: Date,
+    private updatedAt?: Date,
   ) {}
 
-  // static create(params: {
-  //   title: string;
-  //   order: Number;
-  //   storyId: string
-  //   paragraphs?:
-  // })
+  static create(params: {
+    title: string;
+    order: number;
+    storyId: string;
+    content: string;
+    id?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+  }) {
+    return new Chapter(
+      new Id(params.id),
+      new ChapterTitle(params.title),
+      new ChapterOrder(params.order),
+      params.storyId,
+      params.content,
+      params.createdAt,
+      params.updatedAt,
+    );
+  }
+
+  get getId() {
+    return this.id;
+  }
+
+  get getTitle() {
+    return this.title;
+  }
+
+  get getStoryId() {
+    return this.storyId;
+  }
+
+  get getOrder() {
+    return this.order;
+  }
+
+  get getContent() {
+    return this.content;
+  }
+
+  get getCreatedAt() {
+    return this.createdAt;
+  }
+
+  get getUpdatedAt() {
+    return this.updatedAt;
+  }
+
+  toPrimitives() {
+    return {
+      id: this.getId.getValue,
+      title: this.getTitle.getValue,
+      content: this.getContent,
+      storyId: this.getStoryId,
+      order: this.getOrder.getValue,
+    };
+  }
 }

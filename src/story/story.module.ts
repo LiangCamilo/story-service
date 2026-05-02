@@ -16,10 +16,17 @@ import { FindStoryByIdUseCase } from './application/use-cases/story-use-cases/fi
 import { FindStoryByTitleUseCase } from './application/use-cases/story-use-cases/find-story-by-title.use-case';
 import { FindAndFilterMultipleStoryUseCase } from './application/use-cases/story-use-cases/find-and-filter-multiple-story.use-case';
 import { DeleteStoryByIdUseCase } from './application/use-cases/story-use-cases/delete-story-by-id.use-case';
+import { ChapterController } from './presentation/chapter.controller';
+import { CHAPTER_REPOSITORY } from './application/ports/chapter.repository';
+import { PrismaChapterRepository } from './infrastructure/adapters/prisma-chapter.repository';
+import { CreateChapterUseCase } from './application/use-cases/chapter-use-cases/create-chapter.use-case';
+import { FindAllChaptersByStoryIdUseCase } from './application/use-cases/chapter-use-cases/find-all-chapters-by-story-id.use-case';
+import { DeleteChapterByIdUseCase } from './application/use-cases/chapter-use-cases/delete-chapter-by-id.use-case';
+import { UpdateChapterUseCase } from './application/use-cases/chapter-use-cases/update-chapter.use-case';
 
 @Module({
   imports: [PrismaModule],
-  controllers: [StoryController, GenreController],
+  controllers: [StoryController, GenreController, ChapterController],
   providers: [
     CreateStoryUseCase,
     FindGenresUseCase,
@@ -29,6 +36,10 @@ import { DeleteStoryByIdUseCase } from './application/use-cases/story-use-cases/
     FindStoryByIdUseCase,
     FindAndFilterMultipleStoryUseCase,
     DeleteStoryByIdUseCase,
+    CreateChapterUseCase,
+    FindAllChaptersByStoryIdUseCase,
+    DeleteChapterByIdUseCase,
+    UpdateChapterUseCase,
     {
       provide: STORY_REPOSITORY,
       useClass: PrismaStoryRepository,
@@ -40,6 +51,10 @@ import { DeleteStoryByIdUseCase } from './application/use-cases/story-use-cases/
     {
       provide: GENRE_REPOSITORY,
       useClass: PrismaGenreRepository,
+    },
+    {
+      provide: CHAPTER_REPOSITORY,
+      useClass: PrismaChapterRepository,
     },
   ],
 })

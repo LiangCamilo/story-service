@@ -60,7 +60,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     });
   }
 
-  async findByTitle(title: string): Promise<StoryWithDetails | null> {
+  async findByTitle(title: string): Promise<StoryWithDetails | undefined> {
     const story = await this.prisma.story.findUnique({
       where: { title },
       include: {
@@ -71,13 +71,13 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     });
 
     if (!story) {
-      return null;
+      return undefined;
     }
 
     return this.mapToStoryWithDetails(story);
   }
 
-  async findById(id: string): Promise<StoryWithDetails | null> {
+  async findById(id: string): Promise<StoryWithDetails | undefined> {
     const story = await this.prisma.story.findUnique({
       where: { id },
       include: {
@@ -88,7 +88,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     });
 
     if (!story) {
-      return null;
+      return undefined;
     }
 
     return this.mapToStoryWithDetails(story);
@@ -99,14 +99,34 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     filterMultiple: FilterMultipleStoryDto,
   ): Promise<StoryWithDetails[]> {
     const {
-      genreId,
-      secondaryGenreId,
+      genreName,
+      secondaryGenreName,
       status,
       title,
       totalChapters,
       totalRating,
       totalViews,
     } = filterMultiple;
+
+    const orderBy: Array<any> = [];
+
+    if (totalViews !== undefined) {
+      orderBy.push({
+        totalViews: totalViews ? 'desc' : 'asc',
+      });
+    }
+
+    if (totalRating !== undefined) {
+      orderBy.push({
+        totalRating: totalRating ? 'desc' : 'asc',
+      });
+    }
+
+    if (totalChapters !== undefined) {
+      orderBy.push({
+        totalChapters: totalChapters ? 'desc' : 'asc',
+      });
+    }
 
     const rawStories = await this.prisma.story.findMany({
       skip: findMultiple.offset,
@@ -122,11 +142,21 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         ...(status && {
           status,
         }),
-        ...(genreId && {
-          genreId: genreId,
+        ...(genreName && {
+          genre: {
+            name: {
+              contains: genreName,
+              mode: 'insensitive',
+            },
+          },
         }),
-        ...(secondaryGenreId && {
-          secondaryGenreId,
+        ...(secondaryGenreName && {
+          secondaryGenre: {
+            name: {
+              contains: secondaryGenreName,
+              mode: 'insensitive',
+            },
+          },
         }),
       },
       include: {
@@ -134,17 +164,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         secondaryGenre: true,
         tags: true,
       },
-      orderBy: [
-        {
-          totalViews: totalViews ? 'desc' : 'asc',
-        },
-        {
-          totalChapters: totalChapters ? 'desc' : 'asc',
-        },
-        {
-          totalRating: totalRating ? 'desc' : 'asc',
-        },
-      ],
+      orderBy,
     });
 
     return rawStories.map((story) => this.mapToStoryWithDetails(story));
