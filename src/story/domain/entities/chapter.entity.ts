@@ -9,6 +9,8 @@ export class Chapter {
     private order: ChapterOrder,
     private storyId: string,
     private content: string,
+    private createdAt?: Date,
+    private updatedAt?: Date,
   ) {}
 
   static create(params: {
@@ -16,13 +18,18 @@ export class Chapter {
     order: number;
     storyId: string;
     content: string;
+    id?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
   }) {
     return new Chapter(
-      new Id(params.storyId),
+      new Id(params.id),
       new ChapterTitle(params.title),
       new ChapterOrder(params.order),
       params.storyId,
       params.content,
+      params.createdAt,
+      params.updatedAt,
     );
   }
 
@@ -46,13 +53,21 @@ export class Chapter {
     return this.content;
   }
 
+  get getCreatedAt() {
+    return this.createdAt;
+  }
+
+  get getUpdatedAt() {
+    return this.updatedAt;
+  }
+
   toPrimitives() {
     return {
       id: this.getId.getValue,
-      title: this.title.getValue,
-      content: this.content,
-      storyId: this.storyId,
-      order: this.order.getValue,
+      title: this.getTitle.getValue,
+      content: this.getContent,
+      storyId: this.getStoryId,
+      order: this.getOrder.getValue,
     };
   }
 }

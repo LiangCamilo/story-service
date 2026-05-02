@@ -6,6 +6,8 @@ export class Genre {
   constructor(
     private id: Id,
     private name: GenreName,
+    private createdAt?: Date,
+    private updatedAt?: Date,
   ) {}
 
   static create(params: {
@@ -14,7 +16,12 @@ export class Genre {
     createdAt?: Date;
     updatedAt?: Date;
   }): Genre {
-    return new Genre(new Id(params.id), new GenreName(params.name));
+    return new Genre(
+      new Id(params.id),
+      new GenreName(params.name),
+      params.createdAt,
+      params.updatedAt,
+    );
   }
 
   get getId() {
@@ -23,6 +30,14 @@ export class Genre {
 
   get getName() {
     return this.name;
+  }
+
+  get getCreatedAt() {
+    return this.createdAt;
+  }
+
+  get getUpdatedAt() {
+    return this.updatedAt;
   }
 
   toPrimitives() {

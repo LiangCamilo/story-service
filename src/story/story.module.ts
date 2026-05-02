@@ -16,10 +16,11 @@ import { FindStoryByIdUseCase } from './application/use-cases/story-use-cases/fi
 import { FindStoryByTitleUseCase } from './application/use-cases/story-use-cases/find-story-by-title.use-case';
 import { FindAndFilterMultipleStoryUseCase } from './application/use-cases/story-use-cases/find-and-filter-multiple-story.use-case';
 import { DeleteStoryByIdUseCase } from './application/use-cases/story-use-cases/delete-story-by-id.use-case';
+import { ChapterController } from './presentation/chapter.controller';
 
 @Module({
   imports: [PrismaModule],
-  controllers: [StoryController, GenreController],
+  controllers: [StoryController, GenreController, ChapterController],
   providers: [
     CreateStoryUseCase,
     FindGenresUseCase,

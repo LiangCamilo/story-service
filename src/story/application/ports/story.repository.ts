@@ -5,8 +5,8 @@ import { StoryWithDetails } from '../read-models/story-with-details.read-model';
 
 export interface StoryRepositoryPort {
   createStory(story: Story): Promise<Story>;
-  findByTitle(title: string): Promise<StoryWithDetails | null>;
-  findById(id: string): Promise<StoryWithDetails | null>;
+  findByTitle(title: string): Promise<StoryWithDetails | undefined>;
+  findById(id: string): Promise<StoryWithDetails | undefined>;
   findAndFilterMultiple(
     findMultiple: FindMultipleStoryDto,
     filterMultiple: FilterMultipleStoryDto | undefined,

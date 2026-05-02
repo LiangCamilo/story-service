@@ -60,7 +60,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     });
   }
 
-  async findByTitle(title: string): Promise<StoryWithDetails | null> {
+  async findByTitle(title: string): Promise<StoryWithDetails | undefined> {
     const story = await this.prisma.story.findUnique({
       where: { title },
       include: {
@@ -71,13 +71,13 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     });
 
     if (!story) {
-      return null;
+      return undefined;
     }
 
     return this.mapToStoryWithDetails(story);
   }
 
-  async findById(id: string): Promise<StoryWithDetails | null> {
+  async findById(id: string): Promise<StoryWithDetails | undefined> {
     const story = await this.prisma.story.findUnique({
       where: { id },
       include: {
@@ -88,7 +88,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     });
 
     if (!story) {
-      return null;
+      return undefined;
     }
 
     return this.mapToStoryWithDetails(story);
