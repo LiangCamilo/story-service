@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import appConfig from './config/app.config';
 import dbConfig from './config/db.config';
 import { validate } from './config/env.validate';
+import { StoryModule } from './story/story.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -11,6 +13,7 @@ import { validate } from './config/env.validate';
       cache: true,
       validate,
     }),
+    StoryModule,
   ],
 })
-export class StoryModule {}
+export class AppModule {}

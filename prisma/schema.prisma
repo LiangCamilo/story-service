@@ -8,29 +8,41 @@ datasource db {
   provider = "postgresql"
 }
 
+enum StoryStatus {
+  IN_PROGRESS
+  COMPLETED
+  ABANDONED
+  PAUSED
+}
+
 model Story{
-  id String @id @default(uuid()) @db.Uuid
-  title String
+  id String @id @db.Uuid
+  title String @unique
   description String
-  ratings Rating[]
+  totalRating Decimal @default(0) @db.Decimal(4, 2)
+  totalChapters Int @default(0) 
   hidden Boolean @default(true)
+  status StoryStatus @default(IN_PROGRESS)
+  totalViews Int @default(0)
   userId String @db.Uuid
 
   genreId String @db.Uuid
-  subgenreId String? @db.Uuid
+  secondaryGenreId  String? @db.Uuid
   chapters Chapter[]
 
   genre Genre @relation("MainGenre", fields: [genreId], references: [id] )
-  subGenre Genre? @relation("SecondaryGenre", fields: [subgenreId], references: [id])
+  secondaryGenre Genre? @relation("SecondaryGenre", fields: [secondaryGenreId], references: [id])
 
   tags Tag[]
+  ratings Rating[]
+  views View[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Genre {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @db.Uuid
   name String @unique
 
   storiesAsMain Story[] @relation("MainGenre")
@@ -41,7 +53,7 @@ model Genre {
 }
 
 model Tag { 
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @db.Uuid
   name String @unique
 
   stories Story[]
@@ -51,43 +63,38 @@ model Tag {
 }
 
 model Chapter {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @db.Uuid
   title String
   order Int
+  content String @db.Text
 
   storyId String @db.Uuid
   @@unique([storyId, order])
 
-  story Story @relation(fields: [storyId], references: [id])
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  paragraphs Paragraph[]
-}
-
-model Paragraph {
-  id String @id @default(uuid()) @db.Uuid
-  content String
-  order Int
-
-  chapterId String @db.Uuid
-  @@unique([chapterId, order])
-
-  chapter Chapter @relation(fields: [chapterId], references: [id])
-
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Rating {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @db.Uuid
   storyId String @db.Uuid
   userId String @db.Uuid
-  number Float
+  score Decimal @db.Decimal(4, 2)
 
-  story Story @relation(fields: [storyId], references: [id])
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  @@unique([storyId, userId])
+}
+
+model View {
+  id String @id @db.Uuid
+  storyId String @db.Uuid
+  userId String @db.Uuid
+
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
 
   @@unique([storyId, userId])
 }
