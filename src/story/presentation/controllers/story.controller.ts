@@ -6,6 +6,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Put,
   Query,
   UploadedFile,
   UseFilters,
@@ -22,6 +23,8 @@ import { FindAndFilterMultipleStoryUseCase } from '../../application/use-cases/s
 import { StoryExceptionFilter } from '../filters/story-exception.filter';
 import { GenreExceptionFilter } from '../filters/genre-exception.filter';
 import { DeleteStoryByIdUseCase } from '../../application/use-cases/story-use-cases/delete-story-by-id.use-case';
+import { UpdateStoryUseCase } from '../../application/use-cases/story-use-cases/update-story.use-case';
+import { UpdateStoryDto } from '../../application/dtos/story-dtos/update-story.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 
@@ -34,6 +37,7 @@ export class StoryController {
     private findStoryByIdUseCase: FindStoryByIdUseCase,
     private findAndFilterMultipleStoryUseCase: FindAndFilterMultipleStoryUseCase,
     private deleteStoryByIdUseCase: DeleteStoryByIdUseCase,
+    private updateStoryUseCase: UpdateStoryUseCase,
   ) {}
 
   @Post('create')
@@ -103,6 +107,14 @@ export class StoryController {
     return {
       message: `Se eliminó de manera exitosa la historia con id: ${deletedStory.id}`,
     };
+  }
+
+  @Put('update/:id')
+  async updateStory(
+    @Param('id') id: string,
+    @Body() updateStoryDto: UpdateStoryDto,
+  ) {
+    return this.updateStoryUseCase.execute(id, updateStoryDto);
   }
 
   private mapStoryToResponse = (story: Story) => {

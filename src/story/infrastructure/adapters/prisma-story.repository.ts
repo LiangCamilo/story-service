@@ -3,8 +3,12 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { FilterMultipleStoryDto } from 'src/story/application/dtos/story-dtos/filter-multilple-story.dto';
 import { FindMultipleStoryDto } from 'src/story/application/dtos/story-dtos/find-multiple-story.dto';
 import { StoryWithDetails } from 'src/story/application/read-models/story-with-details.read-model';
-import { StoryRepositoryPort } from 'src/story/application/ports/story.repository';
+import {
+  StoryRepositoryPort,
+  UpdateStoryData,
+} from 'src/story/application/ports/story.repository';
 import { Story } from 'src/story/domain/entities/story.entity';
+import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
 
 @Injectable()
 export class PrismaStoryRepository implements StoryRepositoryPort {
@@ -178,6 +182,37 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     await this.prisma.story.delete({
       where: { id },
     });
+  }
+
+  async updateStory(
+    id: string,
+    data: UpdateStoryData,
+  ): Promise<StoryWithDetails> {
+    const updatedStory = await this.prisma.story.update({
+      where: { id },
+      data: {
+        ...(data.title && { title: data.title }),
+        ...(data.description && { description: data.description }),
+        ...(data.status && { status: data.status as AllowedStatus }),
+        ...(data.genreId && {
+          genre: {
+            connect: { id: data.genreId },
+          },
+        }),
+        ...(data.secondaryGenreId && {
+          secondaryGenre: {
+            connect: { id: data.secondaryGenreId },
+          },
+        }),
+      },
+      include: {
+        genre: true,
+        secondaryGenre: true,
+        tags: true,
+      },
+    });
+
+    return this.mapToStoryWithDetails(updatedStory);
   }
 
   private mapToStoryWithDetails(story: {
