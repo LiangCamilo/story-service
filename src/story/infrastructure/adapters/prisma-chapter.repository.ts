@@ -1,13 +1,25 @@
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ChapterRepositoryPort } from 'src/story/application/ports/chapter.repository';
 import { ChapterWithDetails } from 'src/story/application/read-models/chapter-with-details.read-model';
 import { Chapter } from 'src/story/domain/entities/chapter.entity';
 
+@Injectable()
 export class PrismaChapterRepository implements ChapterRepositoryPort {
   constructor(private prisma: PrismaService) {}
 
-  async create(chapter: Chapter): Promise<Chapter> {
+  async create(chapter: Chapter): Promise<ChapterWithDetails | undefined> {
     const data = chapter.toPrimitives();
+
+    const storyExists = await this.prisma.story.findUnique({
+      where: {
+        id: data.storyId,
+      },
+    });
+
+    if (!storyExists) {
+      return undefined;
+    }
 
     const allChapters = await this.prisma.chapter.findMany({
       where: {
@@ -26,16 +38,28 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
         title: `Nueva parte #${order}`,
         content: '',
         order,
-        storyId: data.storyId,
+        story: {
+          connect: {
+            id: data.storyId,
+          },
+        },
+      },
+      include: {
+        story: true,
       },
     });
 
-    return Chapter.create({
+    return this.mapToStoryWithDetails({
       id: rawChapter.id,
+      story: {
+        id: rawChapter.story.id,
+        title: rawChapter.story.title,
+      },
+      title: rawChapter.title,
       content: rawChapter.content,
       order: rawChapter.order,
-      storyId: data.storyId,
-      title: `Parte ${order}`,
+      createdAt: rawChapter.createdAt,
+      updatedAt: rawChapter.updatedAt,
     });
   }
 
