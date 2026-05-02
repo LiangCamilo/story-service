@@ -5,7 +5,7 @@ import {
 } from '../../ports/chapter.repository';
 import { CreateChapterDto } from '../../dtos/chapter-dtos/create-chapter.dto';
 import { Chapter } from 'src/story/domain/entities/chapter.entity';
-import { StoryNotFoundError } from '../../errors/story-errors/story-not-found.error';
+import { StoryNotFoundChapterError } from '../../errors/chapter-errors/story-not-found-chapter.error';
 
 @Injectable()
 export class CreateChapterUseCase {
@@ -25,7 +25,12 @@ export class CreateChapterUseCase {
     );
 
     if (!newChapter) {
-      throw new StoryNotFoundError(404, undefined, createChapterDto.storyId);
+      throw new StoryNotFoundChapterError(
+        404,
+        undefined,
+        undefined,
+        createChapterDto.storyId,
+      );
     }
 
     return newChapter;

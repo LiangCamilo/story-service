@@ -13,8 +13,9 @@ import { StoryExceptionFilter } from './filters/story-exception.filter';
 import { FindAllChaptersByStoryIdUseCase } from '../application/use-cases/chapter-use-cases/find-all-chapters-by-story-id.use-case';
 import { Chapter } from '../domain/entities/chapter.entity';
 import { DeleteChapterByIdUseCase } from '../application/use-cases/chapter-use-cases/delete-chapter-by-id.use-case';
+import { ChapterExceptionFilter } from './filters/chapter-exception.filter';
 
-@UseFilters(StoryExceptionFilter)
+@UseFilters(StoryExceptionFilter, ChapterExceptionFilter)
 @Controller('api/chapter')
 export class ChapterController {
   constructor(

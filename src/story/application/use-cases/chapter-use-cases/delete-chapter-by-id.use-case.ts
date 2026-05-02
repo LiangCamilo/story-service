@@ -3,7 +3,7 @@ import {
   CHAPTER_REPOSITORY,
   ChapterRepositoryPort,
 } from '../../ports/chapter.repository';
-import { ChapterNotFoundError } from '../../errors/chapter-errors/story-not-found.error';
+import { DeleteChapterError } from '../../errors/chapter-errors/delete-chapter.error';
 
 @Injectable()
 export class DeleteChapterByIdUseCase {
@@ -19,7 +19,7 @@ export class DeleteChapterByIdUseCase {
     );
 
     if (!deletedChapter) {
-      throw new ChapterNotFoundError(404, undefined, chapterId, storyId);
+      throw new DeleteChapterError(404, undefined, chapterId, storyId);
     }
 
     return deletedChapter;

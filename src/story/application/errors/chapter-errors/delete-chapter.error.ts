@@ -1,6 +1,6 @@
 import { ChapterError } from './chapter.error';
 
-export class ChapterNotFoundError extends ChapterError {
+export class DeleteChapterError extends ChapterError {
   constructor(
     status?: number,
     title?: string,
@@ -8,7 +8,7 @@ export class ChapterNotFoundError extends ChapterError {
     storyId?: string,
   ) {
     super({
-      message: `El capitulo solicitado no fue encontrado`,
+      message: `El capitulo a borrar no fue encontrado`,
       storyId,
       chapterId,
       title,

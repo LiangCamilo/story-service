@@ -26,6 +26,10 @@ export class ChapterError extends Error {
     return this.param.storyId;
   }
 
+  get getChapterId() {
+    return this.param.chapterId;
+  }
+
   get getTitle() {
     return this.param.title;
   }
