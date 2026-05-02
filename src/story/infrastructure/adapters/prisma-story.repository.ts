@@ -194,6 +194,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         ...(data.title && { title: data.title }),
         ...(data.description && { description: data.description }),
         ...(data.status && { status: data.status as AllowedStatus }),
+        ...(data.coverUrl && { coverUrl: data.coverUrl }),
         ...(data.genreId && {
           genre: {
             connect: { id: data.genreId },

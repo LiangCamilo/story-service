@@ -110,11 +110,26 @@ export class StoryController {
   }
 
   @Put('update/:id')
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: memoryStorage(),
+    }),
+  )
   async updateStory(
     @Param('id') id: string,
     @Body() updateStoryDto: UpdateStoryDto,
+    @UploadedFile() cover?: Express.Multer.File,
   ) {
-    return this.updateStoryUseCase.execute(id, updateStoryDto);
+    const uploadedFile = cover
+      ? {
+          buffer: cover?.buffer,
+          originalName: cover?.originalname,
+          mimeType: cover?.mimetype,
+          size: cover?.size,
+        }
+      : undefined;
+
+    return this.updateStoryUseCase.execute(id, updateStoryDto, uploadedFile);
   }
 
   private mapStoryToResponse = (story: Story) => {

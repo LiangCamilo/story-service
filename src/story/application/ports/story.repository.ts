@@ -9,6 +9,7 @@ export interface UpdateStoryData {
   genreId?: string;
   secondaryGenreId?: string | null;
   status?: string;
+  coverUrl?: string;
 }
 
 export interface StoryRepositoryPort {

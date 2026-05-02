@@ -14,15 +14,22 @@ import { GenreNotFoundError } from '../../errors/genre-errors/genre-not-found.er
 import { capitalizeString } from 'src/utils/capitalize-string';
 import { StoryWithDetails } from '../../read-models/story-with-details.read-model';
 import { StoryAlreadyExistsError } from '../../errors/story-errors/story-already-exists.error';
+import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
+import { UploadedCoverDto } from '../../dtos/story-dtos/uploaded-cover.dto';
 
 @Injectable()
 export class UpdateStoryUseCase {
   constructor(
     @Inject(STORY_REPOSITORY) private storyRepository: StoryRepositoryPort,
     @Inject(GENRE_REPOSITORY) private genreRepository: GenreRepositoryPort,
+    private readonly cloudinaryService: CloudinaryService,
   ) {}
 
-  async execute(id: string, dto: UpdateStoryDto): Promise<StoryWithDetails> {
+  async execute(
+    id: string,
+    dto: UpdateStoryDto,
+    cover?: UploadedCoverDto,
+  ): Promise<StoryWithDetails> {
     const existingStory = await this.storyRepository.findById(id);
 
     if (!existingStory) {
@@ -43,6 +50,18 @@ export class UpdateStoryUseCase {
       description: dto.description,
       status: dto.status,
     };
+
+    if (cover) {
+      let publicId: string | undefined = undefined;
+      if (existingStory.coverUrl) {
+        publicId = existingStory.coverUrl.split('/').pop()?.split('.')[0];
+      }
+      const uploadResult: any = await this.cloudinaryService.uploadImageToCloudinary(
+        cover,
+        publicId,
+      );
+      updateData.coverUrl = uploadResult.secure_url;
+    }
 
     if (dto.genreName) {
       const formattedGenreName = capitalizeString(dto.genreName) ?? '';
