@@ -93,6 +93,25 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
     });
   }
 
+  async findAllChaptersByStoryId(storyId: string): Promise<Chapter[]> {
+    const chaptersFromStory = await this.prisma.chapter.findMany({
+      where: {
+        storyId,
+      },
+    });
+    return chaptersFromStory.map((chapter) => {
+      return Chapter.create({
+        id: chapter.id,
+        title: chapter.title,
+        content: chapter.content,
+        order: chapter.order,
+        storyId: chapter.storyId,
+        createdAt: chapter.createdAt,
+        updatedAt: chapter.updatedAt,
+      });
+    });
+  }
+
   private mapToStoryWithDetails(chapter: {
     id: string;
     title: string;

@@ -20,6 +20,7 @@ import { ChapterController } from './presentation/chapter.controller';
 import { CHAPTER_REPOSITORY } from './application/ports/chapter.repository';
 import { PrismaChapterRepository } from './infrastructure/adapters/prisma-chapter.repository';
 import { CreateChapterUseCase } from './application/use-cases/chapter-use-cases/create-chapter.use-case';
+import { findAllChaptersByStoryIdUseCase } from './application/use-cases/chapter-use-cases/find-all-chapters-by-story-id.use-case';
 
 @Module({
   imports: [PrismaModule],
@@ -34,6 +35,7 @@ import { CreateChapterUseCase } from './application/use-cases/chapter-use-cases/
     FindAndFilterMultipleStoryUseCase,
     DeleteStoryByIdUseCase,
     CreateChapterUseCase,
+    findAllChaptersByStoryIdUseCase,
     {
       provide: STORY_REPOSITORY,
       useClass: PrismaStoryRepository,
