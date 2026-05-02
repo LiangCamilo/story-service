@@ -9,17 +9,17 @@ import {
   Query,
   UseFilters,
 } from '@nestjs/common';
-import { CreateStoryUseCase } from '../application/use-cases/story-use-cases/create-story.use-case';
-import { CreateStoryDto } from '../application/dtos/story-dtos/create-story.dto';
-import { Story } from '../domain/entities/story.entity';
-import { FindStoryByTitleUseCase } from '../application/use-cases/story-use-cases/find-story-by-title.use-case';
-import { FindStoryByIdUseCase } from '../application/use-cases/story-use-cases/find-story-by-id.use-case';
-import { FindMultipleStoryDto } from '../application/dtos/story-dtos/find-multiple-story.dto';
-import { FilterMultipleStoryDto } from '../application/dtos/story-dtos/filter-multilple-story.dto';
-import { FindAndFilterMultipleStoryUseCase } from '../application/use-cases/story-use-cases/find-and-filter-multiple-story.use-case';
-import { StoryExceptionFilter } from './filters/story-exception.filter';
-import { GenreExceptionFilter } from './filters/genre-exception.filter';
-import { DeleteStoryByIdUseCase } from '../application/use-cases/story-use-cases/delete-story-by-id.use-case';
+import { CreateStoryUseCase } from '../../application/use-cases/story-use-cases/create-story.use-case';
+import { CreateStoryDto } from '../../application/dtos/story-dtos/create-story.dto';
+import { Story } from '../../domain/entities/story.entity';
+import { FindStoryByTitleUseCase } from '../../application/use-cases/story-use-cases/find-story-by-title.use-case';
+import { FindStoryByIdUseCase } from '../../application/use-cases/story-use-cases/find-story-by-id.use-case';
+import { FindMultipleStoryDto } from '../../application/dtos/story-dtos/find-multiple-story.dto';
+import { FilterMultipleStoryDto } from '../../application/dtos/story-dtos/filter-multilple-story.dto';
+import { FindAndFilterMultipleStoryUseCase } from '../../application/use-cases/story-use-cases/find-and-filter-multiple-story.use-case';
+import { StoryExceptionFilter } from '../filters/story-exception.filter';
+import { GenreExceptionFilter } from '../filters/genre-exception.filter';
+import { DeleteStoryByIdUseCase } from '../../application/use-cases/story-use-cases/delete-story-by-id.use-case';
 
 @UseFilters(StoryExceptionFilter, GenreExceptionFilter)
 @Controller('api/story')
