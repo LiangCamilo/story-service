@@ -56,10 +56,8 @@ export class UpdateStoryUseCase {
       if (existingStory.coverUrl) {
         publicId = existingStory.coverUrl.split('/').pop()?.split('.')[0];
       }
-      const uploadResult: any = await this.cloudinaryService.uploadImageToCloudinary(
-        cover,
-        publicId,
-      );
+      const uploadResult: any =
+        await this.cloudinaryService.uploadImageToCloudinary(cover, publicId);
       updateData.coverUrl = uploadResult.secure_url;
     }
 

@@ -1,5 +1,8 @@
 import { IsIn, IsOptional, IsString, MaxLength } from 'class-validator';
-import { AllowedStatus, StoryStatusConstants } from '../../../domain/constants/story-constants/story-status.constants';
+import {
+  AllowedStatus,
+  StoryStatusConstants,
+} from '../../../domain/constants/story-constants/story-status.constants';
 
 export class UpdateStoryDto {
   @IsString()
@@ -22,6 +25,8 @@ export class UpdateStoryDto {
   secondaryGenreName?: string;
 
   @IsOptional()
-  @IsIn(StoryStatusConstants, { message: `El status debe ser uno de los siguientes: ${StoryStatusConstants.join(', ')}` })
+  @IsIn(StoryStatusConstants, {
+    message: `El status debe ser uno de los siguientes: ${StoryStatusConstants.join(', ')}`,
+  })
   status?: AllowedStatus;
 }
