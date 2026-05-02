@@ -108,7 +108,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       totalViews,
     } = filterMultiple;
 
-    const orderBy: any[] = [];
+    const orderBy: Array<any> = [];
 
     if (totalViews !== undefined) {
       orderBy.push({

@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   UseFilters,
 } from '@nestjs/common';
@@ -14,6 +15,8 @@ import { FindAllChaptersByStoryIdUseCase } from '../application/use-cases/chapte
 import { Chapter } from '../domain/entities/chapter.entity';
 import { DeleteChapterByIdUseCase } from '../application/use-cases/chapter-use-cases/delete-chapter-by-id.use-case';
 import { ChapterExceptionFilter } from './filters/chapter-exception.filter';
+import { UpdateChapterUseCase } from '../application/use-cases/chapter-use-cases/update-chapter.use-case';
+import { UpdateChapterDto } from '../application/dtos/chapter-dtos/update-chapter.dto';
 
 @UseFilters(StoryExceptionFilter, ChapterExceptionFilter)
 @Controller('api/chapter')
@@ -22,6 +25,7 @@ export class ChapterController {
     private createChapterUseCase: CreateChapterUseCase,
     private findAllChaptersByStoryIdUseCase: FindAllChaptersByStoryIdUseCase,
     private deleteChapterByIdUseCase: DeleteChapterByIdUseCase,
+    private updateChapterUseCase: UpdateChapterUseCase,
   ) {}
 
   @Get(':storyId')
@@ -54,6 +58,14 @@ export class ChapterController {
     return {
       message: `El capitulo de titulo ${deletedChapter} fue eliminado exitosamente`,
     };
+  }
+
+  @Patch('update/:id')
+  async updateChapter(
+    @Param('id') id: string,
+    @Body() updateChapterDto: UpdateChapterDto,
+  ) {
+    return await this.updateChapterUseCase.execute(id, updateChapterDto);
   }
 
   private mapChapterToResponse = (chapter: Chapter) => {

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UpdateChapterDto } from 'src/story/application/dtos/chapter-dtos/update-chapter.dto';
 import { ChapterRepositoryPort } from 'src/story/application/ports/chapter.repository';
 import { ChapterWithDetails } from 'src/story/application/read-models/chapter-with-details.read-model';
 import { Chapter } from 'src/story/domain/entities/chapter.entity';
@@ -141,6 +142,35 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
     ]);
 
     return operation[0].title;
+  }
+
+  async updateChapter(
+    id: string,
+    updateChapterDto: UpdateChapterDto,
+  ): Promise<Chapter> {
+    const { content, title } = updateChapterDto;
+
+    const chapter = await this.prisma.chapter.update({
+      where: { id },
+      data: {
+        ...(title && {
+          title,
+        }),
+        ...(content && {
+          content,
+        }),
+      },
+    });
+
+    return Chapter.create({
+      id,
+      title: chapter.title,
+      content: chapter.content,
+      order: chapter.order,
+      storyId: chapter.storyId,
+      createdAt: chapter.createdAt,
+      updatedAt: chapter.updatedAt,
+    });
   }
 
   private mapToStoryWithDetails(chapter: {
