@@ -5,7 +5,7 @@ import {
 } from '../../ports/chapter.repository';
 
 @Injectable()
-export class DeleteChapterById {
+export class DeleteChapterByIdUseCase {
   constructor(
     @Inject(CHAPTER_REPOSITORY)
     private chapterRepository: ChapterRepositoryPort,
