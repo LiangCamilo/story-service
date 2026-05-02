@@ -8,6 +8,10 @@ export function validate(config: Record<string, unknown>) {
     'POSTGRES_DB',
     'PGADMIN_DEFAULT_EMAIL',
     'PGADMIN_DEFAULT_PASSWORD',
+    'AMQP_HOST',
+    'AMQP_PORT',
+    'AMQP_USERNAME',
+    'AMQP_PASSWORD',
   ];
 
   for (const key of required) {
@@ -16,9 +20,8 @@ export function validate(config: Record<string, unknown>) {
     }
   }
 
-  console.log(config.DATABASE_URL);
-
   return {
     ...config,
   };
 }
+
