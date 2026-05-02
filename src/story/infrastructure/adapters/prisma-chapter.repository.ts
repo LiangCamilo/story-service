@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { ChapterNotFoundError } from 'src/story/application/errors/chapter-errors/story-not-found.error';
 import { ChapterRepositoryPort } from 'src/story/application/ports/chapter.repository';
 import { ChapterWithDetails } from 'src/story/application/read-models/chapter-with-details.read-model';
 import { Chapter } from 'src/story/domain/entities/chapter.entity';
@@ -110,6 +111,32 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
         updatedAt: chapter.updatedAt,
       });
     });
+  }
+
+  async deleteChapterById(chapterId: string, storyId: string): Promise<void> {
+    const chapterFound = await this.prisma.chapter.findUnique({
+      where: { id: chapterId, storyId },
+    });
+
+    if (!chapterFound) {
+      throw new ChapterNotFoundError(404, undefined, chapterId, storyId);
+    }
+
+    await this.prisma.$transaction([
+      this.prisma.chapter.delete({
+        where: { id: chapterId },
+      }),
+
+      this.prisma.chapter.updateMany({
+        where: {
+          storyId,
+          order: { gt: chapterFound.order },
+        },
+        data: {
+          order: { decrement: 1 },
+        },
+      }),
+    ]);
   }
 
   private mapToStoryWithDetails(chapter: {
