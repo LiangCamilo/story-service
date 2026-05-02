@@ -18,6 +18,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         id: data.id,
         title: data.title,
         description: data.description,
+        coverUrl: data.coverUrl,
+        userEmail: data.userEmail,
         hidden: data.hidden,
         userId: data.userId,
         genre: {
@@ -49,7 +51,9 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       title: newStory.title,
       description: newStory.description,
       userId: newStory.userId,
+      userEmail: newStory.userEmail,
       genreId: newStory.genreId,
+      coverUrl: newStory.coverUrl,
       secondaryGenreId: newStory.secondaryGenreId ?? undefined,
       tagIds: data.tagIds,
       totalRating: Number(newStory.totalRating),
@@ -180,6 +184,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     id: string;
     title: string;
     description: string;
+    coverUrl: string;
+    userEmail: string;
     hidden: boolean;
     userId: string;
     genre: { id: string; name: string };
@@ -196,6 +202,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       id: story.id,
       title: story.title,
       description: story.description,
+      coverUrl: story.coverUrl,
+      userEmail: story.userEmail,
       hidden: story.hidden,
       userId: story.userId,
       genre: { id: story.genre.id, name: story.genre.name },

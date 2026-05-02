@@ -13,7 +13,9 @@ export class Story {
     private description: StoryDescription,
     private hidden: boolean = true,
     private userId: string,
+    private userEmail: string,
     private genreId: string,
+    private coverUrl: string = '',
     private tagIds: string[] = [],
     private totalRating?: StoryTotalRating,
     private totalChapters?: StoryTotalChapters,
@@ -28,7 +30,9 @@ export class Story {
     title: string;
     description: string;
     userId: string;
+    userEmail: string;
     genreId: string;
+    coverUrl?: string;
     secondaryGenreId?: string;
     tagIds?: string[];
     totalRating?: number;
@@ -44,7 +48,9 @@ export class Story {
       new StoryDescription(params.description),
       true,
       params.userId,
+      params.userEmail,
       params.genreId,
+      params.coverUrl ?? '',
       params.tagIds ? params.tagIds : [],
       new StoryTotalRating(params.totalRating),
       new StoryTotalChapters(params.totalChapters),
@@ -74,6 +80,14 @@ export class Story {
 
   get getUserId(): string {
     return this.userId;
+  }
+
+  get getUserEmail(): string {
+    return this.userEmail;
+  }
+
+  get getCoverUrl(): string {
+    return this.coverUrl;
   }
 
   get getGenreId(): string {
@@ -119,6 +133,8 @@ export class Story {
       description: this.description.getValue,
       hidden: this.hidden,
       userId: this.userId,
+      userEmail: this.userEmail,
+      coverUrl: this.coverUrl,
       genreId: this.genreId,
       secondaryGenreId: this.secondaryGenreId ?? null,
       tagIds: this.tagIds,

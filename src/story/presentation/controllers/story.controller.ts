@@ -7,7 +7,9 @@ import {
   Param,
   Post,
   Query,
+  UploadedFile,
   UseFilters,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateStoryUseCase } from '../../application/use-cases/story-use-cases/create-story.use-case';
 import { CreateStoryDto } from '../../application/dtos/story-dtos/create-story.dto';
@@ -20,6 +22,8 @@ import { FindAndFilterMultipleStoryUseCase } from '../../application/use-cases/s
 import { StoryExceptionFilter } from '../filters/story-exception.filter';
 import { GenreExceptionFilter } from '../filters/genre-exception.filter';
 import { DeleteStoryByIdUseCase } from '../../application/use-cases/story-use-cases/delete-story-by-id.use-case';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { memoryStorage } from 'multer';
 
 @UseFilters(StoryExceptionFilter, GenreExceptionFilter)
 @Controller('api/story')
@@ -34,9 +38,28 @@ export class StoryController {
 
   @Post('create')
   @HttpCode(201)
-  async createStory(@Body() request: CreateStoryDto) {
-    console.log(request);
-    const story = await this.createStoryUseCase.execute(request);
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: memoryStorage(),
+    }),
+  )
+  async createStory(
+    @Body() createStoryDto: CreateStoryDto,
+    @UploadedFile() cover?: Express.Multer.File,
+  ) {
+    const uploadedFile = cover
+      ? {
+          buffer: cover?.buffer,
+          originalName: cover?.originalname,
+          mimeType: cover?.mimetype,
+          size: cover?.size,
+        }
+      : undefined;
+
+    const story = await this.createStoryUseCase.execute(
+      createStoryDto,
+      uploadedFile,
+    );
     return this.mapStoryToResponse(story);
   }
 
@@ -89,6 +112,8 @@ export class StoryController {
       description: story.getDescription.getValue,
       hidden: story.getHidden,
       author: story.getUserId,
+      userEmail: story.getUserEmail,
+      coverUrl: story.getCoverUrl,
       genreId: story.getGenreId,
       totalRating: story.getTotalRating?.getValue,
       totalChapters: story.getTotalChapters?.getValue,

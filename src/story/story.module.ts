@@ -23,9 +23,10 @@ import { CreateChapterUseCase } from './application/use-cases/chapter-use-cases/
 import { FindAllChaptersByStoryIdUseCase } from './application/use-cases/chapter-use-cases/find-all-chapters-by-story-id.use-case';
 import { DeleteChapterByIdUseCase } from './application/use-cases/chapter-use-cases/delete-chapter-by-id.use-case';
 import { UpdateChapterUseCase } from './application/use-cases/chapter-use-cases/update-chapter.use-case';
+import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [PrismaModule, CloudinaryModule],
   controllers: [StoryController, GenreController, ChapterController],
   providers: [
     CreateStoryUseCase,

@@ -17,6 +17,8 @@ import {
 import { capitalizeString } from 'src/utils/capitalize-string';
 import { GenreNotFoundError } from '../../errors/genre-errors/genre-not-found.error';
 import { Genre } from 'src/story/domain/entities/genre.entity';
+import { UploadedCoverDto } from '../../dtos/story-dtos/uploaded-cover.dto';
+import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
 
 @Injectable()
 export class CreateStoryUseCase {
@@ -24,9 +26,10 @@ export class CreateStoryUseCase {
     @Inject(STORY_REPOSITORY) private storyRepository: StoryRepositoryPort,
     @Inject(TAG_REPOSITORY) private tagRepository: TagRepositoryPort,
     @Inject(GENRE_REPOSITORY) private genreRepository: GenreRepositoryPort,
+    private readonly cloudinaryService: CloudinaryService,
   ) {}
 
-  async execute(dto: CreateStoryDto): Promise<Story> {
+  async execute(dto: CreateStoryDto, cover?: UploadedCoverDto): Promise<Story> {
     const tagIds: string[] = [];
     let secondaryGenre: Genre | undefined = undefined;
 
@@ -89,11 +92,21 @@ export class CreateStoryUseCase {
 
     //Story Creation Logic (By liang, this is not ChatGPT, I swear)
 
+    let coverUrl: string | undefined = undefined;
+
+    if (cover) {
+      const uploadResult: any =
+        await this.cloudinaryService.uploadImageToCloudinary(cover);
+      coverUrl = uploadResult.secure_url;
+    }
+
     const story = Story.create({
       title: dto.title,
       description: dto.description,
       userId: dto.userId,
+      userEmail: dto.userEmail,
       genreId: genre.getId.getValue,
+      coverUrl: coverUrl,
       secondaryGenreId: secondaryGenre
         ? secondaryGenre.getId.getValue
         : undefined,
