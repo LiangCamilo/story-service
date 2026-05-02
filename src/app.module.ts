@@ -15,10 +15,13 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
       cache: true,
       validate,
     }),
+
     RabbitMQModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
         return {
-          uri: configService.get<string>('rabbitmq.url'),
+          uri: configService.getOrThrow<string>('rabbitmq.uri'),
         };
       },
     }),

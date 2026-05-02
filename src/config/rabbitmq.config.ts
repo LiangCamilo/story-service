@@ -7,6 +7,6 @@ export default registerAs('rabbitmq', () => {
   const password = process.env.AMQP_PASSWORD;
 
   return {
-    url: `amqp://${username}:${password}@${host}:${port}`,
+    uri: `amqp://${username}:${password}@${host}:${port}`,
   };
 });
