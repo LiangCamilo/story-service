@@ -6,12 +6,13 @@ import rabbitmqConfig from './config/rabbitmq.config';
 import { validate } from './config/env.validate';
 import { StoryModule } from './story/story.module';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
+import cloudinaryConfig from './config/cloudinary.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, dbConfig, rabbitmqConfig],
+      load: [appConfig, dbConfig, rabbitmqConfig, cloudinaryConfig],
       cache: true,
       validate,
     }),

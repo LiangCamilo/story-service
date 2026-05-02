@@ -8,15 +8,15 @@ import {
   Post,
   UseFilters,
 } from '@nestjs/common';
-import { CreateChapterDto } from '../application/dtos/chapter-dtos/create-chapter.dto';
-import { CreateChapterUseCase } from '../application/use-cases/chapter-use-cases/create-chapter.use-case';
-import { StoryExceptionFilter } from './filters/story-exception.filter';
-import { FindAllChaptersByStoryIdUseCase } from '../application/use-cases/chapter-use-cases/find-all-chapters-by-story-id.use-case';
-import { Chapter } from '../domain/entities/chapter.entity';
-import { DeleteChapterByIdUseCase } from '../application/use-cases/chapter-use-cases/delete-chapter-by-id.use-case';
-import { ChapterExceptionFilter } from './filters/chapter-exception.filter';
-import { UpdateChapterUseCase } from '../application/use-cases/chapter-use-cases/update-chapter.use-case';
-import { UpdateChapterDto } from '../application/dtos/chapter-dtos/update-chapter.dto';
+import { CreateChapterDto } from '../../application/dtos/chapter-dtos/create-chapter.dto';
+import { CreateChapterUseCase } from '../../application/use-cases/chapter-use-cases/create-chapter.use-case';
+import { StoryExceptionFilter } from '../filters/story-exception.filter';
+import { FindAllChaptersByStoryIdUseCase } from '../../application/use-cases/chapter-use-cases/find-all-chapters-by-story-id.use-case';
+import { Chapter } from '../../domain/entities/chapter.entity';
+import { DeleteChapterByIdUseCase } from '../../application/use-cases/chapter-use-cases/delete-chapter-by-id.use-case';
+import { ChapterExceptionFilter } from '../filters/chapter-exception.filter';
+import { UpdateChapterUseCase } from '../../application/use-cases/chapter-use-cases/update-chapter.use-case';
+import { UpdateChapterDto } from '../../application/dtos/chapter-dtos/update-chapter.dto';
 
 @UseFilters(StoryExceptionFilter, ChapterExceptionFilter)
 @Controller('api/chapter')

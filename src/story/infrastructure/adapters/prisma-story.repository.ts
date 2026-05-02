@@ -3,8 +3,12 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { FilterMultipleStoryDto } from 'src/story/application/dtos/story-dtos/filter-multilple-story.dto';
 import { FindMultipleStoryDto } from 'src/story/application/dtos/story-dtos/find-multiple-story.dto';
 import { StoryWithDetails } from 'src/story/application/read-models/story-with-details.read-model';
-import { StoryRepositoryPort } from 'src/story/application/ports/story.repository';
+import {
+  StoryRepositoryPort,
+  UpdateStoryData,
+} from 'src/story/application/ports/story.repository';
 import { Story } from 'src/story/domain/entities/story.entity';
+import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
 
 @Injectable()
 export class PrismaStoryRepository implements StoryRepositoryPort {
@@ -18,6 +22,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         id: data.id,
         title: data.title,
         description: data.description,
+        coverUrl: data.coverUrl,
+        userEmail: data.userEmail,
         hidden: data.hidden,
         userId: data.userId,
         genre: {
@@ -49,7 +55,9 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       title: newStory.title,
       description: newStory.description,
       userId: newStory.userId,
+      userEmail: newStory.userEmail,
       genreId: newStory.genreId,
+      coverUrl: newStory.coverUrl,
       secondaryGenreId: newStory.secondaryGenreId ?? undefined,
       tagIds: data.tagIds,
       totalRating: Number(newStory.totalRating),
@@ -176,10 +184,44 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     });
   }
 
+  async updateStory(
+    id: string,
+    data: UpdateStoryData,
+  ): Promise<StoryWithDetails> {
+    const updatedStory = await this.prisma.story.update({
+      where: { id },
+      data: {
+        ...(data.title && { title: data.title }),
+        ...(data.description && { description: data.description }),
+        ...(data.status && { status: data.status as AllowedStatus }),
+        ...(data.coverUrl && { coverUrl: data.coverUrl }),
+        ...(data.genreId && {
+          genre: {
+            connect: { id: data.genreId },
+          },
+        }),
+        ...(data.secondaryGenreId && {
+          secondaryGenre: {
+            connect: { id: data.secondaryGenreId },
+          },
+        }),
+      },
+      include: {
+        genre: true,
+        secondaryGenre: true,
+        tags: true,
+      },
+    });
+
+    return this.mapToStoryWithDetails(updatedStory);
+  }
+
   private mapToStoryWithDetails(story: {
     id: string;
     title: string;
     description: string;
+    coverUrl: string;
+    userEmail: string;
     hidden: boolean;
     userId: string;
     genre: { id: string; name: string };
@@ -196,6 +238,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       id: story.id,
       title: story.title,
       description: story.description,
+      coverUrl: story.coverUrl,
+      userEmail: story.userEmail,
       hidden: story.hidden,
       userId: story.userId,
       genre: { id: story.genre.id, name: story.genre.name },

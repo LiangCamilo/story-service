@@ -18,12 +18,14 @@ enum StoryStatus {
 model Story{
   id String @id @db.Uuid
   title String @unique
+  coverUrl String @default("")
   description String
   totalRating Decimal @default(0) @db.Decimal(4, 2)
   totalChapters Int @default(0) 
   hidden Boolean @default(true)
   status StoryStatus @default(IN_PROGRESS)
   totalViews Int @default(0)
+  userEmail String
   userId String @db.Uuid
 
   genreId String @db.Uuid

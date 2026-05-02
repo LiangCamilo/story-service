@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   IsArray,
   IsNotEmpty,
@@ -28,9 +29,34 @@ export class CreateStoryDto {
 
   @IsString()
   @IsNotEmpty()
+  userEmail!: string;
+
+  @IsString()
+  @IsNotEmpty()
   @MaxLength(50)
   secondaryGenreName?: string;
 
+  @Transform(({ value }) => {
+    if (Array.isArray(value)) {
+      return value;
+    }
+
+    if (typeof value === 'string') {
+      try {
+        const parsed = JSON.parse(value);
+
+        if (Array.isArray(parsed)) {
+          return parsed;
+        }
+
+        return [];
+      } catch {
+        return [];
+      }
+    }
+
+    return [];
+  })
   @IsArray()
   @IsString({ each: true, message: 'Cada tag debe ser un texto' })
   @IsOptional()

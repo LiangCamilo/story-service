@@ -3,6 +3,15 @@ import { FindMultipleStoryDto } from '../dtos/story-dtos/find-multiple-story.dto
 import { FilterMultipleStoryDto } from '../dtos/story-dtos/filter-multilple-story.dto';
 import { StoryWithDetails } from '../read-models/story-with-details.read-model';
 
+export interface UpdateStoryData {
+  title?: string;
+  description?: string;
+  genreId?: string;
+  secondaryGenreId?: string | null;
+  status?: string;
+  coverUrl?: string;
+}
+
 export interface StoryRepositoryPort {
   createStory(story: Story): Promise<Story>;
   findByTitle(title: string): Promise<StoryWithDetails | undefined>;
@@ -12,6 +21,7 @@ export interface StoryRepositoryPort {
     filterMultiple: FilterMultipleStoryDto | undefined,
   ): Promise<StoryWithDetails[]>;
   deleteStoryById(id: string): Promise<void>;
+  updateStory(id: string, data: UpdateStoryData): Promise<StoryWithDetails>;
 }
 
 export const STORY_REPOSITORY = Symbol('STORY_REPOSITORY');
