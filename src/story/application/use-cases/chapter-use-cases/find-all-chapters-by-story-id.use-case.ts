@@ -5,7 +5,7 @@ import {
 } from '../../ports/chapter.repository';
 
 @Injectable()
-export class findAllChaptersByStoryIdUseCase {
+export class FindAllChaptersByStoryIdUseCase {
   constructor(
     @Inject(CHAPTER_REPOSITORY)
     private chapterRepository: ChapterRepositoryPort,

@@ -19,12 +19,12 @@ export class FilterMultipleStoryDto {
   @IsString()
   @MaxLength(50)
   @IsOptional()
-  genreId?: string;
+  genreName?: string;
 
   @IsString()
   @IsOptional()
   @MaxLength(50)
-  secondaryGenreId?: string;
+  secondaryGenreName?: string;
 
   @IsBoolean()
   @IsOptional()
