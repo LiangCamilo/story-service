@@ -36,6 +36,17 @@ export class PrismaViewRepository implements ViewRepositoryPort {
       },
     });
 
+    await this.prisma.story.update({
+      where: {
+        id: storyId,
+      },
+      data: {
+        totalViews: {
+          increment: 1,
+        },
+      },
+    });
+
     return View.create({
       id: newView.id,
       storyId: newView.storyId,
