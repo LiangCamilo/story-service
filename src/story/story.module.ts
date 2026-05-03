@@ -27,10 +27,17 @@ import { UpdateChapterUseCase } from './application/use-cases/chapter-use-cases/
 import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
 import { VIEW_REPOSITORY } from './application/ports/view.repository';
 import { PrismaViewRepository } from './infrastructure/adapters/prisma-view.repository';
+import { ViewController } from './presentation/controllers/view.controller';
+import { CreateViewUseCase } from './application/use-cases/view-use-cases/create-view.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
-  controllers: [StoryController, GenreController, ChapterController],
+  controllers: [
+    StoryController,
+    GenreController,
+    ChapterController,
+    ViewController,
+  ],
   providers: [
     CreateStoryUseCase,
     FindGenresUseCase,
@@ -45,6 +52,7 @@ import { PrismaViewRepository } from './infrastructure/adapters/prisma-view.repo
     FindAllChaptersByStoryIdUseCase,
     DeleteChapterByIdUseCase,
     UpdateChapterUseCase,
+    CreateViewUseCase,
     {
       provide: STORY_REPOSITORY,
       useClass: PrismaStoryRepository,

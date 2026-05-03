@@ -1,7 +1,9 @@
-import { Controller, Param, Post } from '@nestjs/common';
+import { Controller, Param, Post, UseFilters } from '@nestjs/common';
 import { CreateViewUseCase } from 'src/story/application/use-cases/view-use-cases/create-view.use-case';
+import { ViewExceptionFilter } from '../filters/view-exception.filter';
 
 @Controller('api/view')
+@UseFilters(ViewExceptionFilter)
 export class ViewController {
   constructor(private createViewUseCase: CreateViewUseCase) {}
 
