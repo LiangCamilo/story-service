@@ -25,6 +25,26 @@ export class View {
     );
   }
 
+  get getId() {
+    return this.id;
+  }
+
+  get getStoryId() {
+    return this.storyId;
+  }
+
+  get getUserId() {
+    return this.userId;
+  }
+
+  get getCreatedAt() {
+    return this.createdAt;
+  }
+
+  get getUpdatedAt() {
+    return this.updatedAt;
+  }
+
   toPrimitives() {
     return {
       id: this.id.getValue,

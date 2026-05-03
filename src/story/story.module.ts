@@ -29,6 +29,7 @@ import { VIEW_REPOSITORY } from './application/ports/view.repository';
 import { PrismaViewRepository } from './infrastructure/adapters/prisma-view.repository';
 import { ViewController } from './presentation/controllers/view.controller';
 import { CreateViewUseCase } from './application/use-cases/view-use-cases/create-view.use-case';
+import { RatingController } from './presentation/controllers/rating.controller';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -37,6 +38,7 @@ import { CreateViewUseCase } from './application/use-cases/view-use-cases/create
     GenreController,
     ChapterController,
     ViewController,
+    RatingController,
   ],
   providers: [
     CreateStoryUseCase,

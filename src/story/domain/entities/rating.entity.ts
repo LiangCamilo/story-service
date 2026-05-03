@@ -1,10 +1,48 @@
+import { Id } from '../value-objects/id.vo';
 import { RatingScore } from '../value-objects/rating-vo/rating-score.vo';
 
 export class Rating {
   constructor(
-    private id: string,
+    private id: Id,
     private storyId: string,
     private userId: string,
     private score: RatingScore,
+    private createdAt?: Date,
+    private updatedAt?: Date,
   ) {}
+
+  get getId() {
+    return this.id;
+  }
+
+  get getStoryId() {
+    return this.storyId;
+  }
+
+  get getUserId() {
+    return this.userId;
+  }
+
+  get getScore() {
+    return this.score;
+  }
+
+  get getCreatedAt() {
+    return this.createdAt;
+  }
+
+  get getUpdatedAt() {
+    return this.updatedAt;
+  }
+
+  toPrimitives() {
+    return {
+      id: this.id.getValue,
+      storyId: this.storyId,
+      userId: this.userId,
+      score: this.score.getValue,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
+  }
 }
