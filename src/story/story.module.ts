@@ -25,6 +25,8 @@ import { FindAllChaptersByStoryIdUseCase } from './application/use-cases/chapter
 import { DeleteChapterByIdUseCase } from './application/use-cases/chapter-use-cases/delete-chapter-by-id.use-case';
 import { UpdateChapterUseCase } from './application/use-cases/chapter-use-cases/update-chapter.use-case';
 import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
+import { VIEW_REPOSITORY } from './application/ports/view.repository';
+import { PrismaViewRepository } from './infrastructure/adapters/prisma-view.repository';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -58,6 +60,10 @@ import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
     {
       provide: CHAPTER_REPOSITORY,
       useClass: PrismaChapterRepository,
+    },
+    {
+      provide: VIEW_REPOSITORY,
+      useClass: PrismaViewRepository,
     },
   ],
 })

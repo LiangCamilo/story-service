@@ -39,6 +39,8 @@ export type RatingMinAggregateOutputType = {
   storyId: string | null
   userId: string | null
   score: runtime.Decimal | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type RatingMaxAggregateOutputType = {
@@ -46,6 +48,8 @@ export type RatingMaxAggregateOutputType = {
   storyId: string | null
   userId: string | null
   score: runtime.Decimal | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type RatingCountAggregateOutputType = {
@@ -53,6 +57,8 @@ export type RatingCountAggregateOutputType = {
   storyId: number
   userId: number
   score: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -70,6 +76,8 @@ export type RatingMinAggregateInputType = {
   storyId?: true
   userId?: true
   score?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type RatingMaxAggregateInputType = {
@@ -77,6 +85,8 @@ export type RatingMaxAggregateInputType = {
   storyId?: true
   userId?: true
   score?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type RatingCountAggregateInputType = {
@@ -84,6 +94,8 @@ export type RatingCountAggregateInputType = {
   storyId?: true
   userId?: true
   score?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -178,6 +190,8 @@ export type RatingGroupByOutputType = {
   storyId: string
   userId: string
   score: runtime.Decimal
+  createdAt: Date
+  updatedAt: Date
   _count: RatingCountAggregateOutputType | null
   _avg: RatingAvgAggregateOutputType | null
   _sum: RatingSumAggregateOutputType | null
@@ -208,6 +222,8 @@ export type RatingWhereInput = {
   storyId?: Prisma.UuidFilter<"Rating"> | string
   userId?: Prisma.UuidFilter<"Rating"> | string
   score?: Prisma.DecimalFilter<"Rating"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFilter<"Rating"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Rating"> | Date | string
   story?: Prisma.XOR<Prisma.StoryScalarRelationFilter, Prisma.StoryWhereInput>
 }
 
@@ -216,6 +232,8 @@ export type RatingOrderByWithRelationInput = {
   storyId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   score?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   story?: Prisma.StoryOrderByWithRelationInput
 }
 
@@ -228,6 +246,8 @@ export type RatingWhereUniqueInput = Prisma.AtLeast<{
   storyId?: Prisma.UuidFilter<"Rating"> | string
   userId?: Prisma.UuidFilter<"Rating"> | string
   score?: Prisma.DecimalFilter<"Rating"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFilter<"Rating"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Rating"> | Date | string
   story?: Prisma.XOR<Prisma.StoryScalarRelationFilter, Prisma.StoryWhereInput>
 }, "id" | "storyId_userId">
 
@@ -236,6 +256,8 @@ export type RatingOrderByWithAggregationInput = {
   storyId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   score?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.RatingCountOrderByAggregateInput
   _avg?: Prisma.RatingAvgOrderByAggregateInput
   _max?: Prisma.RatingMaxOrderByAggregateInput
@@ -251,12 +273,16 @@ export type RatingScalarWhereWithAggregatesInput = {
   storyId?: Prisma.UuidWithAggregatesFilter<"Rating"> | string
   userId?: Prisma.UuidWithAggregatesFilter<"Rating"> | string
   score?: Prisma.DecimalWithAggregatesFilter<"Rating"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Rating"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Rating"> | Date | string
 }
 
 export type RatingCreateInput = {
   id: string
   userId: string
   score: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   story: Prisma.StoryCreateNestedOneWithoutRatingsInput
 }
 
@@ -265,12 +291,16 @@ export type RatingUncheckedCreateInput = {
   storyId: string
   userId: string
   score: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RatingUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   story?: Prisma.StoryUpdateOneRequiredWithoutRatingsNestedInput
 }
 
@@ -279,6 +309,8 @@ export type RatingUncheckedUpdateInput = {
   storyId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RatingCreateManyInput = {
@@ -286,12 +318,16 @@ export type RatingCreateManyInput = {
   storyId: string
   userId: string
   score: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RatingUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RatingUncheckedUpdateManyInput = {
@@ -299,6 +335,8 @@ export type RatingUncheckedUpdateManyInput = {
   storyId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RatingListRelationFilter = {
@@ -321,6 +359,8 @@ export type RatingCountOrderByAggregateInput = {
   storyId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   score?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RatingAvgOrderByAggregateInput = {
@@ -332,6 +372,8 @@ export type RatingMaxOrderByAggregateInput = {
   storyId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   score?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RatingMinOrderByAggregateInput = {
@@ -339,6 +381,8 @@ export type RatingMinOrderByAggregateInput = {
   storyId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   score?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RatingSumOrderByAggregateInput = {
@@ -391,12 +435,16 @@ export type RatingCreateWithoutStoryInput = {
   id: string
   userId: string
   score: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RatingUncheckedCreateWithoutStoryInput = {
   id: string
   userId: string
   score: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RatingCreateOrConnectWithoutStoryInput = {
@@ -433,30 +481,40 @@ export type RatingScalarWhereInput = {
   storyId?: Prisma.UuidFilter<"Rating"> | string
   userId?: Prisma.UuidFilter<"Rating"> | string
   score?: Prisma.DecimalFilter<"Rating"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFilter<"Rating"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Rating"> | Date | string
 }
 
 export type RatingCreateManyStoryInput = {
   id: string
   userId: string
   score: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RatingUpdateWithoutStoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RatingUncheckedUpdateWithoutStoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RatingUncheckedUpdateManyWithoutStoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -466,6 +524,8 @@ export type RatingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   storyId?: boolean
   userId?: boolean
   score?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["rating"]>
 
@@ -474,6 +534,8 @@ export type RatingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   storyId?: boolean
   userId?: boolean
   score?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["rating"]>
 
@@ -482,6 +544,8 @@ export type RatingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   storyId?: boolean
   userId?: boolean
   score?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["rating"]>
 
@@ -490,9 +554,11 @@ export type RatingSelectScalar = {
   storyId?: boolean
   userId?: boolean
   score?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type RatingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storyId" | "userId" | "score", ExtArgs["result"]["rating"]>
+export type RatingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storyId" | "userId" | "score" | "createdAt" | "updatedAt", ExtArgs["result"]["rating"]>
 export type RatingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
 }
@@ -513,6 +579,8 @@ export type $RatingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     storyId: string
     userId: string
     score: runtime.Decimal
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["rating"]>
   composites: {}
 }
@@ -941,6 +1009,8 @@ export interface RatingFieldRefs {
   readonly storyId: Prisma.FieldRef<"Rating", 'String'>
   readonly userId: Prisma.FieldRef<"Rating", 'String'>
   readonly score: Prisma.FieldRef<"Rating", 'Decimal'>
+  readonly createdAt: Prisma.FieldRef<"Rating", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Rating", 'DateTime'>
 }
     
 
