@@ -3,6 +3,7 @@ import { AppModule } from './app.module.js';
 import { PrismaService } from './prisma/prisma.service.js';
 import genreSeeder from './seeder/genre.seeder.js';
 import { ValidationPipe } from '@nestjs/common';
+import { EurekaService } from './utils/discovery/eureka.service.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,6 +17,11 @@ async function bootstrap() {
 
   await genreSeeder(prismaService);
 
+  app.enableShutdownHooks();
+
   await app.listen(process.env.PORT ?? 3000);
+
+  const eurekaService = app.get(EurekaService);
+  await eurekaService.registerNestApp(app);
 }
 bootstrap();

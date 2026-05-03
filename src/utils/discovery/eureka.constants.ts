@@ -1,0 +1,1 @@
+export const EUREKA_MODULE_OPTIONS = Symbol('EUREKA_MODULE_OPTIONS');
