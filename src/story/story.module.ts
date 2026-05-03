@@ -25,10 +25,19 @@ import { FindAllChaptersByStoryIdUseCase } from './application/use-cases/chapter
 import { DeleteChapterByIdUseCase } from './application/use-cases/chapter-use-cases/delete-chapter-by-id.use-case';
 import { UpdateChapterUseCase } from './application/use-cases/chapter-use-cases/update-chapter.use-case';
 import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
+import { VIEW_REPOSITORY } from './application/ports/view.repository';
+import { PrismaViewRepository } from './infrastructure/adapters/prisma-view.repository';
+import { ViewController } from './presentation/controllers/view.controller';
+import { CreateViewUseCase } from './application/use-cases/view-use-cases/create-view.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
-  controllers: [StoryController, GenreController, ChapterController],
+  controllers: [
+    StoryController,
+    GenreController,
+    ChapterController,
+    ViewController,
+  ],
   providers: [
     CreateStoryUseCase,
     FindGenresUseCase,
@@ -43,6 +52,7 @@ import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
     FindAllChaptersByStoryIdUseCase,
     DeleteChapterByIdUseCase,
     UpdateChapterUseCase,
+    CreateViewUseCase,
     {
       provide: STORY_REPOSITORY,
       useClass: PrismaStoryRepository,
@@ -58,6 +68,10 @@ import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
     {
       provide: CHAPTER_REPOSITORY,
       useClass: PrismaChapterRepository,
+    },
+    {
+      provide: VIEW_REPOSITORY,
+      useClass: PrismaViewRepository,
     },
   ],
 })

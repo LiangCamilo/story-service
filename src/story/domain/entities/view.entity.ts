@@ -5,10 +5,24 @@ export class View {
     private id: Id,
     private storyId: string,
     private userId: string,
+    private createdAt?: Date,
+    private updatedAt?: Date,
   ) {}
 
-  static create(params: { id: string; storyId: string; userId: string }) {
-    return new View(new Id(params.id), params.storyId, params.userId);
+  static create(params: {
+    storyId: string;
+    userId: string;
+    id?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+  }) {
+    return new View(
+      new Id(params.id),
+      params.storyId,
+      params.userId,
+      params.createdAt,
+      params.updatedAt,
+    );
   }
 
   toPrimitives() {
@@ -16,6 +30,8 @@ export class View {
       id: this.id.getValue,
       storyId: this.storyId,
       userId: this.userId,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

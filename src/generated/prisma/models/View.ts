@@ -28,18 +28,24 @@ export type ViewMinAggregateOutputType = {
   id: string | null
   storyId: string | null
   userId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ViewMaxAggregateOutputType = {
   id: string | null
   storyId: string | null
   userId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ViewCountAggregateOutputType = {
   id: number
   storyId: number
   userId: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -48,18 +54,24 @@ export type ViewMinAggregateInputType = {
   id?: true
   storyId?: true
   userId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type ViewMaxAggregateInputType = {
   id?: true
   storyId?: true
   userId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type ViewCountAggregateInputType = {
   id?: true
   storyId?: true
   userId?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -139,6 +151,8 @@ export type ViewGroupByOutputType = {
   id: string
   storyId: string
   userId: string
+  createdAt: Date
+  updatedAt: Date
   _count: ViewCountAggregateOutputType | null
   _min: ViewMinAggregateOutputType | null
   _max: ViewMaxAggregateOutputType | null
@@ -166,6 +180,8 @@ export type ViewWhereInput = {
   id?: Prisma.UuidFilter<"View"> | string
   storyId?: Prisma.UuidFilter<"View"> | string
   userId?: Prisma.UuidFilter<"View"> | string
+  createdAt?: Prisma.DateTimeFilter<"View"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"View"> | Date | string
   story?: Prisma.XOR<Prisma.StoryScalarRelationFilter, Prisma.StoryWhereInput>
 }
 
@@ -173,6 +189,8 @@ export type ViewOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   story?: Prisma.StoryOrderByWithRelationInput
 }
 
@@ -184,6 +202,8 @@ export type ViewWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ViewWhereInput | Prisma.ViewWhereInput[]
   storyId?: Prisma.UuidFilter<"View"> | string
   userId?: Prisma.UuidFilter<"View"> | string
+  createdAt?: Prisma.DateTimeFilter<"View"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"View"> | Date | string
   story?: Prisma.XOR<Prisma.StoryScalarRelationFilter, Prisma.StoryWhereInput>
 }, "id" | "storyId_userId">
 
@@ -191,6 +211,8 @@ export type ViewOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.ViewCountOrderByAggregateInput
   _max?: Prisma.ViewMaxOrderByAggregateInput
   _min?: Prisma.ViewMinOrderByAggregateInput
@@ -203,11 +225,15 @@ export type ViewScalarWhereWithAggregatesInput = {
   id?: Prisma.UuidWithAggregatesFilter<"View"> | string
   storyId?: Prisma.UuidWithAggregatesFilter<"View"> | string
   userId?: Prisma.UuidWithAggregatesFilter<"View"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"View"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"View"> | Date | string
 }
 
 export type ViewCreateInput = {
   id: string
   userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   story: Prisma.StoryCreateNestedOneWithoutViewsInput
 }
 
@@ -215,11 +241,15 @@ export type ViewUncheckedCreateInput = {
   id: string
   storyId: string
   userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ViewUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   story?: Prisma.StoryUpdateOneRequiredWithoutViewsNestedInput
 }
 
@@ -227,23 +257,31 @@ export type ViewUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   storyId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ViewCreateManyInput = {
   id: string
   storyId: string
   userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ViewUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ViewUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   storyId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ViewListRelationFilter = {
@@ -265,18 +303,24 @@ export type ViewCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ViewMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ViewMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ViewCreateNestedManyWithoutStoryInput = {
@@ -324,11 +368,15 @@ export type ViewUncheckedUpdateManyWithoutStoryNestedInput = {
 export type ViewCreateWithoutStoryInput = {
   id: string
   userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ViewUncheckedCreateWithoutStoryInput = {
   id: string
   userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ViewCreateOrConnectWithoutStoryInput = {
@@ -364,26 +412,36 @@ export type ViewScalarWhereInput = {
   id?: Prisma.UuidFilter<"View"> | string
   storyId?: Prisma.UuidFilter<"View"> | string
   userId?: Prisma.UuidFilter<"View"> | string
+  createdAt?: Prisma.DateTimeFilter<"View"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"View"> | Date | string
 }
 
 export type ViewCreateManyStoryInput = {
   id: string
   userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ViewUpdateWithoutStoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ViewUncheckedUpdateWithoutStoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ViewUncheckedUpdateManyWithoutStoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -392,6 +450,8 @@ export type ViewSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   storyId?: boolean
   userId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["view"]>
 
@@ -399,6 +459,8 @@ export type ViewSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   storyId?: boolean
   userId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["view"]>
 
@@ -406,6 +468,8 @@ export type ViewSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   storyId?: boolean
   userId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["view"]>
 
@@ -413,9 +477,11 @@ export type ViewSelectScalar = {
   id?: boolean
   storyId?: boolean
   userId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type ViewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storyId" | "userId", ExtArgs["result"]["view"]>
+export type ViewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storyId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["view"]>
 export type ViewInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
 }
@@ -435,6 +501,8 @@ export type $ViewPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: string
     storyId: string
     userId: string
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["view"]>
   composites: {}
 }
@@ -862,6 +930,8 @@ export interface ViewFieldRefs {
   readonly id: Prisma.FieldRef<"View", 'String'>
   readonly storyId: Prisma.FieldRef<"View", 'String'>
   readonly userId: Prisma.FieldRef<"View", 'String'>
+  readonly createdAt: Prisma.FieldRef<"View", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"View", 'DateTime'>
 }
     
 

@@ -133,7 +133,9 @@ export const RatingScalarFieldEnum = {
   id: 'id',
   storyId: 'storyId',
   userId: 'userId',
-  score: 'score'
+  score: 'score',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type RatingScalarFieldEnum = (typeof RatingScalarFieldEnum)[keyof typeof RatingScalarFieldEnum]
@@ -142,7 +144,9 @@ export type RatingScalarFieldEnum = (typeof RatingScalarFieldEnum)[keyof typeof 
 export const ViewScalarFieldEnum = {
   id: 'id',
   storyId: 'storyId',
-  userId: 'userId'
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type ViewScalarFieldEnum = (typeof ViewScalarFieldEnum)[keyof typeof ViewScalarFieldEnum]

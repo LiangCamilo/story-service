@@ -50,6 +50,15 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       },
     });
 
+    await this.prisma.story.update({
+      where: { id: data.storyId },
+      data: {
+        totalChapters: {
+          increment: 1,
+        },
+      },
+    });
+
     return this.mapToStoryWithDetails({
       id: rawChapter.id,
       story: {
@@ -137,6 +146,15 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
         },
         data: {
           order: { decrement: 1 },
+        },
+      }),
+
+      this.prisma.story.update({
+        where: { id: storyId },
+        data: {
+          totalChapters: {
+            decrement: 1,
+          },
         },
       }),
     ]);
