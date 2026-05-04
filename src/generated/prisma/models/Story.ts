@@ -28,12 +28,16 @@ export type AggregateStory = {
 
 export type StoryAvgAggregateOutputType = {
   totalRating: runtime.Decimal | null
+  ratingSum: runtime.Decimal | null
+  ratingCount: number | null
   totalChapters: number | null
   totalViews: number | null
 }
 
 export type StorySumAggregateOutputType = {
   totalRating: runtime.Decimal | null
+  ratingSum: runtime.Decimal | null
+  ratingCount: number | null
   totalChapters: number | null
   totalViews: number | null
 }
@@ -44,6 +48,8 @@ export type StoryMinAggregateOutputType = {
   coverUrl: string | null
   description: string | null
   totalRating: runtime.Decimal | null
+  ratingSum: runtime.Decimal | null
+  ratingCount: number | null
   totalChapters: number | null
   hidden: boolean | null
   status: $Enums.StoryStatus | null
@@ -62,6 +68,8 @@ export type StoryMaxAggregateOutputType = {
   coverUrl: string | null
   description: string | null
   totalRating: runtime.Decimal | null
+  ratingSum: runtime.Decimal | null
+  ratingCount: number | null
   totalChapters: number | null
   hidden: boolean | null
   status: $Enums.StoryStatus | null
@@ -80,6 +88,8 @@ export type StoryCountAggregateOutputType = {
   coverUrl: number
   description: number
   totalRating: number
+  ratingSum: number
+  ratingCount: number
   totalChapters: number
   hidden: number
   status: number
@@ -96,12 +106,16 @@ export type StoryCountAggregateOutputType = {
 
 export type StoryAvgAggregateInputType = {
   totalRating?: true
+  ratingSum?: true
+  ratingCount?: true
   totalChapters?: true
   totalViews?: true
 }
 
 export type StorySumAggregateInputType = {
   totalRating?: true
+  ratingSum?: true
+  ratingCount?: true
   totalChapters?: true
   totalViews?: true
 }
@@ -112,6 +126,8 @@ export type StoryMinAggregateInputType = {
   coverUrl?: true
   description?: true
   totalRating?: true
+  ratingSum?: true
+  ratingCount?: true
   totalChapters?: true
   hidden?: true
   status?: true
@@ -130,6 +146,8 @@ export type StoryMaxAggregateInputType = {
   coverUrl?: true
   description?: true
   totalRating?: true
+  ratingSum?: true
+  ratingCount?: true
   totalChapters?: true
   hidden?: true
   status?: true
@@ -148,6 +166,8 @@ export type StoryCountAggregateInputType = {
   coverUrl?: true
   description?: true
   totalRating?: true
+  ratingSum?: true
+  ratingCount?: true
   totalChapters?: true
   hidden?: true
   status?: true
@@ -253,6 +273,8 @@ export type StoryGroupByOutputType = {
   coverUrl: string
   description: string
   totalRating: runtime.Decimal
+  ratingSum: runtime.Decimal
+  ratingCount: number
   totalChapters: number
   hidden: boolean
   status: $Enums.StoryStatus
@@ -294,6 +316,8 @@ export type StoryWhereInput = {
   coverUrl?: Prisma.StringFilter<"Story"> | string
   description?: Prisma.StringFilter<"Story"> | string
   totalRating?: Prisma.DecimalFilter<"Story"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFilter<"Story"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFilter<"Story"> | number
   totalChapters?: Prisma.IntFilter<"Story"> | number
   hidden?: Prisma.BoolFilter<"Story"> | boolean
   status?: Prisma.EnumStoryStatusFilter<"Story"> | $Enums.StoryStatus
@@ -318,6 +342,8 @@ export type StoryOrderByWithRelationInput = {
   coverUrl?: Prisma.SortOrder
   description?: Prisma.SortOrder
   totalRating?: Prisma.SortOrder
+  ratingSum?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
   totalChapters?: Prisma.SortOrder
   hidden?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -345,6 +371,8 @@ export type StoryWhereUniqueInput = Prisma.AtLeast<{
   coverUrl?: Prisma.StringFilter<"Story"> | string
   description?: Prisma.StringFilter<"Story"> | string
   totalRating?: Prisma.DecimalFilter<"Story"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFilter<"Story"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFilter<"Story"> | number
   totalChapters?: Prisma.IntFilter<"Story"> | number
   hidden?: Prisma.BoolFilter<"Story"> | boolean
   status?: Prisma.EnumStoryStatusFilter<"Story"> | $Enums.StoryStatus
@@ -369,6 +397,8 @@ export type StoryOrderByWithAggregationInput = {
   coverUrl?: Prisma.SortOrder
   description?: Prisma.SortOrder
   totalRating?: Prisma.SortOrder
+  ratingSum?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
   totalChapters?: Prisma.SortOrder
   hidden?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -395,6 +425,8 @@ export type StoryScalarWhereWithAggregatesInput = {
   coverUrl?: Prisma.StringWithAggregatesFilter<"Story"> | string
   description?: Prisma.StringWithAggregatesFilter<"Story"> | string
   totalRating?: Prisma.DecimalWithAggregatesFilter<"Story"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalWithAggregatesFilter<"Story"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntWithAggregatesFilter<"Story"> | number
   totalChapters?: Prisma.IntWithAggregatesFilter<"Story"> | number
   hidden?: Prisma.BoolWithAggregatesFilter<"Story"> | boolean
   status?: Prisma.EnumStoryStatusWithAggregatesFilter<"Story"> | $Enums.StoryStatus
@@ -413,6 +445,8 @@ export type StoryCreateInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -435,6 +469,8 @@ export type StoryUncheckedCreateInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -457,6 +493,8 @@ export type StoryUpdateInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -479,6 +517,8 @@ export type StoryUncheckedUpdateInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -501,6 +541,8 @@ export type StoryCreateManyInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -519,6 +561,8 @@ export type StoryUpdateManyMutationInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -535,6 +579,8 @@ export type StoryUncheckedUpdateManyInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -553,6 +599,8 @@ export type StoryCountOrderByAggregateInput = {
   coverUrl?: Prisma.SortOrder
   description?: Prisma.SortOrder
   totalRating?: Prisma.SortOrder
+  ratingSum?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
   totalChapters?: Prisma.SortOrder
   hidden?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -567,6 +615,8 @@ export type StoryCountOrderByAggregateInput = {
 
 export type StoryAvgOrderByAggregateInput = {
   totalRating?: Prisma.SortOrder
+  ratingSum?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
   totalChapters?: Prisma.SortOrder
   totalViews?: Prisma.SortOrder
 }
@@ -577,6 +627,8 @@ export type StoryMaxOrderByAggregateInput = {
   coverUrl?: Prisma.SortOrder
   description?: Prisma.SortOrder
   totalRating?: Prisma.SortOrder
+  ratingSum?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
   totalChapters?: Prisma.SortOrder
   hidden?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -595,6 +647,8 @@ export type StoryMinOrderByAggregateInput = {
   coverUrl?: Prisma.SortOrder
   description?: Prisma.SortOrder
   totalRating?: Prisma.SortOrder
+  ratingSum?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
   totalChapters?: Prisma.SortOrder
   hidden?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -609,6 +663,8 @@ export type StoryMinOrderByAggregateInput = {
 
 export type StorySumOrderByAggregateInput = {
   totalRating?: Prisma.SortOrder
+  ratingSum?: Prisma.SortOrder
+  ratingCount?: Prisma.SortOrder
   totalChapters?: Prisma.SortOrder
   totalViews?: Prisma.SortOrder
 }
@@ -834,6 +890,8 @@ export type StoryCreateWithoutGenreInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -855,6 +913,8 @@ export type StoryUncheckedCreateWithoutGenreInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -886,6 +946,8 @@ export type StoryCreateWithoutSecondaryGenreInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -907,6 +969,8 @@ export type StoryUncheckedCreateWithoutSecondaryGenreInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -957,6 +1021,8 @@ export type StoryScalarWhereInput = {
   coverUrl?: Prisma.StringFilter<"Story"> | string
   description?: Prisma.StringFilter<"Story"> | string
   totalRating?: Prisma.DecimalFilter<"Story"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFilter<"Story"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFilter<"Story"> | number
   totalChapters?: Prisma.IntFilter<"Story"> | number
   hidden?: Prisma.BoolFilter<"Story"> | boolean
   status?: Prisma.EnumStoryStatusFilter<"Story"> | $Enums.StoryStatus
@@ -991,6 +1057,8 @@ export type StoryCreateWithoutTagsInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -1012,6 +1080,8 @@ export type StoryUncheckedCreateWithoutTagsInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -1054,6 +1124,8 @@ export type StoryCreateWithoutChaptersInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -1075,6 +1147,8 @@ export type StoryUncheckedCreateWithoutChaptersInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -1112,6 +1186,8 @@ export type StoryUpdateWithoutChaptersInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1133,6 +1209,8 @@ export type StoryUncheckedUpdateWithoutChaptersInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1154,6 +1232,8 @@ export type StoryCreateWithoutRatingsInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -1175,6 +1255,8 @@ export type StoryUncheckedCreateWithoutRatingsInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -1212,6 +1294,8 @@ export type StoryUpdateWithoutRatingsInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1233,6 +1317,8 @@ export type StoryUncheckedUpdateWithoutRatingsInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1254,6 +1340,8 @@ export type StoryCreateWithoutViewsInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -1275,6 +1363,8 @@ export type StoryUncheckedCreateWithoutViewsInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -1312,6 +1402,8 @@ export type StoryUpdateWithoutViewsInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1333,6 +1425,8 @@ export type StoryUncheckedUpdateWithoutViewsInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1354,6 +1448,8 @@ export type StoryCreateManyGenreInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -1371,6 +1467,8 @@ export type StoryCreateManySecondaryGenreInput = {
   coverUrl?: string
   description: string
   totalRating?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: number
   totalChapters?: number
   hidden?: boolean
   status?: $Enums.StoryStatus
@@ -1388,6 +1486,8 @@ export type StoryUpdateWithoutGenreInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1409,6 +1509,8 @@ export type StoryUncheckedUpdateWithoutGenreInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1430,6 +1532,8 @@ export type StoryUncheckedUpdateManyWithoutGenreInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1447,6 +1551,8 @@ export type StoryUpdateWithoutSecondaryGenreInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1468,6 +1574,8 @@ export type StoryUncheckedUpdateWithoutSecondaryGenreInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1489,6 +1597,8 @@ export type StoryUncheckedUpdateManyWithoutSecondaryGenreInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1506,6 +1616,8 @@ export type StoryUpdateWithoutTagsInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1527,6 +1639,8 @@ export type StoryUncheckedUpdateWithoutTagsInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1548,6 +1662,8 @@ export type StoryUncheckedUpdateManyWithoutTagsInput = {
   coverUrl?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   totalRating?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingSum?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ratingCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalChapters?: Prisma.IntFieldUpdateOperationsInput | number
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
@@ -1624,6 +1740,8 @@ export type StorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   coverUrl?: boolean
   description?: boolean
   totalRating?: boolean
+  ratingSum?: boolean
+  ratingCount?: boolean
   totalChapters?: boolean
   hidden?: boolean
   status?: boolean
@@ -1649,6 +1767,8 @@ export type StorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   coverUrl?: boolean
   description?: boolean
   totalRating?: boolean
+  ratingSum?: boolean
+  ratingCount?: boolean
   totalChapters?: boolean
   hidden?: boolean
   status?: boolean
@@ -1669,6 +1789,8 @@ export type StorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   coverUrl?: boolean
   description?: boolean
   totalRating?: boolean
+  ratingSum?: boolean
+  ratingCount?: boolean
   totalChapters?: boolean
   hidden?: boolean
   status?: boolean
@@ -1689,6 +1811,8 @@ export type StorySelectScalar = {
   coverUrl?: boolean
   description?: boolean
   totalRating?: boolean
+  ratingSum?: boolean
+  ratingCount?: boolean
   totalChapters?: boolean
   hidden?: boolean
   status?: boolean
@@ -1701,7 +1825,7 @@ export type StorySelectScalar = {
   updatedAt?: boolean
 }
 
-export type StoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "coverUrl" | "description" | "totalRating" | "totalChapters" | "hidden" | "status" | "totalViews" | "userEmail" | "userId" | "genreId" | "secondaryGenreId" | "createdAt" | "updatedAt", ExtArgs["result"]["story"]>
+export type StoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "coverUrl" | "description" | "totalRating" | "ratingSum" | "ratingCount" | "totalChapters" | "hidden" | "status" | "totalViews" | "userEmail" | "userId" | "genreId" | "secondaryGenreId" | "createdAt" | "updatedAt", ExtArgs["result"]["story"]>
 export type StoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   chapters?: boolean | Prisma.Story$chaptersArgs<ExtArgs>
   genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
@@ -1736,6 +1860,8 @@ export type $StoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     coverUrl: string
     description: string
     totalRating: runtime.Decimal
+    ratingSum: runtime.Decimal
+    ratingCount: number
     totalChapters: number
     hidden: boolean
     status: $Enums.StoryStatus
@@ -2180,6 +2306,8 @@ export interface StoryFieldRefs {
   readonly coverUrl: Prisma.FieldRef<"Story", 'String'>
   readonly description: Prisma.FieldRef<"Story", 'String'>
   readonly totalRating: Prisma.FieldRef<"Story", 'Decimal'>
+  readonly ratingSum: Prisma.FieldRef<"Story", 'Decimal'>
+  readonly ratingCount: Prisma.FieldRef<"Story", 'Int'>
   readonly totalChapters: Prisma.FieldRef<"Story", 'Int'>
   readonly hidden: Prisma.FieldRef<"Story", 'Boolean'>
   readonly status: Prisma.FieldRef<"Story", 'StoryStatus'>

@@ -30,6 +30,9 @@ import { PrismaViewRepository } from './infrastructure/adapters/prisma-view.repo
 import { ViewController } from './presentation/controllers/view.controller';
 import { CreateViewUseCase } from './application/use-cases/view-use-cases/create-view.use-case';
 import { RatingController } from './presentation/controllers/rating.controller';
+import { CreateOrUpdateRatingUseCase } from './application/use-cases/rating-use-cases/create-or-update-rating.use-case';
+import { RATING_REPOSITORY } from './application/ports/rating.repository';
+import { PrismaRatingRepository } from './infrastructure/adapters/prisma-rating.repository';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -55,6 +58,7 @@ import { RatingController } from './presentation/controllers/rating.controller';
     DeleteChapterByIdUseCase,
     UpdateChapterUseCase,
     CreateViewUseCase,
+    CreateOrUpdateRatingUseCase,
     {
       provide: STORY_REPOSITORY,
       useClass: PrismaStoryRepository,
@@ -74,6 +78,10 @@ import { RatingController } from './presentation/controllers/rating.controller';
     {
       provide: VIEW_REPOSITORY,
       useClass: PrismaViewRepository,
+    },
+    {
+      provide: RATING_REPOSITORY,
+      useClass: PrismaRatingRepository,
     },
   ],
 })

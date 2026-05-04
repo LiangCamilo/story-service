@@ -11,6 +11,24 @@ export class Rating {
     private updatedAt?: Date,
   ) {}
 
+  static create(params: {
+    storyId: string;
+    userId: string;
+    score: number;
+    id?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+  }) {
+    return new Rating(
+      new Id(params.id),
+      params.storyId,
+      params.userId,
+      new RatingScore(params.score),
+      params.createdAt,
+      params.updatedAt,
+    );
+  }
+
   get getId() {
     return this.id;
   }

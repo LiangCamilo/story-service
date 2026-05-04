@@ -81,6 +81,8 @@ export const StoryScalarFieldEnum = {
   coverUrl: 'coverUrl',
   description: 'description',
   totalRating: 'totalRating',
+  ratingSum: 'ratingSum',
+  ratingCount: 'ratingCount',
   totalChapters: 'totalChapters',
   hidden: 'hidden',
   status: 'status',
