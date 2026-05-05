@@ -10,6 +10,7 @@ import cloudinaryConfig from './config/cloudinary.config';
 import eurekaConfig from './config/eureka.config';
 import { EurekaModule } from './utils/discovery/eureka.module';
 import { ConfigType } from '@nestjs/config';
+import viewConfig from './config/view.config';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ConfigType } from '@nestjs/config';
         rabbitmqConfig,
         cloudinaryConfig,
         eurekaConfig,
+        viewConfig,
       ],
       cache: true,
       validate,
