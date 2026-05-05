@@ -29,6 +29,7 @@ model Story{
   totalViews Int @default(0)
   userEmail String
   userId String @db.Uuid
+  totalFavorite Int @default(0)
 
   genreId String @db.Uuid
   secondaryGenreId  String? @db.Uuid
@@ -40,9 +41,22 @@ model Story{
   tags Tag[]
   ratings Rating[]
   views View[]
+  favoriteStories FavoriteStory[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model FavoriteStory {
+  id String @id @db.Uuid
+  storyId String @db.Uuid
+  userId String @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  @@unique([storyId, userId])
 }
 
 model Genre {
