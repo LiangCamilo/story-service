@@ -21,6 +21,8 @@ model Story{
   coverUrl String @default("")
   description String
   totalRating Decimal @default(0) @db.Decimal(4, 2)
+  ratingSum    Decimal @default(0) @db.Decimal(10, 2)
+  ratingCount  Int     @default(0)
   totalChapters Int @default(0) 
   hidden Boolean @default(true)
   status StoryStatus @default(IN_PROGRESS)

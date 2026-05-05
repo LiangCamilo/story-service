@@ -1,6 +1,8 @@
 import { AllowedStatus } from '../constants/story-constants/story-status.constants';
 import { Id } from '../value-objects/id.vo';
 import { StoryDescription } from '../value-objects/story-vo/story-description.vo';
+import { StoryRatingCount } from '../value-objects/story-vo/story-rating-count.vo';
+import { StoryRatingSum } from '../value-objects/story-vo/story-rating-sum.vo';
 import { StoryTitle } from '../value-objects/story-vo/story-title.vo';
 import { StoryTotalChapters } from '../value-objects/story-vo/story-total-chapters.vo';
 import { StoryTotalRating } from '../value-objects/story-vo/story-total-rating.vo';
@@ -18,6 +20,8 @@ export class Story {
     private coverUrl: string = '',
     private tagIds: string[] = [],
     private totalRating?: StoryTotalRating,
+    private ratingSum?: StoryRatingSum,
+    private ratingCount?: StoryRatingCount,
     private totalChapters?: StoryTotalChapters,
     private totalViews?: StoryTotalViews,
     private secondaryGenreId?: string,
@@ -36,6 +40,8 @@ export class Story {
     secondaryGenreId?: string;
     tagIds?: string[];
     totalRating?: number;
+    ratingSum?: number;
+    ratingCount?: number;
     totalChapters?: number;
     id?: string;
     status?: AllowedStatus;
@@ -53,6 +59,8 @@ export class Story {
       params.coverUrl ?? '',
       params.tagIds ? params.tagIds : [],
       new StoryTotalRating(params.totalRating),
+      new StoryRatingSum(params.ratingSum),
+      new StoryRatingCount(params.ratingCount),
       new StoryTotalChapters(params.totalChapters),
       new StoryTotalViews(0),
       params?.secondaryGenreId,
@@ -140,6 +148,8 @@ export class Story {
       tagIds: this.tagIds,
       totalRating: this.totalRating?.getValue,
       totalChapters: this.totalChapters?.getValue,
+      ratingSum: this.ratingSum?.getValue,
+      ratingCount: this.ratingCount?.getValue,
       createdAt: this.createdAt,
       updateAt: this.updatedAt,
     };
