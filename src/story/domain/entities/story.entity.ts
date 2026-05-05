@@ -135,6 +135,10 @@ export class Story {
     return this.totalViews;
   }
 
+  get getTotalFavorites(): StoryTotalFavorites | undefined {
+    return this.totalFavorites;
+  }
+
   get getStatus(): AllowedStatus | undefined {
     return this.status;
   }
@@ -153,6 +157,7 @@ export class Story {
       tagIds: this.tagIds,
       totalRating: this.totalRating?.getValue,
       totalChapters: this.totalChapters?.getValue,
+      totalFavorites: this.totalFavorites?.getValue,
       ratingSum: this.ratingSum?.getValue,
       ratingCount: this.ratingCount?.getValue,
       createdAt: this.createdAt,
