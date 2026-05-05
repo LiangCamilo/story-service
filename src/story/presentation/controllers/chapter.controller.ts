@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Patch,
   Post,
@@ -41,7 +42,6 @@ export class ChapterController {
   async create(@Body() createChapterDto: CreateChapterDto) {
     const newChapter =
       await this.createChapterUseCase.execute(createChapterDto);
-
     return newChapter;
   }
 

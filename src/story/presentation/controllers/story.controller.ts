@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpCode,
+  Inject,
   Param,
   Post,
   Put,
@@ -27,6 +28,8 @@ import { UpdateStoryUseCase } from '../../application/use-cases/story-use-cases/
 import { UpdateStoryDto } from '../../application/dtos/story-dtos/update-story.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
+import viewConfig from 'src/config/view.config';
+import { ConfigType } from '@nestjs/config';
 
 @UseFilters(StoryExceptionFilter, GenreExceptionFilter)
 @Controller('api/story')
@@ -38,6 +41,8 @@ export class StoryController {
     private findAndFilterMultipleStoryUseCase: FindAndFilterMultipleStoryUseCase,
     private deleteStoryByIdUseCase: DeleteStoryByIdUseCase,
     private updateStoryUseCase: UpdateStoryUseCase,
+    @Inject(viewConfig.KEY)
+    private readonly viewEnvs: ConfigType<typeof viewConfig>,
   ) {}
 
   @Post('create')
@@ -64,6 +69,31 @@ export class StoryController {
       createStoryDto,
       uploadedFile,
     );
+
+    const viewUrl = this.viewEnvs.viewUrl;
+
+    if (viewUrl) {
+      const viewCreate = await fetch(viewUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          book: {
+            bookId: story.getId.getValue,
+            title: story.getTitle.getValue,
+            authorEmail: story.getUserEmail,
+          },
+        }),
+      });
+
+      if (viewCreate.ok) {
+        console.log('Se ha enviado correctamente la creación de la story');
+      } else {
+        console.log('No se ha podido enviar la creación de la story');
+      }
+    }
+
     return this.mapStoryToResponse(story);
   }
 
@@ -103,6 +133,21 @@ export class StoryController {
   @Delete('delete/:id')
   async deleteStoryById(@Param('id') id: string) {
     const deletedStory = await this.deleteStoryByIdUseCase.execute(id);
+    const viewUrl = this.viewEnvs.viewUrl;
+
+    if (viewUrl) {
+      const viewCreate = await fetch(`${viewUrl}/${deletedStory.id}`, {
+        method: 'DELETE',
+      });
+
+      if (viewCreate.ok) {
+        console.log('Se ha eliminado correctamente el tracking de view');
+      } else {
+        console.log(
+          'no se ha podido eliminar de manera correcta en el view service',
+        );
+      }
+    }
 
     return {
       message: `Se eliminó de manera exitosa la historia con id: ${deletedStory.id}`,
