@@ -198,7 +198,7 @@ export type ChapterGroupByOutputType = {
   content: string
   storyId: string
   createdAt: Date
-  updatedAt: Date
+  updatedAt: Date | null
   _count: ChapterCountAggregateOutputType | null
   _avg: ChapterAvgAggregateOutputType | null
   _sum: ChapterSumAggregateOutputType | null
@@ -231,7 +231,7 @@ export type ChapterWhereInput = {
   content?: Prisma.StringFilter<"Chapter"> | string
   storyId?: Prisma.UuidFilter<"Chapter"> | string
   createdAt?: Prisma.DateTimeFilter<"Chapter"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Chapter"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
   story?: Prisma.XOR<Prisma.StoryScalarRelationFilter, Prisma.StoryWhereInput>
 }
 
@@ -242,7 +242,7 @@ export type ChapterOrderByWithRelationInput = {
   content?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   story?: Prisma.StoryOrderByWithRelationInput
 }
 
@@ -257,7 +257,7 @@ export type ChapterWhereUniqueInput = Prisma.AtLeast<{
   content?: Prisma.StringFilter<"Chapter"> | string
   storyId?: Prisma.UuidFilter<"Chapter"> | string
   createdAt?: Prisma.DateTimeFilter<"Chapter"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Chapter"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
   story?: Prisma.XOR<Prisma.StoryScalarRelationFilter, Prisma.StoryWhereInput>
 }, "id" | "storyId_order">
 
@@ -268,7 +268,7 @@ export type ChapterOrderByWithAggregationInput = {
   content?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ChapterCountOrderByAggregateInput
   _avg?: Prisma.ChapterAvgOrderByAggregateInput
   _max?: Prisma.ChapterMaxOrderByAggregateInput
@@ -286,7 +286,7 @@ export type ChapterScalarWhereWithAggregatesInput = {
   content?: Prisma.StringWithAggregatesFilter<"Chapter"> | string
   storyId?: Prisma.UuidWithAggregatesFilter<"Chapter"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Chapter"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Chapter"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Chapter"> | Date | string | null
 }
 
 export type ChapterCreateInput = {
@@ -295,7 +295,7 @@ export type ChapterCreateInput = {
   order: number
   content: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   story: Prisma.StoryCreateNestedOneWithoutChaptersInput
 }
 
@@ -306,7 +306,7 @@ export type ChapterUncheckedCreateInput = {
   content: string
   storyId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type ChapterUpdateInput = {
@@ -315,7 +315,7 @@ export type ChapterUpdateInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   story?: Prisma.StoryUpdateOneRequiredWithoutChaptersNestedInput
 }
 
@@ -326,7 +326,7 @@ export type ChapterUncheckedUpdateInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
   storyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ChapterCreateManyInput = {
@@ -336,7 +336,7 @@ export type ChapterCreateManyInput = {
   content: string
   storyId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type ChapterUpdateManyMutationInput = {
@@ -345,7 +345,7 @@ export type ChapterUpdateManyMutationInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ChapterUncheckedUpdateManyInput = {
@@ -355,7 +355,7 @@ export type ChapterUncheckedUpdateManyInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
   storyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ChapterListRelationFilter = {
@@ -459,7 +459,7 @@ export type ChapterCreateWithoutStoryInput = {
   order: number
   content: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type ChapterUncheckedCreateWithoutStoryInput = {
@@ -468,7 +468,7 @@ export type ChapterUncheckedCreateWithoutStoryInput = {
   order: number
   content: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type ChapterCreateOrConnectWithoutStoryInput = {
@@ -507,7 +507,7 @@ export type ChapterScalarWhereInput = {
   content?: Prisma.StringFilter<"Chapter"> | string
   storyId?: Prisma.UuidFilter<"Chapter"> | string
   createdAt?: Prisma.DateTimeFilter<"Chapter"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Chapter"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
 }
 
 export type ChapterCreateManyStoryInput = {
@@ -516,7 +516,7 @@ export type ChapterCreateManyStoryInput = {
   order: number
   content: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type ChapterUpdateWithoutStoryInput = {
@@ -525,7 +525,7 @@ export type ChapterUpdateWithoutStoryInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ChapterUncheckedUpdateWithoutStoryInput = {
@@ -534,7 +534,7 @@ export type ChapterUncheckedUpdateWithoutStoryInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ChapterUncheckedUpdateManyWithoutStoryInput = {
@@ -543,7 +543,7 @@ export type ChapterUncheckedUpdateManyWithoutStoryInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -614,7 +614,7 @@ export type $ChapterPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     content: string
     storyId: string
     createdAt: Date
-    updatedAt: Date
+    updatedAt: Date | null
   }, ExtArgs["result"]["chapter"]>
   composites: {}
 }

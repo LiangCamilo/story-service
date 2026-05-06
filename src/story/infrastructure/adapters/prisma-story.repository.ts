@@ -23,7 +23,6 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         title: data.title,
         description: data.description,
         coverUrl: data.coverUrl,
-        userEmail: data.userEmail,
         hidden: data.hidden,
         userId: data.userId,
         genre: {
@@ -55,7 +54,6 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       title: newStory.title,
       description: newStory.description,
       userId: newStory.userId,
-      userEmail: newStory.userEmail,
       genreId: newStory.genreId,
       coverUrl: newStory.coverUrl,
       secondaryGenreId: newStory.secondaryGenreId ?? undefined,
@@ -209,6 +207,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
             connect: { id: data.secondaryGenreId },
           },
         }),
+        updatedAt: new Date(),
       },
       include: {
         genre: true,
@@ -240,7 +239,6 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       id: updatedStory.id,
       title: updatedStory.title,
       userId: updatedStory.userId,
-      userEmail: updatedStory.userEmail,
       description: updatedStory.description,
       genreId: updatedStory.genreId,
       hidden: updatedStory.hidden,
@@ -263,7 +261,6 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     title: string;
     description: string;
     coverUrl: string;
-    userEmail: string;
     hidden: boolean;
     userId: string;
     genre: { id: string; name: string };
@@ -277,14 +274,13 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     totalFavorite: number;
     status: string;
     createdAt: Date;
-    updatedAt: Date;
+    updatedAt: Date | null;
   }): StoryWithDetails {
     return {
       id: story.id,
       title: story.title,
       description: story.description,
       coverUrl: story.coverUrl,
-      userEmail: story.userEmail,
       hidden: story.hidden,
       userId: story.userId,
       genre: { id: story.genre.id, name: story.genre.name },

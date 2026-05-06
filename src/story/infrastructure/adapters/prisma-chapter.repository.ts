@@ -177,6 +177,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
         ...(content && {
           content,
         }),
+        updatedAt: new Date(),
       },
     });
 

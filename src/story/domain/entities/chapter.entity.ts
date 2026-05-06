@@ -10,7 +10,7 @@ export class Chapter {
     private storyId: string,
     private content: string,
     private createdAt?: Date,
-    private updatedAt?: Date,
+    private updatedAt?: Date | null,
   ) {}
 
   static create(params: {
@@ -20,7 +20,7 @@ export class Chapter {
     content: string;
     id?: string;
     createdAt?: Date;
-    updatedAt?: Date;
+    updatedAt?: Date | null;
   }) {
     return new Chapter(
       new Id(params.id),

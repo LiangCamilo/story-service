@@ -88,7 +88,6 @@ export const StoryScalarFieldEnum = {
   hidden: 'hidden',
   status: 'status',
   totalViews: 'totalViews',
-  userEmail: 'userEmail',
   userId: 'userId',
   totalFavorite: 'totalFavorite',
   genreId: 'genreId',

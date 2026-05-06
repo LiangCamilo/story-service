@@ -4,7 +4,6 @@ export interface StoryWithDetails {
   description: string;
   hidden: boolean;
   userId: string;
-  userEmail: string;
   coverUrl: string;
   genre: { id: string; name: string };
   secondaryGenre?: { id: string; name: string };
@@ -17,5 +16,5 @@ export interface StoryWithDetails {
   totalFavorites: number;
   status: string;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt: Date | null;
 }

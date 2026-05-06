@@ -8,5 +8,5 @@ export interface ChapterWithDetails {
   };
   content: string;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt: Date | null;
 }

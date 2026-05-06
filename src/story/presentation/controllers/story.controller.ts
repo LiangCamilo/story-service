@@ -82,11 +82,9 @@ export class StoryController {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          book: {
-            bookId: story.getId.getValue,
-            title: story.getTitle.getValue,
-            authorEmail: story.getUserEmail,
-          },
+          bookId: story.getId.getValue,
+          title: story.getTitle.getValue,
+          authorId: story.getUserId,
         }),
       });
 
@@ -193,7 +191,6 @@ export class StoryController {
       description: story.getDescription.getValue,
       hidden: story.getHidden,
       author: story.getUserId,
-      userEmail: story.getUserEmail,
       coverUrl: story.getCoverUrl,
       genreId: story.getGenreId,
       totalRating: story.getTotalRating?.getValue,

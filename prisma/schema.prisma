@@ -27,7 +27,6 @@ model Story{
   hidden Boolean @default(true)
   status StoryStatus @default(IN_PROGRESS)
   totalViews Int @default(0)
-  userEmail String
   userId String @db.Uuid
   totalFavorite Int @default(0)
 
@@ -44,7 +43,7 @@ model Story{
   favoriteStories FavoriteStory[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime?
 }
 
 model FavoriteStory {
@@ -92,7 +91,7 @@ model Chapter {
   story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime?
 
 }
 
