@@ -1,8 +1,9 @@
-import { Controller, Inject, Param, Post, UseFilters } from '@nestjs/common';
+import { Body, Controller, Inject, Post, UseFilters } from '@nestjs/common';
 import { CreateViewUseCase } from 'src/story/application/use-cases/view-use-cases/create-view.use-case';
 import { ViewExceptionFilter } from '../filters/view-exception.filter';
 import viewConfig from 'src/config/view.config';
 import { ConfigType } from '@nestjs/config';
+import { CreateViewDto } from '../../application/dtos/view-dtos/create-view.dto';
 
 @Controller('api/view')
 @UseFilters(ViewExceptionFilter)
@@ -13,12 +14,11 @@ export class ViewController {
     private readonly viewEnvs: ConfigType<typeof viewConfig>,
   ) {}
 
-  @Post(':userId/story/:storyId')
+  @Post('create')
   async createView(
-    @Param('userId') userId: string,
-    @Param('storyId') storyId: string,
+    @Body() createViewDto: CreateViewDto,
   ) {
-    const newView = await this.createViewUseCase.execute(storyId, userId);
+    const newView = await this.createViewUseCase.execute(createViewDto.storyId, createViewDto.userId);
 
     const viewUrl = this.viewEnvs.viewUrl;
 

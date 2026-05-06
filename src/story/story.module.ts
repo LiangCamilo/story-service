@@ -33,6 +33,8 @@ import { RatingController } from './presentation/controllers/rating.controller';
 import { CreateOrUpdateRatingUseCase } from './application/use-cases/rating-use-cases/create-or-update-rating.use-case';
 import { RATING_REPOSITORY } from './application/ports/rating.repository';
 import { PrismaRatingRepository } from './infrastructure/adapters/prisma-rating.repository';
+import { FAVORITE_STORY_REPOSITORY } from './application/ports/favorite-story.repository';
+import { PrismaFavoriteStoryRepository } from './infrastructure/adapters/prisma-favorite-story.repository';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -82,6 +84,10 @@ import { PrismaRatingRepository } from './infrastructure/adapters/prisma-rating.
     {
       provide: RATING_REPOSITORY,
       useClass: PrismaRatingRepository,
+    },
+    {
+      provide: FAVORITE_STORY_REPOSITORY,
+      useClass: PrismaFavoriteStoryRepository,
     },
   ],
 })

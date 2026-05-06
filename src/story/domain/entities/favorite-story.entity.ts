@@ -1,6 +1,6 @@
 import { Id } from '../value-objects/id.vo';
 
-export class StoryFavorite {
+export class FavoriteStory {
   constructor(
     private id: Id,
     private storyId: string,
@@ -16,7 +16,7 @@ export class StoryFavorite {
     createdAt?: Date;
     updatedAt?: Date;
   }) {
-    return new StoryFavorite(
+    return new FavoriteStory(
       new Id(params.id),
       params.storyId,
       params.userId,
