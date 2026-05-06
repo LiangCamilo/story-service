@@ -5,6 +5,7 @@ import { StoryRatingCount } from '../value-objects/story-vo/story-rating-count.v
 import { StoryRatingSum } from '../value-objects/story-vo/story-rating-sum.vo';
 import { StoryTitle } from '../value-objects/story-vo/story-title.vo';
 import { StoryTotalChapters } from '../value-objects/story-vo/story-total-chapters.vo';
+import { StoryTotalFavorites } from '../value-objects/story-vo/story-total-favorites.vo';
 import { StoryTotalRating } from '../value-objects/story-vo/story-total-rating.vo';
 import { StoryTotalViews } from '../value-objects/story-vo/story-total-views.vo';
 
@@ -24,6 +25,7 @@ export class Story {
     private ratingCount?: StoryRatingCount,
     private totalChapters?: StoryTotalChapters,
     private totalViews?: StoryTotalViews,
+    private totalFavorites?: StoryTotalFavorites,
     private secondaryGenreId?: string,
     private status?: AllowedStatus,
     private createdAt?: Date,
@@ -36,6 +38,7 @@ export class Story {
     userId: string;
     userEmail: string;
     genreId: string;
+    hidden?: boolean;
     coverUrl?: string;
     secondaryGenreId?: string;
     tagIds?: string[];
@@ -43,6 +46,8 @@ export class Story {
     ratingSum?: number;
     ratingCount?: number;
     totalChapters?: number;
+    totalViews?: number;
+    totalFavorite?: number;
     id?: string;
     status?: AllowedStatus;
     createdAt?: Date;
@@ -52,7 +57,7 @@ export class Story {
       new Id(params.id),
       new StoryTitle(params.title),
       new StoryDescription(params.description),
-      true,
+      params.hidden ?? false,
       params.userId,
       params.userEmail,
       params.genreId,
@@ -62,7 +67,8 @@ export class Story {
       new StoryRatingSum(params.ratingSum),
       new StoryRatingCount(params.ratingCount),
       new StoryTotalChapters(params.totalChapters),
-      new StoryTotalViews(0),
+      new StoryTotalViews(params.totalViews ?? 0),
+      new StoryTotalFavorites(params.totalFavorite ?? 0),
       params?.secondaryGenreId,
       params?.status,
       params.createdAt,
@@ -130,6 +136,10 @@ export class Story {
     return this.totalViews;
   }
 
+  get getTotalFavorites(): StoryTotalFavorites | undefined {
+    return this.totalFavorites;
+  }
+
   get getStatus(): AllowedStatus | undefined {
     return this.status;
   }
@@ -148,6 +158,7 @@ export class Story {
       tagIds: this.tagIds,
       totalRating: this.totalRating?.getValue,
       totalChapters: this.totalChapters?.getValue,
+      totalFavorites: this.totalFavorites?.getValue,
       ratingSum: this.ratingSum?.getValue,
       ratingCount: this.ratingCount?.getValue,
       createdAt: this.createdAt,

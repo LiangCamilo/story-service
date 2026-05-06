@@ -6,6 +6,7 @@ import {
   HttpCode,
   Inject,
   Param,
+  Patch,
   Post,
   Put,
   Query,
@@ -25,6 +26,7 @@ import { StoryExceptionFilter } from '../filters/story-exception.filter';
 import { GenreExceptionFilter } from '../filters/genre-exception.filter';
 import { DeleteStoryByIdUseCase } from '../../application/use-cases/story-use-cases/delete-story-by-id.use-case';
 import { UpdateStoryUseCase } from '../../application/use-cases/story-use-cases/update-story.use-case';
+import { ToggleHiddenStoryUseCase } from '../../application/use-cases/story-use-cases/toggle-hidden-story.use-case';
 import { UpdateStoryDto } from '../../application/dtos/story-dtos/update-story.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
@@ -41,6 +43,7 @@ export class StoryController {
     private findAndFilterMultipleStoryUseCase: FindAndFilterMultipleStoryUseCase,
     private deleteStoryByIdUseCase: DeleteStoryByIdUseCase,
     private updateStoryUseCase: UpdateStoryUseCase,
+    private toggleHiddenStoryUseCase: ToggleHiddenStoryUseCase,
     @Inject(viewConfig.KEY)
     private readonly viewEnvs: ConfigType<typeof viewConfig>,
   ) {}
@@ -175,6 +178,12 @@ export class StoryController {
       : undefined;
 
     return this.updateStoryUseCase.execute(id, updateStoryDto, uploadedFile);
+  }
+
+  @Patch('toggle-hidden/:id')
+  async toggleHiddenStory(@Param('id') id: string) {
+    const updatedStory = await this.toggleHiddenStoryUseCase.execute(id);
+    return this.mapStoryToResponse(updatedStory);
   }
 
   private mapStoryToResponse = (story: Story) => {

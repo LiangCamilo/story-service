@@ -9,15 +9,13 @@ export class RatingController {
     private createOrUpdateRatingUseCase: CreateOrUpdateRatingUseCase,
   ) {}
 
-  @Post('/create/:userId/story/:storyId')
+  @Post('/create')
   async createView(
-    @Param('userId') userId: string,
-    @Param('storyId') storyId: string,
     @Body() createOrUpdateRatingDto: CreateOrUpdateRatingDto,
   ) {
     return await this.createOrUpdateRatingUseCase.execute(
-      userId,
-      storyId,
+      createOrUpdateRatingDto.userId,
+      createOrUpdateRatingDto.storyId,
       createOrUpdateRatingDto,
     );
   }

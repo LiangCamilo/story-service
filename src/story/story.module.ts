@@ -17,6 +17,7 @@ import { FindStoryByIdUseCase } from './application/use-cases/story-use-cases/fi
 import { FindStoryByTitleUseCase } from './application/use-cases/story-use-cases/find-story-by-title.use-case';
 import { FindAndFilterMultipleStoryUseCase } from './application/use-cases/story-use-cases/find-and-filter-multiple-story.use-case';
 import { DeleteStoryByIdUseCase } from './application/use-cases/story-use-cases/delete-story-by-id.use-case';
+import { ToggleHiddenStoryUseCase } from './application/use-cases/story-use-cases/toggle-hidden-story.use-case';
 import { ChapterController } from './presentation/controllers/chapter.controller';
 import { CHAPTER_REPOSITORY } from './application/ports/chapter.repository';
 import { PrismaChapterRepository } from './infrastructure/adapters/prisma-chapter.repository';
@@ -33,6 +34,11 @@ import { RatingController } from './presentation/controllers/rating.controller';
 import { CreateOrUpdateRatingUseCase } from './application/use-cases/rating-use-cases/create-or-update-rating.use-case';
 import { RATING_REPOSITORY } from './application/ports/rating.repository';
 import { PrismaRatingRepository } from './infrastructure/adapters/prisma-rating.repository';
+import { FAVORITE_STORY_REPOSITORY } from './application/ports/favorite-story.repository';
+import { PrismaFavoriteStoryRepository } from './infrastructure/adapters/prisma-favorite-story.repository';
+import { AddFavoriteStoryUseCase } from './application/use-cases/favorite-story-use-cases/add-favorite-story.use-case';
+import { FavoriteStoryController } from './presentation/controllers/favorite-story.controller';
+import { FindAllFavoriteStoriesByUserIdUseCase } from './application/use-cases/favorite-story-use-cases/find-all-favorite-stories-by-user-id.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -42,6 +48,7 @@ import { PrismaRatingRepository } from './infrastructure/adapters/prisma-rating.
     ChapterController,
     ViewController,
     RatingController,
+    FavoriteStoryController,
   ],
   providers: [
     CreateStoryUseCase,
@@ -53,12 +60,15 @@ import { PrismaRatingRepository } from './infrastructure/adapters/prisma-rating.
     FindAndFilterMultipleStoryUseCase,
     DeleteStoryByIdUseCase,
     UpdateStoryUseCase,
+    ToggleHiddenStoryUseCase,
     CreateChapterUseCase,
     FindAllChaptersByStoryIdUseCase,
     DeleteChapterByIdUseCase,
     UpdateChapterUseCase,
     CreateViewUseCase,
     CreateOrUpdateRatingUseCase,
+    AddFavoriteStoryUseCase,
+    FindAllFavoriteStoriesByUserIdUseCase,
     {
       provide: STORY_REPOSITORY,
       useClass: PrismaStoryRepository,
@@ -82,6 +92,10 @@ import { PrismaRatingRepository } from './infrastructure/adapters/prisma-rating.
     {
       provide: RATING_REPOSITORY,
       useClass: PrismaRatingRepository,
+    },
+    {
+      provide: FAVORITE_STORY_REPOSITORY,
+      useClass: PrismaFavoriteStoryRepository,
     },
   ],
 })

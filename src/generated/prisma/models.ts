@@ -9,6 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Story.js'
+export type * from './models/FavoriteStory.js'
 export type * from './models/Genre.js'
 export type * from './models/Tag.js'
 export type * from './models/Chapter.js'

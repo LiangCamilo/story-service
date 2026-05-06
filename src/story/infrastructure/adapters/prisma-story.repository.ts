@@ -114,6 +114,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       totalChapters,
       totalRating,
       totalViews,
+      userId,
     } = filterMultiple;
 
     const orderBy: Array<any> = [];
@@ -140,7 +141,10 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       skip: findMultiple.offset,
       take: findMultiple.limit,
       where: {
-        // hidden: false,
+        hidden: true,
+        ...(userId && {
+          userId,
+        }),
         ...(title && {
           title: {
             contains: title,
@@ -216,6 +220,44 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     return this.mapToStoryWithDetails(updatedStory);
   }
 
+  async toggleHidden(id: string): Promise<Story | undefined> {
+    const existingStory = await this.prisma.story.findUnique({
+      where: { id },
+    });
+
+    if (!existingStory) {
+      return undefined;
+    }
+
+    const updatedStory = await this.prisma.story.update({
+      where: { id },
+      data: {
+        hidden: !existingStory.hidden,
+      },
+    });
+
+    return Story.create({
+      id: updatedStory.id,
+      title: updatedStory.title,
+      userId: updatedStory.userId,
+      userEmail: updatedStory.userEmail,
+      description: updatedStory.description,
+      genreId: updatedStory.genreId,
+      hidden: updatedStory.hidden,
+      coverUrl: updatedStory.coverUrl,
+      ratingCount: updatedStory.ratingCount,
+      ratingSum: Number(updatedStory.ratingSum),
+      totalRating: Number(updatedStory.totalRating),
+      totalChapters: updatedStory.totalChapters,
+      secondaryGenreId: updatedStory.secondaryGenreId ?? undefined,
+      totalFavorite: updatedStory.totalFavorite,
+      totalViews: updatedStory.totalViews,
+      status: updatedStory.status,
+      createdAt: updatedStory.createdAt,
+      updatedAt: updatedStory.updatedAt,
+    });
+  }
+
   private mapToStoryWithDetails(story: {
     id: string;
     title: string;
@@ -228,8 +270,11 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     secondaryGenre: { id: string; name: string } | null;
     tags: { id: string; name: string }[];
     totalRating: any;
+    ratingSum: any;
+    ratingCount: number;
     totalChapters: number;
     totalViews: number;
+    totalFavorite: number;
     status: string;
     createdAt: Date;
     updatedAt: Date;
@@ -251,8 +296,11 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       }),
       tags: story.tags.map((tag) => ({ id: tag.id, name: tag.name })),
       totalRating: Number(story.totalRating),
+      ratingSum: Number(story.ratingSum),
+      ratingCount: story.ratingCount,
       totalChapters: story.totalChapters,
       totalViews: story.totalViews,
+      totalFavorites: story.totalFavorite,
       status: story.status,
       createdAt: story.createdAt,
       updatedAt: story.updatedAt,
