@@ -36,6 +36,9 @@ import { RATING_REPOSITORY } from './application/ports/rating.repository';
 import { PrismaRatingRepository } from './infrastructure/adapters/prisma-rating.repository';
 import { FAVORITE_STORY_REPOSITORY } from './application/ports/favorite-story.repository';
 import { PrismaFavoriteStoryRepository } from './infrastructure/adapters/prisma-favorite-story.repository';
+import { AddFavoriteStoryUseCase } from './application/use-cases/favorite-story-use-cases/add-favorite-story.use-case';
+import { FavoriteStoryController } from './presentation/controllers/favorite-story.controller';
+import { FindAllFavoriteStoriesByUserIdUseCase } from './application/use-cases/favorite-story-use-cases/find-all-favorite-stories-by-user-id.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -45,6 +48,7 @@ import { PrismaFavoriteStoryRepository } from './infrastructure/adapters/prisma-
     ChapterController,
     ViewController,
     RatingController,
+    FavoriteStoryController,
   ],
   providers: [
     CreateStoryUseCase,
@@ -63,6 +67,8 @@ import { PrismaFavoriteStoryRepository } from './infrastructure/adapters/prisma-
     UpdateChapterUseCase,
     CreateViewUseCase,
     CreateOrUpdateRatingUseCase,
+    AddFavoriteStoryUseCase,
+    FindAllFavoriteStoriesByUserIdUseCase,
     {
       provide: STORY_REPOSITORY,
       useClass: PrismaStoryRepository,
