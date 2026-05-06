@@ -1,7 +1,6 @@
 export function validate(config: Record<string, unknown>) {
   const required = [
     'DATABASE_URL',
-    'FRONTEND_URL',
     'POSTGRES_PORT',
     'POSTGRES_USER',
     'POSTGRES_PASSWORD',
