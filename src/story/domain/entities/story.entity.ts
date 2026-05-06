@@ -38,6 +38,7 @@ export class Story {
     userId: string;
     userEmail: string;
     genreId: string;
+    hidden?: boolean;
     coverUrl?: string;
     secondaryGenreId?: string;
     tagIds?: string[];
@@ -46,7 +47,7 @@ export class Story {
     ratingCount?: number;
     totalChapters?: number;
     totalViews?: number;
-    totalFavorites?: number;
+    totalFavorite?: number;
     id?: string;
     status?: AllowedStatus;
     createdAt?: Date;
@@ -56,7 +57,7 @@ export class Story {
       new Id(params.id),
       new StoryTitle(params.title),
       new StoryDescription(params.description),
-      true,
+      params.hidden ?? false,
       params.userId,
       params.userEmail,
       params.genreId,
@@ -67,7 +68,7 @@ export class Story {
       new StoryRatingCount(params.ratingCount),
       new StoryTotalChapters(params.totalChapters),
       new StoryTotalViews(params.totalViews ?? 0),
-      new StoryTotalFavorites(params.totalFavorites ?? 0),
+      new StoryTotalFavorites(params.totalFavorite ?? 0),
       params?.secondaryGenreId,
       params?.status,
       params.createdAt,

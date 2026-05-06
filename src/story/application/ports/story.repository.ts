@@ -22,6 +22,7 @@ export interface StoryRepositoryPort {
   ): Promise<StoryWithDetails[]>;
   deleteStoryById(id: string): Promise<void>;
   updateStory(id: string, data: UpdateStoryData): Promise<StoryWithDetails>;
+  toggleHidden(id: string): Promise<Story | undefined>;
 }
 
 export const STORY_REPOSITORY = Symbol('STORY_REPOSITORY');

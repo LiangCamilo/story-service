@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   Story: 'Story',
+  FavoriteStory: 'FavoriteStory',
   Genre: 'Genre',
   Tag: 'Tag',
   Chapter: 'Chapter',
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "story" | "genre" | "tag" | "chapter" | "rating" | "view"
+    modelProps: "story" | "favoriteStory" | "genre" | "tag" | "chapter" | "rating" | "view"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -480,6 +481,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.StoryCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.StoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    FavoriteStory: {
+      payload: Prisma.$FavoriteStoryPayload<ExtArgs>
+      fields: Prisma.FavoriteStoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FavoriteStoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteStoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FavoriteStoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteStoryPayload>
+        }
+        findFirst: {
+          args: Prisma.FavoriteStoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteStoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FavoriteStoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteStoryPayload>
+        }
+        findMany: {
+          args: Prisma.FavoriteStoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteStoryPayload>[]
+        }
+        create: {
+          args: Prisma.FavoriteStoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteStoryPayload>
+        }
+        createMany: {
+          args: Prisma.FavoriteStoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FavoriteStoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteStoryPayload>[]
+        }
+        delete: {
+          args: Prisma.FavoriteStoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteStoryPayload>
+        }
+        update: {
+          args: Prisma.FavoriteStoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteStoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.FavoriteStoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FavoriteStoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FavoriteStoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteStoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.FavoriteStoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteStoryPayload>
+        }
+        aggregate: {
+          args: Prisma.FavoriteStoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFavoriteStory>
+        }
+        groupBy: {
+          args: Prisma.FavoriteStoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FavoriteStoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FavoriteStoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FavoriteStoryCountAggregateOutputType> | number
         }
       }
     }
@@ -906,6 +981,7 @@ export const StoryScalarFieldEnum = {
   totalViews: 'totalViews',
   userEmail: 'userEmail',
   userId: 'userId',
+  totalFavorite: 'totalFavorite',
   genreId: 'genreId',
   secondaryGenreId: 'secondaryGenreId',
   createdAt: 'createdAt',
@@ -913,6 +989,17 @@ export const StoryScalarFieldEnum = {
 } as const
 
 export type StoryScalarFieldEnum = (typeof StoryScalarFieldEnum)[keyof typeof StoryScalarFieldEnum]
+
+
+export const FavoriteStoryScalarFieldEnum = {
+  id: 'id',
+  storyId: 'storyId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FavoriteStoryScalarFieldEnum = (typeof FavoriteStoryScalarFieldEnum)[keyof typeof FavoriteStoryScalarFieldEnum]
 
 
 export const GenreScalarFieldEnum = {
@@ -1202,6 +1289,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   story?: Prisma.StoryOmit
+  favoriteStory?: Prisma.FavoriteStoryOmit
   genre?: Prisma.GenreOmit
   tag?: Prisma.TagOmit
   chapter?: Prisma.ChapterOmit

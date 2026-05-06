@@ -23,6 +23,11 @@ export * from './enums.js';
  */
 export type Story = Prisma.StoryModel
 /**
+ * Model FavoriteStory
+ * 
+ */
+export type FavoriteStory = Prisma.FavoriteStoryModel
+/**
  * Model Genre
  * 
  */

@@ -17,6 +17,7 @@ import { FindStoryByIdUseCase } from './application/use-cases/story-use-cases/fi
 import { FindStoryByTitleUseCase } from './application/use-cases/story-use-cases/find-story-by-title.use-case';
 import { FindAndFilterMultipleStoryUseCase } from './application/use-cases/story-use-cases/find-and-filter-multiple-story.use-case';
 import { DeleteStoryByIdUseCase } from './application/use-cases/story-use-cases/delete-story-by-id.use-case';
+import { ToggleHiddenStoryUseCase } from './application/use-cases/story-use-cases/toggle-hidden-story.use-case';
 import { ChapterController } from './presentation/controllers/chapter.controller';
 import { CHAPTER_REPOSITORY } from './application/ports/chapter.repository';
 import { PrismaChapterRepository } from './infrastructure/adapters/prisma-chapter.repository';
@@ -55,6 +56,7 @@ import { PrismaFavoriteStoryRepository } from './infrastructure/adapters/prisma-
     FindAndFilterMultipleStoryUseCase,
     DeleteStoryByIdUseCase,
     UpdateStoryUseCase,
+    ToggleHiddenStoryUseCase,
     CreateChapterUseCase,
     FindAllChaptersByStoryIdUseCase,
     DeleteChapterByIdUseCase,

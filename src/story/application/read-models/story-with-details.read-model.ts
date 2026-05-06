@@ -10,8 +10,11 @@ export interface StoryWithDetails {
   secondaryGenre?: { id: string; name: string };
   tags: { id: string; name: string }[];
   totalRating: number;
+  ratingSum: number;
+  ratingCount: number;
   totalChapters: number;
   totalViews: number;
+  totalFavorites: number;
   status: string;
   createdAt: Date;
   updatedAt: Date;

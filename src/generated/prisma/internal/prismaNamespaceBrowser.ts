@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Story: 'Story',
+  FavoriteStory: 'FavoriteStory',
   Genre: 'Genre',
   Tag: 'Tag',
   Chapter: 'Chapter',
@@ -89,6 +90,7 @@ export const StoryScalarFieldEnum = {
   totalViews: 'totalViews',
   userEmail: 'userEmail',
   userId: 'userId',
+  totalFavorite: 'totalFavorite',
   genreId: 'genreId',
   secondaryGenreId: 'secondaryGenreId',
   createdAt: 'createdAt',
@@ -96,6 +98,17 @@ export const StoryScalarFieldEnum = {
 } as const
 
 export type StoryScalarFieldEnum = (typeof StoryScalarFieldEnum)[keyof typeof StoryScalarFieldEnum]
+
+
+export const FavoriteStoryScalarFieldEnum = {
+  id: 'id',
+  storyId: 'storyId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FavoriteStoryScalarFieldEnum = (typeof FavoriteStoryScalarFieldEnum)[keyof typeof FavoriteStoryScalarFieldEnum]
 
 
 export const GenreScalarFieldEnum = {
