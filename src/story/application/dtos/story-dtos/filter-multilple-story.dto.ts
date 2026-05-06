@@ -46,4 +46,8 @@ export class FilterMultipleStoryDto {
   @IsOptional()
   @IsString()
   status?: AllowedStatus;
+
+  @IsString()
+  @IsOptional()
+  userId?: string;
 }

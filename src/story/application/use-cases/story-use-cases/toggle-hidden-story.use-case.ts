@@ -9,7 +9,7 @@ import { StoryNotFoundError } from '../../errors/story-errors/story-not-found.er
 export class ToggleHiddenStoryUseCase {
   constructor(
     @Inject(STORY_REPOSITORY) private storyRepository: StoryRepositoryPort,
-  ) { }
+  ) {}
 
   async execute(id: string) {
     const toggledPublication = await this.storyRepository.toggleHidden(id);

@@ -114,6 +114,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       totalChapters,
       totalRating,
       totalViews,
+      userId,
     } = filterMultiple;
 
     const orderBy: Array<any> = [];
@@ -141,6 +142,9 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       take: findMultiple.limit,
       where: {
         hidden: true,
+        ...(userId && {
+          userId,
+        }),
         ...(title && {
           title: {
             contains: title,
