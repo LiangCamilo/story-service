@@ -202,7 +202,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
     };
     content: string;
     createdAt: Date;
-    updatedAt: Date;
+    updatedAt: Date | null;
   }): ChapterWithDetails {
     return {
       id: chapter.id,
