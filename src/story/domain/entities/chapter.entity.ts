@@ -9,6 +9,7 @@ export class Chapter {
     private order: ChapterOrder,
     private storyId: string,
     private content: string,
+    private hidden?: boolean,
     private createdAt?: Date,
     private updatedAt?: Date | null,
   ) {}
@@ -19,6 +20,7 @@ export class Chapter {
     storyId: string;
     content: string;
     id?: string;
+    hidden?: boolean;
     createdAt?: Date;
     updatedAt?: Date | null;
   }) {
@@ -28,6 +30,7 @@ export class Chapter {
       new ChapterOrder(params.order),
       params.storyId,
       params.content,
+      params.hidden ?? true,
       params.createdAt,
       params.updatedAt,
     );

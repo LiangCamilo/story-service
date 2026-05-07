@@ -84,7 +84,8 @@ model Chapter {
   title String
   order Int
   content String @db.Text
-  
+  hidden Boolean @default(true)
+
   storyId String @db.Uuid
   @@unique([storyId, order])
 

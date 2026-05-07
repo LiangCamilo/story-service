@@ -14,6 +14,7 @@ export interface ChapterRepositoryPort {
     id: string,
     updateChapterDto: UpdateChapterDto,
   ): Promise<Chapter>;
+  toggleHidden(id: string): Promise<Chapter | undefined>;
 }
 
 export const CHAPTER_REPOSITORY = Symbol('CHAPTER_REPOSITORY');

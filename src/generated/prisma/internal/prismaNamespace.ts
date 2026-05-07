@@ -1026,6 +1026,7 @@ export const ChapterScalarFieldEnum = {
   title: 'title',
   order: 'order',
   content: 'content',
+  hidden: 'hidden',
   storyId: 'storyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

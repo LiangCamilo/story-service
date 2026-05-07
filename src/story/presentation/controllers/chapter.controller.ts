@@ -17,6 +17,7 @@ import { DeleteChapterByIdUseCase } from '../../application/use-cases/chapter-us
 import { ChapterExceptionFilter } from '../filters/chapter-exception.filter';
 import { UpdateChapterUseCase } from '../../application/use-cases/chapter-use-cases/update-chapter.use-case';
 import { UpdateChapterDto } from '../../application/dtos/chapter-dtos/update-chapter.dto';
+import { ToggleHiddenChapterUseCase } from 'src/story/application/use-cases/chapter-use-cases/toggle-hidden-chapter.use-case';
 
 @UseFilters(StoryExceptionFilter, ChapterExceptionFilter)
 @Controller('api/chapter')
@@ -26,6 +27,7 @@ export class ChapterController {
     private findAllChaptersByStoryIdUseCase: FindAllChaptersByStoryIdUseCase,
     private deleteChapterByIdUseCase: DeleteChapterByIdUseCase,
     private updateChapterUseCase: UpdateChapterUseCase,
+    private toggleHiddenChapterUseCase: ToggleHiddenChapterUseCase,
   ) {}
 
   @Get(':storyId')
@@ -42,6 +44,12 @@ export class ChapterController {
     const newChapter =
       await this.createChapterUseCase.execute(createChapterDto);
     return newChapter;
+  }
+
+  @Patch('toggle-hidden/:id')
+  async toggleHiddenStory(@Param('id') id: string) {
+    const updatedChapter = await this.toggleHiddenChapterUseCase.execute(id);
+    return this.mapChapterToResponse(updatedChapter);
   }
 
   @Delete(':storyId/chapter/:chapterId')

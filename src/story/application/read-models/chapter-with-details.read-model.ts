@@ -6,6 +6,7 @@ export interface ChapterWithDetails {
     id: string;
     title: string;
   };
+  hidden: boolean;
   content: string;
   createdAt: Date;
   updatedAt: Date | null;

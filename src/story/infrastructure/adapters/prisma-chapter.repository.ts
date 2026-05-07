@@ -66,6 +66,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
         title: rawChapter.story.title,
       },
       title: rawChapter.title,
+      hidden: rawChapter.hidden,
       content: rawChapter.content,
       order: rawChapter.order,
       createdAt: rawChapter.createdAt,
@@ -98,6 +99,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       order: chapter.order,
       story,
       content: chapter.content,
+      hidden: chapter.hidden,
       createdAt: chapter.createdAt,
       updatedAt: chapter.updatedAt,
     });
@@ -192,6 +194,35 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
     });
   }
 
+  async toggleHidden(id: string) {
+    const existingChapter = await this.prisma.chapter.findUnique({
+      where: { id },
+    });
+
+    if (!existingChapter) {
+      return undefined;
+    }
+
+    const updatedStory = await this.prisma.chapter.update({
+      where: { id },
+      data: {
+        hidden: !existingChapter.hidden,
+        updatedAt: new Date(),
+      },
+    });
+
+    return Chapter.create({
+      id: updatedStory.id,
+      content: updatedStory.content,
+      hidden: updatedStory.hidden,
+      order: updatedStory.order,
+      storyId: updatedStory.storyId,
+      title: updatedStory.title,
+      createdAt: updatedStory.createdAt,
+      updatedAt: updatedStory.updatedAt,
+    });
+  }
+
   private mapToStoryWithDetails(chapter: {
     id: string;
     title: string;
@@ -200,6 +231,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       id: string;
       title: string;
     };
+    hidden: boolean;
     content: string;
     createdAt: Date;
     updatedAt: Date | null;
@@ -209,6 +241,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       title: chapter.title,
       order: chapter.order,
       story: chapter.story,
+      hidden: chapter.hidden ?? true,
       content: chapter.content,
       createdAt: chapter.createdAt,
       updatedAt: chapter.updatedAt,
