@@ -9,6 +9,7 @@ import {
 } from 'src/story/application/ports/story.repository';
 import { Story } from 'src/story/domain/entities/story.entity';
 import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
+import { FilterMyStoriesDto } from 'src/story/application/dtos/story-dtos/filter-my-stories.dto';
 
 @Injectable()
 export class PrismaStoryRepository implements StoryRepositoryPort {
@@ -23,7 +24,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         title: data.title,
         description: data.description,
         coverUrl: data.coverUrl ?? '',
-        hidden: data.hidden,
+        hidden: true,
         userId: data.userId,
         genre: {
           connect: {
@@ -55,6 +56,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       description: newStory.description,
       userId: newStory.userId,
       genreId: newStory.genreId,
+      hidden: newStory.hidden,
       coverUrl: newStory.coverUrl,
       secondaryGenreId: newStory.secondaryGenreId ?? undefined,
       tagIds: data.tagIds,
@@ -142,6 +144,87 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         hidden: true,
         ...(userId && {
           userId,
+        }),
+        ...(title && {
+          title: {
+            contains: title,
+            mode: 'insensitive',
+          },
+        }),
+        ...(status && {
+          status,
+        }),
+        ...(genreName && {
+          genre: {
+            name: {
+              contains: genreName,
+              mode: 'insensitive',
+            },
+          },
+        }),
+        ...(secondaryGenreName && {
+          secondaryGenre: {
+            name: {
+              contains: secondaryGenreName,
+              mode: 'insensitive',
+            },
+          },
+        }),
+      },
+      include: {
+        genre: true,
+        secondaryGenre: true,
+        tags: true,
+      },
+      orderBy,
+    });
+
+    return rawStories.map((story) => this.mapToStoryWithDetails(story));
+  }
+
+  async findAndFilterMyStories(
+    findMultiple: FindMultipleStoryDto,
+    filterMultiple: FilterMyStoriesDto,
+  ): Promise<StoryWithDetails[]> {
+    const {
+      genreName,
+      secondaryGenreName,
+      status,
+      title,
+      totalChapters,
+      totalRating,
+      totalViews,
+      userId,
+      hidden,
+    } = filterMultiple;
+
+    const orderBy: Array<any> = [];
+
+    if (totalViews !== undefined) {
+      orderBy.push({
+        totalViews: totalViews ? 'desc' : 'asc',
+      });
+    }
+
+    if (totalRating !== undefined) {
+      orderBy.push({
+        totalRating: totalRating ? 'desc' : 'asc',
+      });
+    }
+
+    if (totalChapters !== undefined) {
+      orderBy.push({
+        totalChapters: totalChapters ? 'desc' : 'asc',
+      });
+    }
+
+    const rawStories = await this.prisma.story.findMany({
+      skip: findMultiple.offset,
+      take: findMultiple.limit,
+      where: {
+        userId,
+        ...(hidden && {
+          hidden,
         }),
         ...(title && {
           title: {
