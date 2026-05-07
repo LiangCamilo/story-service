@@ -26,4 +26,9 @@ export class FavoriteStoryController {
   async getFavorites(@Param('userId') id: string) {
     return await this.findAllFavoriteStoriesByUserIdUseCase.execute(id);
   }
+
+  @Post('filter')
+  async filterFavorites() {
+    return;
+  }
 }

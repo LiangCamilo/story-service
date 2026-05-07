@@ -5,6 +5,7 @@ import { FavoriteStoryRepositoryPort } from 'src/story/application/ports/favorit
 import { FavoriteStory } from 'src/story/domain/entities/favorite-story.entity';
 import { FavoriteStoryWithDetails } from 'src/story/application/read-models/favorite-story-with-details.read-model';
 import { StoryWithDetails } from 'src/story/application/read-models/story-with-details.read-model';
+import { FilterFavoriteStoriesDto } from 'src/story/application/dtos/favorite-story-dtos/filter-favorite-stories.dto';
 
 @Injectable()
 export class PrismaStoryFavoriteRepository {}
@@ -67,6 +68,38 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
     return favoriteStories.map((favoriteStory) =>
       this.mapToFavoriteStoryWithDetails(favoriteStory),
     );
+  }
+
+  async filterFavoriteStories(
+    filterFavoriteStoriesDto: FilterFavoriteStoriesDto,
+  ): Promise<StoryWithDetails[]> {
+    const {
+      userId,
+      genreName,
+      secondaryGenreName,
+      status,
+      title,
+      totalChapters,
+      totalRating,
+      totalViews,
+    } = filterFavoriteStoriesDto;
+
+    const favoriteStories: Array<StoryWithDetails> = [];
+
+    const rawFavoriteStories = await this.prisma.favoriteStory.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        story: true,
+      },
+    });
+
+    rawFavoriteStories.map((favoriteStory) => {
+      favoriteStories.push(this.mapToStoryWithDetails(favoriteStory.story));
+    });
+
+    return favoriteStories;
   }
 
   private mapToFavoriteStoryWithDetails(favoriteStory: {
