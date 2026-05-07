@@ -16,9 +16,8 @@ export class Story {
     private description: StoryDescription,
     private hidden: boolean = true,
     private userId: string,
-    private userEmail: string,
     private genreId: string,
-    private coverUrl: string = '',
+    private coverUrl: string | null,
     private tagIds: string[] = [],
     private totalRating?: StoryTotalRating,
     private ratingSum?: StoryRatingSum,
@@ -29,17 +28,16 @@ export class Story {
     private secondaryGenreId?: string,
     private status?: AllowedStatus,
     private createdAt?: Date,
-    private updatedAt?: Date,
+    private updatedAt?: Date | null,
   ) {}
 
   static create(params: {
     title: string;
     description: string;
     userId: string;
-    userEmail: string;
     genreId: string;
     hidden?: boolean;
-    coverUrl?: string;
+    coverUrl?: string | null;
     secondaryGenreId?: string;
     tagIds?: string[];
     totalRating?: number;
@@ -51,7 +49,7 @@ export class Story {
     id?: string;
     status?: AllowedStatus;
     createdAt?: Date;
-    updatedAt?: Date;
+    updatedAt?: Date | null;
   }): Story {
     return new Story(
       new Id(params.id),
@@ -59,9 +57,8 @@ export class Story {
       new StoryDescription(params.description),
       params.hidden ?? false,
       params.userId,
-      params.userEmail,
       params.genreId,
-      params.coverUrl ?? '',
+      (params.coverUrl = ''),
       params.tagIds ? params.tagIds : [],
       new StoryTotalRating(params.totalRating),
       new StoryRatingSum(params.ratingSum),
@@ -96,11 +93,7 @@ export class Story {
     return this.userId;
   }
 
-  get getUserEmail(): string {
-    return this.userEmail;
-  }
-
-  get getCoverUrl(): string {
+  get getCoverUrl(): string | null {
     return this.coverUrl;
   }
 
@@ -120,7 +113,7 @@ export class Story {
     return this.createdAt;
   }
 
-  get getUpdatedAt(): Date | undefined {
+  get getUpdatedAt(): Date | undefined | null {
     return this.updatedAt;
   }
 
@@ -151,7 +144,6 @@ export class Story {
       description: this.description.getValue,
       hidden: this.hidden,
       userId: this.userId,
-      userEmail: this.userEmail,
       coverUrl: this.coverUrl,
       genreId: this.genreId,
       secondaryGenreId: this.secondaryGenreId ?? null,

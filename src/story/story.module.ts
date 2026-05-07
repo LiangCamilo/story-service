@@ -39,6 +39,9 @@ import { PrismaFavoriteStoryRepository } from './infrastructure/adapters/prisma-
 import { AddFavoriteStoryUseCase } from './application/use-cases/favorite-story-use-cases/add-favorite-story.use-case';
 import { FavoriteStoryController } from './presentation/controllers/favorite-story.controller';
 import { FindAllFavoriteStoriesByUserIdUseCase } from './application/use-cases/favorite-story-use-cases/find-all-favorite-stories-by-user-id.use-case';
+import { ToggleHiddenChapterUseCase } from './application/use-cases/chapter-use-cases/toggle-hidden-chapter.use-case';
+import { FindChaptersByOwnedStoryIdUseCase } from './application/use-cases/chapter-use-cases/find-chapters-by-owned-story-id.use-case';
+import { FindAndFilterMyStoriesUseCase } from './application/use-cases/story-use-cases/find-and-filter-my-stories.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -58,13 +61,16 @@ import { FindAllFavoriteStoriesByUserIdUseCase } from './application/use-cases/f
     FindStoryByTitleUseCase,
     FindStoryByIdUseCase,
     FindAndFilterMultipleStoryUseCase,
+    FindAndFilterMyStoriesUseCase,
     DeleteStoryByIdUseCase,
     UpdateStoryUseCase,
     ToggleHiddenStoryUseCase,
     CreateChapterUseCase,
     FindAllChaptersByStoryIdUseCase,
+    FindChaptersByOwnedStoryIdUseCase,
     DeleteChapterByIdUseCase,
     UpdateChapterUseCase,
+    ToggleHiddenChapterUseCase,
     CreateViewUseCase,
     CreateOrUpdateRatingUseCase,
     AddFavoriteStoryUseCase,

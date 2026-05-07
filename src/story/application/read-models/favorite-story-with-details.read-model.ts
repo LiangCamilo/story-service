@@ -5,6 +5,6 @@ export interface FavoriteStoryWithDetails {
   storyId: string;
   userId: string;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt: Date | null;
   story: StoryWithDetails;
 }

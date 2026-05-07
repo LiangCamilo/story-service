@@ -2,6 +2,7 @@ import { Story } from 'src/story/domain/entities/story.entity';
 import { FindMultipleStoryDto } from '../dtos/story-dtos/find-multiple-story.dto';
 import { FilterMultipleStoryDto } from '../dtos/story-dtos/filter-multilple-story.dto';
 import { StoryWithDetails } from '../read-models/story-with-details.read-model';
+import { FilterMyStoriesDto } from '../dtos/story-dtos/filter-my-stories.dto';
 
 export interface UpdateStoryData {
   title?: string;
@@ -19,6 +20,10 @@ export interface StoryRepositoryPort {
   findAndFilterMultiple(
     findMultiple: FindMultipleStoryDto,
     filterMultiple: FilterMultipleStoryDto | undefined,
+  ): Promise<StoryWithDetails[]>;
+  findAndFilterMyStories(
+    findMultiple: FindMultipleStoryDto,
+    filterMultiple: FilterMyStoriesDto,
   ): Promise<StoryWithDetails[]>;
   deleteStoryById(id: string): Promise<void>;
   updateStory(id: string, data: UpdateStoryData): Promise<StoryWithDetails>;

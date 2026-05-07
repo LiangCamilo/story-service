@@ -93,7 +93,6 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
       title: story.title,
       description: story.description,
       coverUrl: story.coverUrl,
-      userEmail: story.userEmail,
       hidden: story.hidden,
       userId: story.userId,
       genre: { id: story.genre.id, name: story.genre.name },

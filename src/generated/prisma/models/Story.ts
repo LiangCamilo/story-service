@@ -56,7 +56,6 @@ export type StoryMinAggregateOutputType = {
   hidden: boolean | null
   status: $Enums.StoryStatus | null
   totalViews: number | null
-  userEmail: string | null
   userId: string | null
   totalFavorite: number | null
   genreId: string | null
@@ -77,7 +76,6 @@ export type StoryMaxAggregateOutputType = {
   hidden: boolean | null
   status: $Enums.StoryStatus | null
   totalViews: number | null
-  userEmail: string | null
   userId: string | null
   totalFavorite: number | null
   genreId: string | null
@@ -98,7 +96,6 @@ export type StoryCountAggregateOutputType = {
   hidden: number
   status: number
   totalViews: number
-  userEmail: number
   userId: number
   totalFavorite: number
   genreId: number
@@ -139,7 +136,6 @@ export type StoryMinAggregateInputType = {
   hidden?: true
   status?: true
   totalViews?: true
-  userEmail?: true
   userId?: true
   totalFavorite?: true
   genreId?: true
@@ -160,7 +156,6 @@ export type StoryMaxAggregateInputType = {
   hidden?: true
   status?: true
   totalViews?: true
-  userEmail?: true
   userId?: true
   totalFavorite?: true
   genreId?: true
@@ -181,7 +176,6 @@ export type StoryCountAggregateInputType = {
   hidden?: true
   status?: true
   totalViews?: true
-  userEmail?: true
   userId?: true
   totalFavorite?: true
   genreId?: true
@@ -289,13 +283,12 @@ export type StoryGroupByOutputType = {
   hidden: boolean
   status: $Enums.StoryStatus
   totalViews: number
-  userEmail: string
   userId: string
   totalFavorite: number
   genreId: string
   secondaryGenreId: string | null
   createdAt: Date
-  updatedAt: Date
+  updatedAt: Date | null
   _count: StoryCountAggregateOutputType | null
   _avg: StoryAvgAggregateOutputType | null
   _sum: StorySumAggregateOutputType | null
@@ -333,13 +326,12 @@ export type StoryWhereInput = {
   hidden?: Prisma.BoolFilter<"Story"> | boolean
   status?: Prisma.EnumStoryStatusFilter<"Story"> | $Enums.StoryStatus
   totalViews?: Prisma.IntFilter<"Story"> | number
-  userEmail?: Prisma.StringFilter<"Story"> | string
   userId?: Prisma.UuidFilter<"Story"> | string
   totalFavorite?: Prisma.IntFilter<"Story"> | number
   genreId?: Prisma.UuidFilter<"Story"> | string
   secondaryGenreId?: Prisma.UuidNullableFilter<"Story"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Story"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Story"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Story"> | Date | string | null
   chapters?: Prisma.ChapterListRelationFilter
   genre?: Prisma.XOR<Prisma.GenreScalarRelationFilter, Prisma.GenreWhereInput>
   secondaryGenre?: Prisma.XOR<Prisma.GenreNullableScalarRelationFilter, Prisma.GenreWhereInput> | null
@@ -361,13 +353,12 @@ export type StoryOrderByWithRelationInput = {
   hidden?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalViews?: Prisma.SortOrder
-  userEmail?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   totalFavorite?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
   secondaryGenreId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   chapters?: Prisma.ChapterOrderByRelationAggregateInput
   genre?: Prisma.GenreOrderByWithRelationInput
   secondaryGenre?: Prisma.GenreOrderByWithRelationInput
@@ -392,13 +383,12 @@ export type StoryWhereUniqueInput = Prisma.AtLeast<{
   hidden?: Prisma.BoolFilter<"Story"> | boolean
   status?: Prisma.EnumStoryStatusFilter<"Story"> | $Enums.StoryStatus
   totalViews?: Prisma.IntFilter<"Story"> | number
-  userEmail?: Prisma.StringFilter<"Story"> | string
   userId?: Prisma.UuidFilter<"Story"> | string
   totalFavorite?: Prisma.IntFilter<"Story"> | number
   genreId?: Prisma.UuidFilter<"Story"> | string
   secondaryGenreId?: Prisma.UuidNullableFilter<"Story"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Story"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Story"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Story"> | Date | string | null
   chapters?: Prisma.ChapterListRelationFilter
   genre?: Prisma.XOR<Prisma.GenreScalarRelationFilter, Prisma.GenreWhereInput>
   secondaryGenre?: Prisma.XOR<Prisma.GenreNullableScalarRelationFilter, Prisma.GenreWhereInput> | null
@@ -420,13 +410,12 @@ export type StoryOrderByWithAggregationInput = {
   hidden?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalViews?: Prisma.SortOrder
-  userEmail?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   totalFavorite?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
   secondaryGenreId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.StoryCountOrderByAggregateInput
   _avg?: Prisma.StoryAvgOrderByAggregateInput
   _max?: Prisma.StoryMaxOrderByAggregateInput
@@ -449,13 +438,12 @@ export type StoryScalarWhereWithAggregatesInput = {
   hidden?: Prisma.BoolWithAggregatesFilter<"Story"> | boolean
   status?: Prisma.EnumStoryStatusWithAggregatesFilter<"Story"> | $Enums.StoryStatus
   totalViews?: Prisma.IntWithAggregatesFilter<"Story"> | number
-  userEmail?: Prisma.StringWithAggregatesFilter<"Story"> | string
   userId?: Prisma.UuidWithAggregatesFilter<"Story"> | string
   totalFavorite?: Prisma.IntWithAggregatesFilter<"Story"> | number
   genreId?: Prisma.UuidWithAggregatesFilter<"Story"> | string
   secondaryGenreId?: Prisma.UuidNullableWithAggregatesFilter<"Story"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Story"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Story"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Story"> | Date | string | null
 }
 
 export type StoryCreateInput = {
@@ -470,11 +458,10 @@ export type StoryCreateInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterCreateNestedManyWithoutStoryInput
   genre: Prisma.GenreCreateNestedOneWithoutStoriesAsMainInput
   secondaryGenre?: Prisma.GenreCreateNestedOneWithoutStoriesAsSubInput
@@ -496,13 +483,12 @@ export type StoryUncheckedCreateInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   genreId: string
   secondaryGenreId?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterUncheckedCreateNestedManyWithoutStoryInput
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutStoriesInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutStoryInput
@@ -522,11 +508,10 @@ export type StoryUpdateInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUpdateManyWithoutStoryNestedInput
   genre?: Prisma.GenreUpdateOneRequiredWithoutStoriesAsMainNestedInput
   secondaryGenre?: Prisma.GenreUpdateOneWithoutStoriesAsSubNestedInput
@@ -548,13 +533,12 @@ export type StoryUncheckedUpdateInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryGenreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUncheckedUpdateManyWithoutStoryNestedInput
   tags?: Prisma.TagUncheckedUpdateManyWithoutStoriesNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutStoryNestedInput
@@ -574,13 +558,12 @@ export type StoryCreateManyInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   genreId: string
   secondaryGenreId?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type StoryUpdateManyMutationInput = {
@@ -595,11 +578,10 @@ export type StoryUpdateManyMutationInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type StoryUncheckedUpdateManyInput = {
@@ -614,13 +596,12 @@ export type StoryUncheckedUpdateManyInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryGenreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type StoryCountOrderByAggregateInput = {
@@ -635,7 +616,6 @@ export type StoryCountOrderByAggregateInput = {
   hidden?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalViews?: Prisma.SortOrder
-  userEmail?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   totalFavorite?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
@@ -665,7 +645,6 @@ export type StoryMaxOrderByAggregateInput = {
   hidden?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalViews?: Prisma.SortOrder
-  userEmail?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   totalFavorite?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
@@ -686,7 +665,6 @@ export type StoryMinOrderByAggregateInput = {
   hidden?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalViews?: Prisma.SortOrder
-  userEmail?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   totalFavorite?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
@@ -749,6 +727,10 @@ export type EnumStoryStatusFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
@@ -945,11 +927,10 @@ export type StoryCreateWithoutFavoriteStoriesInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterCreateNestedManyWithoutStoryInput
   genre: Prisma.GenreCreateNestedOneWithoutStoriesAsMainInput
   secondaryGenre?: Prisma.GenreCreateNestedOneWithoutStoriesAsSubInput
@@ -970,13 +951,12 @@ export type StoryUncheckedCreateWithoutFavoriteStoriesInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   genreId: string
   secondaryGenreId?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterUncheckedCreateNestedManyWithoutStoryInput
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutStoriesInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutStoryInput
@@ -1011,11 +991,10 @@ export type StoryUpdateWithoutFavoriteStoriesInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUpdateManyWithoutStoryNestedInput
   genre?: Prisma.GenreUpdateOneRequiredWithoutStoriesAsMainNestedInput
   secondaryGenre?: Prisma.GenreUpdateOneWithoutStoriesAsSubNestedInput
@@ -1036,13 +1015,12 @@ export type StoryUncheckedUpdateWithoutFavoriteStoriesInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryGenreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUncheckedUpdateManyWithoutStoryNestedInput
   tags?: Prisma.TagUncheckedUpdateManyWithoutStoriesNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutStoryNestedInput
@@ -1061,11 +1039,10 @@ export type StoryCreateWithoutGenreInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterCreateNestedManyWithoutStoryInput
   secondaryGenre?: Prisma.GenreCreateNestedOneWithoutStoriesAsSubInput
   tags?: Prisma.TagCreateNestedManyWithoutStoriesInput
@@ -1086,12 +1063,11 @@ export type StoryUncheckedCreateWithoutGenreInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   secondaryGenreId?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterUncheckedCreateNestedManyWithoutStoryInput
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutStoriesInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutStoryInput
@@ -1121,11 +1097,10 @@ export type StoryCreateWithoutSecondaryGenreInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterCreateNestedManyWithoutStoryInput
   genre: Prisma.GenreCreateNestedOneWithoutStoriesAsMainInput
   tags?: Prisma.TagCreateNestedManyWithoutStoriesInput
@@ -1146,12 +1121,11 @@ export type StoryUncheckedCreateWithoutSecondaryGenreInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   genreId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterUncheckedCreateNestedManyWithoutStoryInput
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutStoriesInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutStoryInput
@@ -1200,13 +1174,12 @@ export type StoryScalarWhereInput = {
   hidden?: Prisma.BoolFilter<"Story"> | boolean
   status?: Prisma.EnumStoryStatusFilter<"Story"> | $Enums.StoryStatus
   totalViews?: Prisma.IntFilter<"Story"> | number
-  userEmail?: Prisma.StringFilter<"Story"> | string
   userId?: Prisma.UuidFilter<"Story"> | string
   totalFavorite?: Prisma.IntFilter<"Story"> | number
   genreId?: Prisma.UuidFilter<"Story"> | string
   secondaryGenreId?: Prisma.UuidNullableFilter<"Story"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Story"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Story"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Story"> | Date | string | null
 }
 
 export type StoryUpsertWithWhereUniqueWithoutSecondaryGenreInput = {
@@ -1237,11 +1210,10 @@ export type StoryCreateWithoutTagsInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterCreateNestedManyWithoutStoryInput
   genre: Prisma.GenreCreateNestedOneWithoutStoriesAsMainInput
   secondaryGenre?: Prisma.GenreCreateNestedOneWithoutStoriesAsSubInput
@@ -1262,13 +1234,12 @@ export type StoryUncheckedCreateWithoutTagsInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   genreId: string
   secondaryGenreId?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterUncheckedCreateNestedManyWithoutStoryInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutStoryInput
   views?: Prisma.ViewUncheckedCreateNestedManyWithoutStoryInput
@@ -1308,11 +1279,10 @@ export type StoryCreateWithoutChaptersInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   genre: Prisma.GenreCreateNestedOneWithoutStoriesAsMainInput
   secondaryGenre?: Prisma.GenreCreateNestedOneWithoutStoriesAsSubInput
   tags?: Prisma.TagCreateNestedManyWithoutStoriesInput
@@ -1333,13 +1303,12 @@ export type StoryUncheckedCreateWithoutChaptersInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   genreId: string
   secondaryGenreId?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutStoriesInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutStoryInput
   views?: Prisma.ViewUncheckedCreateNestedManyWithoutStoryInput
@@ -1374,11 +1343,10 @@ export type StoryUpdateWithoutChaptersInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   genre?: Prisma.GenreUpdateOneRequiredWithoutStoriesAsMainNestedInput
   secondaryGenre?: Prisma.GenreUpdateOneWithoutStoriesAsSubNestedInput
   tags?: Prisma.TagUpdateManyWithoutStoriesNestedInput
@@ -1399,13 +1367,12 @@ export type StoryUncheckedUpdateWithoutChaptersInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryGenreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tags?: Prisma.TagUncheckedUpdateManyWithoutStoriesNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutStoryNestedInput
   views?: Prisma.ViewUncheckedUpdateManyWithoutStoryNestedInput
@@ -1424,11 +1391,10 @@ export type StoryCreateWithoutRatingsInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterCreateNestedManyWithoutStoryInput
   genre: Prisma.GenreCreateNestedOneWithoutStoriesAsMainInput
   secondaryGenre?: Prisma.GenreCreateNestedOneWithoutStoriesAsSubInput
@@ -1449,13 +1415,12 @@ export type StoryUncheckedCreateWithoutRatingsInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   genreId: string
   secondaryGenreId?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterUncheckedCreateNestedManyWithoutStoryInput
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutStoriesInput
   views?: Prisma.ViewUncheckedCreateNestedManyWithoutStoryInput
@@ -1490,11 +1455,10 @@ export type StoryUpdateWithoutRatingsInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUpdateManyWithoutStoryNestedInput
   genre?: Prisma.GenreUpdateOneRequiredWithoutStoriesAsMainNestedInput
   secondaryGenre?: Prisma.GenreUpdateOneWithoutStoriesAsSubNestedInput
@@ -1515,13 +1479,12 @@ export type StoryUncheckedUpdateWithoutRatingsInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryGenreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUncheckedUpdateManyWithoutStoryNestedInput
   tags?: Prisma.TagUncheckedUpdateManyWithoutStoriesNestedInput
   views?: Prisma.ViewUncheckedUpdateManyWithoutStoryNestedInput
@@ -1540,11 +1503,10 @@ export type StoryCreateWithoutViewsInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterCreateNestedManyWithoutStoryInput
   genre: Prisma.GenreCreateNestedOneWithoutStoriesAsMainInput
   secondaryGenre?: Prisma.GenreCreateNestedOneWithoutStoriesAsSubInput
@@ -1565,13 +1527,12 @@ export type StoryUncheckedCreateWithoutViewsInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   genreId: string
   secondaryGenreId?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   chapters?: Prisma.ChapterUncheckedCreateNestedManyWithoutStoryInput
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutStoriesInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutStoryInput
@@ -1606,11 +1567,10 @@ export type StoryUpdateWithoutViewsInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUpdateManyWithoutStoryNestedInput
   genre?: Prisma.GenreUpdateOneRequiredWithoutStoriesAsMainNestedInput
   secondaryGenre?: Prisma.GenreUpdateOneWithoutStoriesAsSubNestedInput
@@ -1631,13 +1591,12 @@ export type StoryUncheckedUpdateWithoutViewsInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryGenreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUncheckedUpdateManyWithoutStoryNestedInput
   tags?: Prisma.TagUncheckedUpdateManyWithoutStoriesNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutStoryNestedInput
@@ -1656,12 +1615,11 @@ export type StoryCreateManyGenreInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   secondaryGenreId?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type StoryCreateManySecondaryGenreInput = {
@@ -1676,12 +1634,11 @@ export type StoryCreateManySecondaryGenreInput = {
   hidden?: boolean
   status?: $Enums.StoryStatus
   totalViews?: number
-  userEmail: string
   userId: string
   totalFavorite?: number
   genreId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type StoryUpdateWithoutGenreInput = {
@@ -1696,11 +1653,10 @@ export type StoryUpdateWithoutGenreInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUpdateManyWithoutStoryNestedInput
   secondaryGenre?: Prisma.GenreUpdateOneWithoutStoriesAsSubNestedInput
   tags?: Prisma.TagUpdateManyWithoutStoriesNestedInput
@@ -1721,12 +1677,11 @@ export type StoryUncheckedUpdateWithoutGenreInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   secondaryGenreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUncheckedUpdateManyWithoutStoryNestedInput
   tags?: Prisma.TagUncheckedUpdateManyWithoutStoriesNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutStoryNestedInput
@@ -1746,12 +1701,11 @@ export type StoryUncheckedUpdateManyWithoutGenreInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   secondaryGenreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type StoryUpdateWithoutSecondaryGenreInput = {
@@ -1766,11 +1720,10 @@ export type StoryUpdateWithoutSecondaryGenreInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUpdateManyWithoutStoryNestedInput
   genre?: Prisma.GenreUpdateOneRequiredWithoutStoriesAsMainNestedInput
   tags?: Prisma.TagUpdateManyWithoutStoriesNestedInput
@@ -1791,12 +1744,11 @@ export type StoryUncheckedUpdateWithoutSecondaryGenreInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUncheckedUpdateManyWithoutStoryNestedInput
   tags?: Prisma.TagUncheckedUpdateManyWithoutStoriesNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutStoryNestedInput
@@ -1816,12 +1768,11 @@ export type StoryUncheckedUpdateManyWithoutSecondaryGenreInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type StoryUpdateWithoutTagsInput = {
@@ -1836,11 +1787,10 @@ export type StoryUpdateWithoutTagsInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUpdateManyWithoutStoryNestedInput
   genre?: Prisma.GenreUpdateOneRequiredWithoutStoriesAsMainNestedInput
   secondaryGenre?: Prisma.GenreUpdateOneWithoutStoriesAsSubNestedInput
@@ -1861,13 +1811,12 @@ export type StoryUncheckedUpdateWithoutTagsInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryGenreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapters?: Prisma.ChapterUncheckedUpdateManyWithoutStoryNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutStoryNestedInput
   views?: Prisma.ViewUncheckedUpdateManyWithoutStoryNestedInput
@@ -1886,13 +1835,12 @@ export type StoryUncheckedUpdateManyWithoutTagsInput = {
   hidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumStoryStatusFieldUpdateOperationsInput | $Enums.StoryStatus
   totalViews?: Prisma.IntFieldUpdateOperationsInput | number
-  userEmail?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   totalFavorite?: Prisma.IntFieldUpdateOperationsInput | number
   genreId?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryGenreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -1974,7 +1922,6 @@ export type StorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   hidden?: boolean
   status?: boolean
   totalViews?: boolean
-  userEmail?: boolean
   userId?: boolean
   totalFavorite?: boolean
   genreId?: boolean
@@ -2003,7 +1950,6 @@ export type StorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   hidden?: boolean
   status?: boolean
   totalViews?: boolean
-  userEmail?: boolean
   userId?: boolean
   totalFavorite?: boolean
   genreId?: boolean
@@ -2026,7 +1972,6 @@ export type StorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   hidden?: boolean
   status?: boolean
   totalViews?: boolean
-  userEmail?: boolean
   userId?: boolean
   totalFavorite?: boolean
   genreId?: boolean
@@ -2049,7 +1994,6 @@ export type StorySelectScalar = {
   hidden?: boolean
   status?: boolean
   totalViews?: boolean
-  userEmail?: boolean
   userId?: boolean
   totalFavorite?: boolean
   genreId?: boolean
@@ -2058,7 +2002,7 @@ export type StorySelectScalar = {
   updatedAt?: boolean
 }
 
-export type StoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "coverUrl" | "description" | "totalRating" | "ratingSum" | "ratingCount" | "totalChapters" | "hidden" | "status" | "totalViews" | "userEmail" | "userId" | "totalFavorite" | "genreId" | "secondaryGenreId" | "createdAt" | "updatedAt", ExtArgs["result"]["story"]>
+export type StoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "coverUrl" | "description" | "totalRating" | "ratingSum" | "ratingCount" | "totalChapters" | "hidden" | "status" | "totalViews" | "userId" | "totalFavorite" | "genreId" | "secondaryGenreId" | "createdAt" | "updatedAt", ExtArgs["result"]["story"]>
 export type StoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   chapters?: boolean | Prisma.Story$chaptersArgs<ExtArgs>
   genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
@@ -2101,13 +2045,12 @@ export type $StoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     hidden: boolean
     status: $Enums.StoryStatus
     totalViews: number
-    userEmail: string
     userId: string
     totalFavorite: number
     genreId: string
     secondaryGenreId: string | null
     createdAt: Date
-    updatedAt: Date
+    updatedAt: Date | null
   }, ExtArgs["result"]["story"]>
   composites: {}
 }
@@ -2549,7 +2492,6 @@ export interface StoryFieldRefs {
   readonly hidden: Prisma.FieldRef<"Story", 'Boolean'>
   readonly status: Prisma.FieldRef<"Story", 'StoryStatus'>
   readonly totalViews: Prisma.FieldRef<"Story", 'Int'>
-  readonly userEmail: Prisma.FieldRef<"Story", 'String'>
   readonly userId: Prisma.FieldRef<"Story", 'String'>
   readonly totalFavorite: Prisma.FieldRef<"Story", 'Int'>
   readonly genreId: Prisma.FieldRef<"Story", 'String'>

@@ -59,13 +59,14 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       },
     });
 
-    return this.mapToStoryWithDetails({
+    return this.mapToChapterWithDetails({
       id: rawChapter.id,
       story: {
         id: rawChapter.story.id,
         title: rawChapter.story.title,
       },
       title: rawChapter.title,
+      hidden: rawChapter.hidden,
       content: rawChapter.content,
       order: rawChapter.order,
       createdAt: rawChapter.createdAt,
@@ -92,30 +93,69 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       title: chapter.story.title,
     };
 
-    return this.mapToStoryWithDetails({
+    return this.mapToChapterWithDetails({
       id: chapter.id,
       title: chapter.title,
       order: chapter.order,
       story,
       content: chapter.content,
+      hidden: chapter.hidden,
       createdAt: chapter.createdAt,
       updatedAt: chapter.updatedAt,
     });
   }
 
-  async findAllChaptersByStoryId(storyId: string): Promise<Chapter[]> {
+  async findAllChaptersByStoryId(
+    storyId: string,
+  ): Promise<ChapterWithDetails[]> {
+    const chaptersFromStory = await this.prisma.chapter.findMany({
+      where: {
+        storyId,
+        hidden: false,
+      },
+      include: {
+        story: true,
+      },
+    });
+    return chaptersFromStory.map((chapter) => {
+      return this.mapToChapterWithDetails({
+        id: chapter.id,
+        story: {
+          id: chapter.story.id,
+          title: chapter.story.title,
+        },
+        title: chapter.title,
+        hidden: chapter.hidden,
+        content: chapter.content,
+        order: chapter.order,
+        createdAt: chapter.createdAt,
+        updatedAt: chapter.updatedAt,
+      });
+    });
+  }
+
+  async findChaptersByOwnedStoryId(
+    storyId: string,
+  ): Promise<ChapterWithDetails[]> {
     const chaptersFromStory = await this.prisma.chapter.findMany({
       where: {
         storyId,
       },
+      include: {
+        story: true,
+      },
     });
     return chaptersFromStory.map((chapter) => {
-      return Chapter.create({
+      return this.mapToChapterWithDetails({
         id: chapter.id,
+        story: {
+          id: chapter.story.id,
+          title: chapter.story.title,
+        },
         title: chapter.title,
+        hidden: chapter.hidden,
         content: chapter.content,
         order: chapter.order,
-        storyId: chapter.storyId,
         createdAt: chapter.createdAt,
         updatedAt: chapter.updatedAt,
       });
@@ -177,21 +217,51 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
         ...(content && {
           content,
         }),
+        updatedAt: new Date(),
       },
     });
 
     return Chapter.create({
-      id,
-      title: chapter.title,
+      id: chapter.id,
       content: chapter.content,
       order: chapter.order,
       storyId: chapter.storyId,
+      title: chapter.title,
       createdAt: chapter.createdAt,
       updatedAt: chapter.updatedAt,
     });
   }
 
-  private mapToStoryWithDetails(chapter: {
+  async toggleHidden(id: string) {
+    const existingChapter = await this.prisma.chapter.findUnique({
+      where: { id },
+    });
+
+    if (!existingChapter) {
+      return undefined;
+    }
+
+    const updatedStory = await this.prisma.chapter.update({
+      where: { id },
+      data: {
+        hidden: !existingChapter.hidden,
+        updatedAt: new Date(),
+      },
+    });
+
+    return Chapter.create({
+      id: updatedStory.id,
+      content: updatedStory.content,
+      hidden: updatedStory.hidden,
+      order: updatedStory.order,
+      storyId: updatedStory.storyId,
+      title: updatedStory.title,
+      createdAt: updatedStory.createdAt,
+      updatedAt: updatedStory.updatedAt,
+    });
+  }
+
+  private mapToChapterWithDetails(chapter: {
     id: string;
     title: string;
     order: number;
@@ -199,15 +269,17 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       id: string;
       title: string;
     };
+    hidden: boolean;
     content: string;
     createdAt: Date;
-    updatedAt: Date;
+    updatedAt: Date | null;
   }): ChapterWithDetails {
     return {
       id: chapter.id,
       title: chapter.title,
       order: chapter.order,
       story: chapter.story,
+      hidden: chapter.hidden ?? true,
       content: chapter.content,
       createdAt: chapter.createdAt,
       updatedAt: chapter.updatedAt,

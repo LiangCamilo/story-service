@@ -9,6 +9,7 @@ import {
 } from 'src/story/application/ports/story.repository';
 import { Story } from 'src/story/domain/entities/story.entity';
 import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
+import { FilterMyStoriesDto } from 'src/story/application/dtos/story-dtos/filter-my-stories.dto';
 
 @Injectable()
 export class PrismaStoryRepository implements StoryRepositoryPort {
@@ -22,9 +23,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         id: data.id,
         title: data.title,
         description: data.description,
-        coverUrl: data.coverUrl,
-        userEmail: data.userEmail,
-        hidden: data.hidden,
+        coverUrl: data.coverUrl ?? '',
+        hidden: true,
         userId: data.userId,
         genre: {
           connect: {
@@ -55,8 +55,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       title: newStory.title,
       description: newStory.description,
       userId: newStory.userId,
-      userEmail: newStory.userEmail,
       genreId: newStory.genreId,
+      hidden: newStory.hidden,
       coverUrl: newStory.coverUrl,
       secondaryGenreId: newStory.secondaryGenreId ?? undefined,
       tagIds: data.tagIds,
@@ -182,6 +182,87 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     return rawStories.map((story) => this.mapToStoryWithDetails(story));
   }
 
+  async findAndFilterMyStories(
+    findMultiple: FindMultipleStoryDto,
+    filterMultiple: FilterMyStoriesDto,
+  ): Promise<StoryWithDetails[]> {
+    const {
+      genreName,
+      secondaryGenreName,
+      status,
+      title,
+      totalChapters,
+      totalRating,
+      totalViews,
+      userId,
+      hidden,
+    } = filterMultiple;
+
+    const orderBy: Array<any> = [];
+
+    if (totalViews !== undefined) {
+      orderBy.push({
+        totalViews: totalViews ? 'desc' : 'asc',
+      });
+    }
+
+    if (totalRating !== undefined) {
+      orderBy.push({
+        totalRating: totalRating ? 'desc' : 'asc',
+      });
+    }
+
+    if (totalChapters !== undefined) {
+      orderBy.push({
+        totalChapters: totalChapters ? 'desc' : 'asc',
+      });
+    }
+
+    const rawStories = await this.prisma.story.findMany({
+      skip: findMultiple.offset,
+      take: findMultiple.limit,
+      where: {
+        userId,
+        ...(hidden && {
+          hidden,
+        }),
+        ...(title && {
+          title: {
+            contains: title,
+            mode: 'insensitive',
+          },
+        }),
+        ...(status && {
+          status,
+        }),
+        ...(genreName && {
+          genre: {
+            name: {
+              contains: genreName,
+              mode: 'insensitive',
+            },
+          },
+        }),
+        ...(secondaryGenreName && {
+          secondaryGenre: {
+            name: {
+              contains: secondaryGenreName,
+              mode: 'insensitive',
+            },
+          },
+        }),
+      },
+      include: {
+        genre: true,
+        secondaryGenre: true,
+        tags: true,
+      },
+      orderBy,
+    });
+
+    return rawStories.map((story) => this.mapToStoryWithDetails(story));
+  }
+
   async deleteStoryById(id: string): Promise<void> {
     await this.prisma.story.delete({
       where: { id },
@@ -209,6 +290,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
             connect: { id: data.secondaryGenreId },
           },
         }),
+        updatedAt: new Date(),
       },
       include: {
         genre: true,
@@ -233,6 +315,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       where: { id },
       data: {
         hidden: !existingStory.hidden,
+        updatedAt: new Date(),
       },
     });
 
@@ -240,7 +323,6 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       id: updatedStory.id,
       title: updatedStory.title,
       userId: updatedStory.userId,
-      userEmail: updatedStory.userEmail,
       description: updatedStory.description,
       genreId: updatedStory.genreId,
       hidden: updatedStory.hidden,
@@ -263,7 +345,6 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     title: string;
     description: string;
     coverUrl: string;
-    userEmail: string;
     hidden: boolean;
     userId: string;
     genre: { id: string; name: string };
@@ -277,14 +358,13 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     totalFavorite: number;
     status: string;
     createdAt: Date;
-    updatedAt: Date;
+    updatedAt: Date | null;
   }): StoryWithDetails {
     return {
       id: story.id,
       title: story.title,
       description: story.description,
-      coverUrl: story.coverUrl,
-      userEmail: story.userEmail,
+      coverUrl: story.coverUrl === '' ? null : story.coverUrl,
       hidden: story.hidden,
       userId: story.userId,
       genre: { id: story.genre.id, name: story.genre.name },

@@ -32,6 +32,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import viewConfig from 'src/config/view.config';
 import { ConfigType } from '@nestjs/config';
+import { FindAndFilterMyStoriesUseCase } from 'src/story/application/use-cases/story-use-cases/find-and-filter-my-stories.use-case';
+import { FilterMyStoriesDto } from 'src/story/application/dtos/story-dtos/filter-my-stories.dto';
 
 @UseFilters(StoryExceptionFilter, GenreExceptionFilter)
 @Controller('api/story')
@@ -44,6 +46,7 @@ export class StoryController {
     private deleteStoryByIdUseCase: DeleteStoryByIdUseCase,
     private updateStoryUseCase: UpdateStoryUseCase,
     private toggleHiddenStoryUseCase: ToggleHiddenStoryUseCase,
+    private findAndFilterMyStoriesUseCase: FindAndFilterMyStoriesUseCase,
     @Inject(viewConfig.KEY)
     private readonly viewEnvs: ConfigType<typeof viewConfig>,
   ) {}
@@ -82,11 +85,9 @@ export class StoryController {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          book: {
-            bookId: story.getId.getValue,
-            title: story.getTitle.getValue,
-            authorEmail: story.getUserEmail,
-          },
+          bookId: story.getId.getValue,
+          title: story.getTitle.getValue,
+          authorId: story.getUserId,
         }),
       });
 
@@ -120,6 +121,28 @@ export class StoryController {
         findMultipleStoryDto,
         filterMultipleStoryDto,
       );
+
+    if (stories.length === 0) {
+      return {
+        message: 'No se han encontrado historias con los filtros especificados',
+      };
+    }
+
+    return {
+      data: stories,
+      meta,
+    };
+  }
+
+  @Post('my-stories')
+  async findAndFilterMyStories(
+    @Query() findMultipleStoryDto: FindMultipleStoryDto,
+    @Body() filterMyStoriesDto: FilterMyStoriesDto,
+  ) {
+    const { stories, meta } = await this.findAndFilterMyStoriesUseCase.execute(
+      findMultipleStoryDto,
+      filterMyStoriesDto,
+    );
 
     if (stories.length === 0) {
       return {
@@ -193,7 +216,6 @@ export class StoryController {
       description: story.getDescription.getValue,
       hidden: story.getHidden,
       author: story.getUserId,
-      userEmail: story.getUserEmail,
       coverUrl: story.getCoverUrl,
       genreId: story.getGenreId,
       totalRating: story.getTotalRating?.getValue,

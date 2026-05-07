@@ -29,10 +29,6 @@ export class CreateStoryDto {
 
   @IsString()
   @IsNotEmpty()
-  userEmail!: string;
-
-  @IsString()
-  @IsNotEmpty()
   @MaxLength(50)
   secondaryGenreName?: string;
 

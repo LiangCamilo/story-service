@@ -104,7 +104,6 @@ export class CreateStoryUseCase {
       title: dto.title,
       description: dto.description,
       userId: dto.userId,
-      userEmail: dto.userEmail,
       genreId: genre.getId.getValue,
       coverUrl: coverUrl,
       secondaryGenreId: secondaryGenre
