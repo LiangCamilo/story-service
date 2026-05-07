@@ -5,7 +5,8 @@ import { UpdateChapterDto } from '../dtos/chapter-dtos/update-chapter.dto';
 export interface ChapterRepositoryPort {
   create(chapter: Chapter): Promise<ChapterWithDetails | undefined>;
   findChapterById(id: string): Promise<ChapterWithDetails | undefined>;
-  findAllChaptersByStoryId(storyId: string): Promise<Chapter[]>;
+  findAllChaptersByStoryId(storyId: string): Promise<ChapterWithDetails[]>;
+  findChaptersByOwnedStoryId(storyId: string): Promise<ChapterWithDetails[]>;
   deleteChapterById(
     chapterId: string,
     storyId: string,

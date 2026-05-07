@@ -59,7 +59,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       },
     });
 
-    return this.mapToStoryWithDetails({
+    return this.mapToChapterWithDetails({
       id: rawChapter.id,
       story: {
         id: rawChapter.story.id,
@@ -93,7 +93,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       title: chapter.story.title,
     };
 
-    return this.mapToStoryWithDetails({
+    return this.mapToChapterWithDetails({
       id: chapter.id,
       title: chapter.title,
       order: chapter.order,
@@ -105,19 +105,57 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
     });
   }
 
-  async findAllChaptersByStoryId(storyId: string): Promise<Chapter[]> {
+  async findAllChaptersByStoryId(
+    storyId: string,
+  ): Promise<ChapterWithDetails[]> {
+    const chaptersFromStory = await this.prisma.chapter.findMany({
+      where: {
+        storyId,
+        hidden: false,
+      },
+      include: {
+        story: true,
+      },
+    });
+    return chaptersFromStory.map((chapter) => {
+      return this.mapToChapterWithDetails({
+        id: chapter.id,
+        story: {
+          id: chapter.story.id,
+          title: chapter.story.title,
+        },
+        title: chapter.title,
+        hidden: chapter.hidden,
+        content: chapter.content,
+        order: chapter.order,
+        createdAt: chapter.createdAt,
+        updatedAt: chapter.updatedAt,
+      });
+    });
+  }
+
+  async findChaptersByOwnedStoryId(
+    storyId: string,
+  ): Promise<ChapterWithDetails[]> {
     const chaptersFromStory = await this.prisma.chapter.findMany({
       where: {
         storyId,
       },
+      include: {
+        story: true,
+      },
     });
     return chaptersFromStory.map((chapter) => {
-      return Chapter.create({
+      return this.mapToChapterWithDetails({
         id: chapter.id,
+        story: {
+          id: chapter.story.id,
+          title: chapter.story.title,
+        },
         title: chapter.title,
+        hidden: chapter.hidden,
         content: chapter.content,
         order: chapter.order,
-        storyId: chapter.storyId,
         createdAt: chapter.createdAt,
         updatedAt: chapter.updatedAt,
       });
@@ -184,11 +222,11 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
     });
 
     return Chapter.create({
-      id,
-      title: chapter.title,
+      id: chapter.id,
       content: chapter.content,
       order: chapter.order,
       storyId: chapter.storyId,
+      title: chapter.title,
       createdAt: chapter.createdAt,
       updatedAt: chapter.updatedAt,
     });
@@ -223,7 +261,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
     });
   }
 
-  private mapToStoryWithDetails(chapter: {
+  private mapToChapterWithDetails(chapter: {
     id: string;
     title: string;
     order: number;

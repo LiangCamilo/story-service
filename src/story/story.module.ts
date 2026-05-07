@@ -40,6 +40,7 @@ import { AddFavoriteStoryUseCase } from './application/use-cases/favorite-story-
 import { FavoriteStoryController } from './presentation/controllers/favorite-story.controller';
 import { FindAllFavoriteStoriesByUserIdUseCase } from './application/use-cases/favorite-story-use-cases/find-all-favorite-stories-by-user-id.use-case';
 import { ToggleHiddenChapterUseCase } from './application/use-cases/chapter-use-cases/toggle-hidden-chapter.use-case';
+import { FindChaptersByOwnedStoryIdUseCase } from './application/use-cases/chapter-use-cases/find-chapters-by-owned-story-id.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -64,6 +65,7 @@ import { ToggleHiddenChapterUseCase } from './application/use-cases/chapter-use-
     ToggleHiddenStoryUseCase,
     CreateChapterUseCase,
     FindAllChaptersByStoryIdUseCase,
+    FindChaptersByOwnedStoryIdUseCase,
     DeleteChapterByIdUseCase,
     UpdateChapterUseCase,
     ToggleHiddenChapterUseCase,

@@ -18,6 +18,7 @@ import { ChapterExceptionFilter } from '../filters/chapter-exception.filter';
 import { UpdateChapterUseCase } from '../../application/use-cases/chapter-use-cases/update-chapter.use-case';
 import { UpdateChapterDto } from '../../application/dtos/chapter-dtos/update-chapter.dto';
 import { ToggleHiddenChapterUseCase } from 'src/story/application/use-cases/chapter-use-cases/toggle-hidden-chapter.use-case';
+import { FindChaptersByOwnedStoryIdUseCase } from 'src/story/application/use-cases/chapter-use-cases/find-chapters-by-owned-story-id.use-case';
 
 @UseFilters(StoryExceptionFilter, ChapterExceptionFilter)
 @Controller('api/chapter')
@@ -28,6 +29,7 @@ export class ChapterController {
     private deleteChapterByIdUseCase: DeleteChapterByIdUseCase,
     private updateChapterUseCase: UpdateChapterUseCase,
     private toggleHiddenChapterUseCase: ToggleHiddenChapterUseCase,
+    private findChaptersByOwnedStoryId: FindChaptersByOwnedStoryIdUseCase,
   ) {}
 
   @Get(':storyId')
@@ -35,7 +37,15 @@ export class ChapterController {
     const allChapters =
       await this.findAllChaptersByStoryIdUseCase.execute(storyId);
     return allChapters.map((chapter) => {
-      return this.mapChapterToResponse(chapter);
+      return chapter;
+    });
+  }
+
+  @Get('my-chapters/:storyId')
+  async findOwnedChaptersByStoryId(@Param('storyId') storyId: string) {
+    const allChapters = await this.findChaptersByOwnedStoryId.execute(storyId);
+    return allChapters.map((chapter) => {
+      return chapter;
     });
   }
 

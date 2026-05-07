@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { StoryRepositoryPort } from '../../ports/story.repository';
 import {
   CHAPTER_REPOSITORY,
   ChapterRepositoryPort,
