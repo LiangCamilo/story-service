@@ -4,7 +4,7 @@ export interface StoryWithDetails {
   description: string;
   hidden: boolean;
   userId: string;
-  coverUrl: string;
+  coverUrl: string | null;
   genre: { id: string; name: string };
   secondaryGenre?: { id: string; name: string };
   tags: { id: string; name: string }[];

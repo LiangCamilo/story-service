@@ -22,7 +22,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         id: data.id,
         title: data.title,
         description: data.description,
-        coverUrl: data.coverUrl,
+        coverUrl: data.coverUrl ?? '',
         hidden: data.hidden,
         userId: data.userId,
         genre: {
@@ -232,6 +232,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       where: { id },
       data: {
         hidden: !existingStory.hidden,
+        updatedAt: new Date(),
       },
     });
 
@@ -280,7 +281,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       id: story.id,
       title: story.title,
       description: story.description,
-      coverUrl: story.coverUrl,
+      coverUrl: story.coverUrl === '' ? null : story.coverUrl,
       hidden: story.hidden,
       userId: story.userId,
       genre: { id: story.genre.id, name: story.genre.name },
