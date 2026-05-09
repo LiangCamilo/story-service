@@ -1,5 +1,7 @@
 import { Id } from '../value-objects/id.vo';
+import { Story } from './story.entity';
 
+type StoryCreateParams = Parameters<typeof Story.create>[0];
 export class FavoriteStory {
   constructor(
     private id: Id,
@@ -7,6 +9,7 @@ export class FavoriteStory {
     private userId: string,
     private createdAt?: Date,
     private updatedAt?: Date,
+    private story?: Story,
   ) {}
 
   static create(params: {
@@ -15,13 +18,21 @@ export class FavoriteStory {
     id?: string;
     createdAt?: Date;
     updatedAt?: Date;
-  }) {
+    story?: StoryCreateParams;
+  }): FavoriteStory {
+    const storyInstance = params.story
+      ? params.story instanceof Story
+        ? params.story
+        : Story.create(params.story)
+      : undefined;
+
     return new FavoriteStory(
       new Id(params.id),
       params.storyId,
       params.userId,
       params.createdAt,
       params.updatedAt,
+      storyInstance,
     );
   }
 
@@ -45,6 +56,10 @@ export class FavoriteStory {
     return this.updatedAt;
   }
 
+  get getStory() {
+    return this.story;
+  }
+
   toPrimitives() {
     return {
       id: this.id.getValue,
@@ -52,6 +67,7 @@ export class FavoriteStory {
       userId: this.userId,
       createdAt: this.createdAt?.toISOString(),
       updatedAt: this.updatedAt?.toISOString(),
+      story: this.story ? this.story.toPrimitives() : undefined,
     };
   }
 }

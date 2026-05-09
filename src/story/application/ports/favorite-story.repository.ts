@@ -12,7 +12,13 @@ export interface FavoriteStoryRepositoryPort {
     userId: string,
     filterFavoriteStoriesDto: FilterFavoriteStoriesDto,
   ): Promise<StoryWithDetails[]>;
+
   findExistingFavorite(userId: string, storyId: string): Promise<boolean>;
+
+  removeStoryFromFavorite(
+    userId: string,
+    storyId: string,
+  ): Promise<FavoriteStory>;
 }
 
 export const FAVORITE_STORY_REPOSITORY = Symbol('FAVORITE_STORY_REPOSITORY');
