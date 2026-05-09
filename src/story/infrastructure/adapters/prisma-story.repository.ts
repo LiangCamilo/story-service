@@ -199,6 +199,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       hidden,
     } = dto;
 
+    console.log(dto);
+
     const orderBy: Array<any> = [];
 
     if (totalViews !== undefined) {
@@ -224,7 +226,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       take: limit,
       where: {
         userId,
-        ...(hidden && {
+        ...(hidden !== undefined && {
           hidden,
         }),
         ...(title && {

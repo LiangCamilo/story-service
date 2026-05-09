@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsNumber,
@@ -7,9 +7,14 @@ import {
   IsString,
   Max,
   MaxLength,
-  Min,
 } from 'class-validator';
 import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
+
+const parseBoolean = ({ value }: { value: unknown }) => {
+  if (value === true || value === 'true') return true;
+  if (value === false || value === 'false') return false;
+  return value;
+};
 
 export class FilterMyStoriesDto {
   @IsNumber()
@@ -37,29 +42,27 @@ export class FilterMyStoriesDto {
   @MaxLength(50)
   secondaryGenreName?: string;
 
-  @IsBoolean()
   @IsOptional()
-  @Type(() => Boolean)
+  @Transform(parseBoolean)
+  @IsBoolean()
   totalRating?: boolean;
 
-  @IsBoolean()
   @IsOptional()
-  @Type(() => Boolean)
+  @Transform(parseBoolean)
+  @IsBoolean()
   totalViews?: boolean;
 
-  @IsNumber()
   @IsOptional()
-  @Min(1)
-  @Max(999999)
-  @Type(() => Number)
-  totalChapters?: number;
+  @Transform(parseBoolean)
+  @IsBoolean()
+  totalChapters?: boolean;
+
+  @IsOptional()
+  @Transform(parseBoolean)
+  @IsBoolean()
+  hidden?: boolean;
 
   @IsOptional()
   @IsString()
   status?: AllowedStatus;
-
-  @IsOptional()
-  @IsBoolean()
-  @Type(() => Boolean)
-  hidden?: boolean;
 }

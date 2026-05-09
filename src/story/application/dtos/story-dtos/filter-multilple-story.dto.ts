@@ -7,7 +7,6 @@ import {
   IsString,
   Max,
   MaxLength,
-  Min,
 } from 'class-validator';
 import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
 
@@ -47,12 +46,10 @@ export class FilterMultipleStoryDto {
   @Type(() => Boolean)
   totalViews?: boolean;
 
-  @IsNumber()
   @IsOptional()
-  @Min(1)
-  @Max(999999)
-  @Type(() => Number)
-  totalChapters?: number;
+  @IsBoolean()
+  @Type(() => Boolean)
+  totalChapters?: boolean;
 
   @IsOptional()
   @IsString()
