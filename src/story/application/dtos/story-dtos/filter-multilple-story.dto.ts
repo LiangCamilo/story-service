@@ -3,6 +3,7 @@ import {
   IsBoolean,
   IsNumber,
   IsOptional,
+  IsPositive,
   IsString,
   Max,
   MaxLength,
@@ -11,6 +12,16 @@ import {
 import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
 
 export class FilterMultipleStoryDto {
+  @IsNumber()
+  @Type(() => Number)
+  offset: number = 0;
+
+  @IsNumber()
+  @IsPositive()
+  @Type(() => Number)
+  @Max(50)
+  limit: number = 20;
+
   @IsString()
   @MaxLength(120)
   @IsOptional()
