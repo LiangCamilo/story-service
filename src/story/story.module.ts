@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { CreateStoryUseCase } from './application/use-cases/story-use-cases/create-story.use-case';
 import { UpdateStoryUseCase } from './application/use-cases/story-use-cases/update-story.use-case';
+import { UpdateStoryCoverUseCase } from './application/use-cases/story-use-cases/update-story-cover.use-case';
+import { RemoveStoryCoverUseCase } from './application/use-cases/story-use-cases/remove-story-cover.use-case';
 import { STORY_REPOSITORY } from './application/ports/story.repository';
 import { PrismaStoryRepository } from './infrastructure/adapters/prisma-story.repository';
 import { PrismaTagRepository } from './infrastructure/adapters/prisma-tag.repository';
@@ -68,6 +70,8 @@ import { FindLastModifiedStoryByUserIdUseCase } from './application/use-cases/st
       FindLastModifiedStoryByUserIdUseCase,
       DeleteStoryByIdUseCase,
       UpdateStoryUseCase,
+      UpdateStoryCoverUseCase,
+      RemoveStoryCoverUseCase,
       ToggleHiddenStoryUseCase,
     ],
     ...[
