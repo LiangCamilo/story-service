@@ -26,6 +26,8 @@ import { StoryExceptionFilter } from '../filters/story-exception.filter';
 import { GenreExceptionFilter } from '../filters/genre-exception.filter';
 import { DeleteStoryByIdUseCase } from '../../application/use-cases/story-use-cases/delete-story-by-id.use-case';
 import { UpdateStoryUseCase } from '../../application/use-cases/story-use-cases/update-story.use-case';
+import { UpdateStoryCoverUseCase } from '../../application/use-cases/story-use-cases/update-story-cover.use-case';
+import { RemoveStoryCoverUseCase } from '../../application/use-cases/story-use-cases/remove-story-cover.use-case';
 import { ToggleHiddenStoryUseCase } from '../../application/use-cases/story-use-cases/toggle-hidden-story.use-case';
 import { UpdateStoryDto } from '../../application/dtos/story-dtos/update-story.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -47,6 +49,8 @@ export class StoryController {
     private findAndFilterMultipleStoryUseCase: FindAndFilterMultipleStoryUseCase,
     private deleteStoryByIdUseCase: DeleteStoryByIdUseCase,
     private updateStoryUseCase: UpdateStoryUseCase,
+    private updateStoryCoverUseCase: UpdateStoryCoverUseCase,
+    private removeStoryCoverUseCase: RemoveStoryCoverUseCase,
     private toggleHiddenStoryUseCase: ToggleHiddenStoryUseCase,
     private findAndFilterMyStoriesUseCase: FindAndFilterMyStoriesUseCase,
     private findLastModifiedStoryByUserIdUseCase: FindLastModifiedStoryByUserIdUseCase,
@@ -191,26 +195,36 @@ export class StoryController {
   }
 
   @Put('update/:id')
+  async updateStory(
+    @Param('id') id: string,
+    @Body() updateStoryDto: UpdateStoryDto,
+  ) {
+    return this.updateStoryUseCase.execute(id, updateStoryDto);
+  }
+
+  @Patch('cover/:id')
   @UseInterceptors(
     FileInterceptor('image', {
       storage: memoryStorage(),
     }),
   )
-  async updateStory(
+  async updateStoryCover(
     @Param('id') id: string,
-    @Body() updateStoryDto: UpdateStoryDto,
-    @UploadedFile() cover?: Express.Multer.File,
+    @UploadedFile() cover: Express.Multer.File,
   ) {
-    const uploadedFile = cover
-      ? {
-          buffer: cover?.buffer,
-          originalName: cover?.originalname,
-          mimeType: cover?.mimetype,
-          size: cover?.size,
-        }
-      : undefined;
+    const uploadedFile = {
+      buffer: cover.buffer,
+      originalName: cover.originalname,
+      mimeType: cover.mimetype,
+      size: cover.size,
+    };
 
-    return this.updateStoryUseCase.execute(id, updateStoryDto, uploadedFile);
+    return this.updateStoryCoverUseCase.execute(id, uploadedFile);
+  }
+
+  @Delete('cover/:id')
+  async removeStoryCover(@Param('id') id: string) {
+    return this.removeStoryCoverUseCase.execute(id);
   }
 
   @Patch('toggle-hidden/:id')

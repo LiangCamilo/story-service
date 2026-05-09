@@ -349,7 +349,6 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         ...(data.title && { title: data.title }),
         ...(data.description && { description: data.description }),
         ...(data.status && { status: data.status as AllowedStatus }),
-        ...(data.coverUrl && { coverUrl: data.coverUrl }),
         ...(data.genreId && {
           genre: {
             connect: { id: data.genreId },
@@ -360,6 +359,29 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
             connect: { id: data.secondaryGenreId },
           },
         }),
+        updatedAt: now,
+        lastActivityAt: now,
+      },
+      include: {
+        genre: true,
+        secondaryGenre: true,
+        tags: true,
+      },
+    });
+
+    return this.mapToStoryWithDetails(updatedStory);
+  }
+
+  async updateCoverUrl(
+    id: string,
+    coverUrl: string,
+  ): Promise<StoryWithDetails> {
+    const now = new Date();
+
+    const updatedStory = await this.prisma.story.update({
+      where: { id },
+      data: {
+        coverUrl,
         updatedAt: now,
         lastActivityAt: now,
       },

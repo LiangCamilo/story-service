@@ -9,7 +9,6 @@ export interface UpdateStoryData {
   genreId?: string;
   secondaryGenreId?: string | null;
   status?: string;
-  coverUrl?: string;
 }
 
 export interface StoryRepositoryPort {
@@ -25,6 +24,7 @@ export interface StoryRepositoryPort {
   ): Promise<StoryWithDetails[]>;
   deleteStoryById(id: string): Promise<void>;
   updateStory(id: string, data: UpdateStoryData): Promise<StoryWithDetails>;
+  updateCoverUrl(id: string, coverUrl: string): Promise<StoryWithDetails>;
   toggleHidden(id: string): Promise<Story | undefined>;
   findLastModifiedStoryByUserId(
     userId: string,
