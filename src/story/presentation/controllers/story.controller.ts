@@ -131,12 +131,15 @@ export class StoryController {
     };
   }
 
-  @Post('search')
+  @Get('search/:userId')
   async findAndFilterMyStories(
     @Query() filterMyStoriesDto: FilterMyStoriesDto,
+    @Param('userId') userId: string,
   ) {
-    const { stories, meta } =
-      await this.findAndFilterMyStoriesUseCase.execute(filterMyStoriesDto);
+    const { stories, meta } = await this.findAndFilterMyStoriesUseCase.execute(
+      userId,
+      filterMyStoriesDto,
+    );
 
     if (stories.length === 0) {
       return {

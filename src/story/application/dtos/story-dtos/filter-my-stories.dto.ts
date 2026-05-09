@@ -1,7 +1,6 @@
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
-  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsPositive,
@@ -22,13 +21,6 @@ export class FilterMyStoriesDto {
   @Type(() => Number)
   @Max(50)
   limit: number = 20;
-
-  @IsString()
-  @IsNotEmpty({
-    message:
-      'Debe proporcionar un userId para filtrar y/o encontrar sus historias',
-  })
-  userId?: string;
 
   @IsString()
   @MaxLength(120)

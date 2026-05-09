@@ -11,8 +11,11 @@ export class FindAndFilterMyStoriesUseCase {
     @Inject(STORY_REPOSITORY) private storyRepository: StoryRepositoryPort,
   ) {}
 
-  async execute(dto: FilterMyStoriesDto) {
-    const stories = await this.storyRepository.findAndFilterMyStories(dto);
+  async execute(userId: string, dto: FilterMyStoriesDto) {
+    const stories = await this.storyRepository.findAndFilterMyStories(
+      userId,
+      dto,
+    );
 
     const pageSize: number = dto.limit;
     const totalItems = stories.length;

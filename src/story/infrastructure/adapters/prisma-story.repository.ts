@@ -183,6 +183,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
   }
 
   async findAndFilterMyStories(
+    userId: string,
     dto: FilterMyStoriesDto,
   ): Promise<StoryWithDetails[]> {
     const {
@@ -195,7 +196,6 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       totalChapters,
       totalRating,
       totalViews,
-      userId,
       hidden,
     } = dto;
 

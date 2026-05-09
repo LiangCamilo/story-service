@@ -20,6 +20,7 @@ export interface StoryRepositoryPort {
     filterMultiple: FilterMultipleStoryDto,
   ): Promise<StoryWithDetails[]>;
   findAndFilterMyStories(
+    userId: string,
     filterMultiple: FilterMyStoriesDto,
   ): Promise<StoryWithDetails[]>;
   deleteStoryById(id: string): Promise<void>;
