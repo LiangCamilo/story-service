@@ -38,10 +38,10 @@ import { FAVORITE_STORY_REPOSITORY } from './application/ports/favorite-story.re
 import { PrismaFavoriteStoryRepository } from './infrastructure/adapters/prisma-favorite-story.repository';
 import { AddFavoriteStoryUseCase } from './application/use-cases/favorite-story-use-cases/add-favorite-story.use-case';
 import { FavoriteStoryController } from './presentation/controllers/favorite-story.controller';
-import { FindAllFavoriteStoriesByUserIdUseCase } from './application/use-cases/favorite-story-use-cases/find-all-favorite-stories-by-user-id.use-case';
 import { ToggleHiddenChapterUseCase } from './application/use-cases/chapter-use-cases/toggle-hidden-chapter.use-case';
 import { FindChaptersByOwnedStoryIdUseCase } from './application/use-cases/chapter-use-cases/find-chapters-by-owned-story-id.use-case';
 import { FindAndFilterMyStoriesUseCase } from './application/use-cases/story-use-cases/find-and-filter-my-stories.use-case';
+import { FilterOwnFavoriteStoriesUseCase } from './application/use-cases/favorite-story-use-cases/filter-own-favorite-stories.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -54,27 +54,30 @@ import { FindAndFilterMyStoriesUseCase } from './application/use-cases/story-use
     FavoriteStoryController,
   ],
   providers: [
-    CreateStoryUseCase,
-    FindGenresUseCase,
-    FindGenreByNameUseCase,
-    FindGenreByIdUseCase,
-    FindStoryByTitleUseCase,
-    FindStoryByIdUseCase,
-    FindAndFilterMultipleStoryUseCase,
-    FindAndFilterMyStoriesUseCase,
-    DeleteStoryByIdUseCase,
-    UpdateStoryUseCase,
-    ToggleHiddenStoryUseCase,
-    CreateChapterUseCase,
-    FindAllChaptersByStoryIdUseCase,
-    FindChaptersByOwnedStoryIdUseCase,
-    DeleteChapterByIdUseCase,
-    UpdateChapterUseCase,
-    ToggleHiddenChapterUseCase,
-    CreateViewUseCase,
-    CreateOrUpdateRatingUseCase,
-    AddFavoriteStoryUseCase,
-    FindAllFavoriteStoriesByUserIdUseCase,
+    ...[
+      CreateStoryUseCase,
+      FindGenresUseCase,
+      FindGenreByNameUseCase,
+      FindGenreByIdUseCase,
+      FindStoryByTitleUseCase,
+      FindStoryByIdUseCase,
+      FindAndFilterMultipleStoryUseCase,
+      FindAndFilterMyStoriesUseCase,
+      DeleteStoryByIdUseCase,
+      UpdateStoryUseCase,
+      ToggleHiddenStoryUseCase,
+    ],
+    ...[
+      CreateChapterUseCase,
+      FindAllChaptersByStoryIdUseCase,
+      FindChaptersByOwnedStoryIdUseCase,
+      DeleteChapterByIdUseCase,
+      UpdateChapterUseCase,
+      ToggleHiddenChapterUseCase,
+    ],
+    ...[CreateViewUseCase],
+    ...[CreateOrUpdateRatingUseCase],
+    ...[AddFavoriteStoryUseCase, FilterOwnFavoriteStoriesUseCase],
     {
       provide: STORY_REPOSITORY,
       useClass: PrismaStoryRepository,

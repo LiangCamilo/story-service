@@ -1,13 +1,13 @@
 import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
+  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsPositive,
   IsString,
   Max,
   MaxLength,
-  IsArray,
 } from 'class-validator';
 import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
 
@@ -17,14 +17,16 @@ const parseBoolean = ({ value }: { value: unknown }) => {
   return value;
 };
 
-export class FilterMyStoriesDto {
+export class FilterFavoriteStoriesDto {
   @IsNumber()
   @Type(() => Number)
+  @IsOptional()
   offset: number = 0;
 
   @IsNumber()
   @IsPositive()
   @Type(() => Number)
+  @IsOptional()
   @Max(50)
   limit: number = 20;
 
@@ -46,11 +48,6 @@ export class FilterMyStoriesDto {
   @IsOptional()
   @Transform(parseBoolean)
   @IsBoolean()
-  totalRating?: boolean;
-
-  @IsOptional()
-  @Transform(parseBoolean)
-  @IsBoolean()
   totalViews?: boolean;
 
   @IsOptional()
@@ -58,22 +55,12 @@ export class FilterMyStoriesDto {
   @IsBoolean()
   totalChapters?: boolean;
 
-  @IsOptional()
-  @Transform(parseBoolean)
   @IsBoolean()
-  hidden?: boolean;
+  @IsOptional()
+  @Type(() => Boolean)
+  totalRating?: boolean;
 
   @IsOptional()
   @IsString()
   status?: AllowedStatus;
-
-  @IsArray()
-  @IsString({ each: true })
-  @IsOptional()
-  @Transform(({ value }) => {
-    if (Array.isArray(value)) return value;
-    if (typeof value === 'string') return value.split(',').map((v) => v.trim());
-    return value;
-  })
-  tagNames?: string[];
 }

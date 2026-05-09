@@ -19,7 +19,6 @@ import { CreateStoryDto } from '../../application/dtos/story-dtos/create-story.d
 import { Story } from '../../domain/entities/story.entity';
 import { FindStoryByTitleUseCase } from '../../application/use-cases/story-use-cases/find-story-by-title.use-case';
 import { FindStoryByIdUseCase } from '../../application/use-cases/story-use-cases/find-story-by-id.use-case';
-import { FindMultipleStoryDto } from '../../application/dtos/story-dtos/find-multiple-story.dto';
 import { FilterMultipleStoryDto } from '../../application/dtos/story-dtos/filter-multilple-story.dto';
 import { FindAndFilterMultipleStoryUseCase } from '../../application/use-cases/story-use-cases/find-and-filter-multiple-story.use-case';
 import { StoryExceptionFilter } from '../filters/story-exception.filter';
@@ -111,14 +110,12 @@ export class StoryController {
     return this.findStoryByIdUseCase.execute(id);
   }
 
-  @Post('filter')
+  @Get('search')
   async findAndFilterMultiple(
-    @Query() findMultipleStoryDto: FindMultipleStoryDto,
-    @Body() filterMultipleStoryDto: FilterMultipleStoryDto,
+    @Query() filterMultipleStoryDto: FilterMultipleStoryDto,
   ) {
     const { stories, meta } =
       await this.findAndFilterMultipleStoryUseCase.execute(
-        findMultipleStoryDto,
         filterMultipleStoryDto,
       );
 
@@ -134,13 +131,13 @@ export class StoryController {
     };
   }
 
-  @Post('my-stories')
+  @Get('search/:userId')
   async findAndFilterMyStories(
-    @Query() findMultipleStoryDto: FindMultipleStoryDto,
-    @Body() filterMyStoriesDto: FilterMyStoriesDto,
+    @Query() filterMyStoriesDto: FilterMyStoriesDto,
+    @Param('userId') userId: string,
   ) {
     const { stories, meta } = await this.findAndFilterMyStoriesUseCase.execute(
-      findMultipleStoryDto,
+      userId,
       filterMyStoriesDto,
     );
 

@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { FilterMultipleStoryDto } from 'src/story/application/dtos/story-dtos/filter-multilple-story.dto';
-import { FindMultipleStoryDto } from 'src/story/application/dtos/story-dtos/find-multiple-story.dto';
 import { StoryWithDetails } from 'src/story/application/read-models/story-with-details.read-model';
 import {
   StoryRepositoryPort,
@@ -103,10 +102,11 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
   }
 
   async findAndFilterMultiple(
-    findMultiple: FindMultipleStoryDto,
     filterMultiple: FilterMultipleStoryDto,
   ): Promise<StoryWithDetails[]> {
     const {
+      limit,
+      offset,
       genreName,
       secondaryGenreName,
       status,
@@ -115,6 +115,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       totalRating,
       totalViews,
       userId,
+      tagNames,
     } = filterMultiple;
 
     const orderBy: Array<any> = [];
@@ -138,10 +139,10 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     }
 
     const rawStories = await this.prisma.story.findMany({
-      skip: findMultiple.offset,
-      take: findMultiple.limit,
+      skip: offset,
+      take: limit,
       where: {
-        hidden: true,
+        hidden: false,
         ...(userId && {
           userId,
         }),
@@ -170,6 +171,17 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
             },
           },
         }),
+        ...(tagNames &&
+          tagNames.length > 0 && {
+            tags: {
+              some: {
+                name: {
+                  in: tagNames,
+                  mode: 'insensitive',
+                },
+              },
+            },
+          }),
       },
       include: {
         genre: true,
@@ -183,10 +195,12 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
   }
 
   async findAndFilterMyStories(
-    findMultiple: FindMultipleStoryDto,
-    filterMultiple: FilterMyStoriesDto,
+    userId: string,
+    dto: FilterMyStoriesDto,
   ): Promise<StoryWithDetails[]> {
     const {
+      limit,
+      offset,
       genreName,
       secondaryGenreName,
       status,
@@ -194,9 +208,9 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       totalChapters,
       totalRating,
       totalViews,
-      userId,
       hidden,
-    } = filterMultiple;
+      tagNames,
+    } = dto;
 
     const orderBy: Array<any> = [];
 
@@ -219,11 +233,11 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     }
 
     const rawStories = await this.prisma.story.findMany({
-      skip: findMultiple.offset,
-      take: findMultiple.limit,
+      skip: offset,
+      take: limit,
       where: {
         userId,
-        ...(hidden && {
+        ...(hidden !== undefined && {
           hidden,
         }),
         ...(title && {
@@ -251,6 +265,17 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
             },
           },
         }),
+        ...(tagNames &&
+          tagNames.length > 0 && {
+            tags: {
+              some: {
+                name: {
+                  in: tagNames,
+                  mode: 'insensitive',
+                },
+              },
+            },
+          }),
       },
       include: {
         genre: true,
