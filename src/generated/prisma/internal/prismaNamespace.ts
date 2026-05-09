@@ -984,7 +984,8 @@ export const StoryScalarFieldEnum = {
   genreId: 'genreId',
   secondaryGenreId: 'secondaryGenreId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  lastActivityAt: 'lastActivityAt'
 } as const
 
 export type StoryScalarFieldEnum = (typeof StoryScalarFieldEnum)[keyof typeof StoryScalarFieldEnum]

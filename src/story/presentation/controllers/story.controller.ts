@@ -35,6 +35,7 @@ import { ConfigType } from '@nestjs/config';
 import { FindAndFilterMyStoriesUseCase } from 'src/story/application/use-cases/story-use-cases/find-and-filter-my-stories.use-case';
 import { FilterMyStoriesDto } from 'src/story/application/dtos/story-dtos/filter-my-stories.dto';
 import { Response } from 'express';
+import { FindLastModifiedStoryByUserIdUseCase } from 'src/story/application/use-cases/story-use-cases/find-last-modified-story-by-user-id.use-case';
 
 @UseFilters(StoryExceptionFilter, GenreExceptionFilter)
 @Controller('api/story')
@@ -48,6 +49,7 @@ export class StoryController {
     private updateStoryUseCase: UpdateStoryUseCase,
     private toggleHiddenStoryUseCase: ToggleHiddenStoryUseCase,
     private findAndFilterMyStoriesUseCase: FindAndFilterMyStoriesUseCase,
+    private findLastModifiedStoryByUserIdUseCase: FindLastModifiedStoryByUserIdUseCase,
     @Inject(viewConfig.KEY)
     private readonly viewEnvs: ConfigType<typeof viewConfig>,
   ) {}
@@ -159,6 +161,11 @@ export class StoryController {
     };
   }
 
+  @Get('/last-modified/:userId')
+  async findLastModifiedStoryByUserId(@Param('userId') userId: string) {
+    return await this.findLastModifiedStoryByUserIdUseCase.execute(userId);
+  }
+
   @Delete('delete/:id')
   async deleteStoryById(@Param('id') id: string) {
     const deletedStory = await this.deleteStoryByIdUseCase.execute(id);
@@ -225,8 +232,9 @@ export class StoryController {
       totalChapters: story.getTotalChapters?.getValue,
       secondaryGenreId: story?.getSecondaryGenreId,
       totalViews: story?.getTotalViews?.getValue,
-      createdAt: story.getCreatedAt?.getDate(),
-      updatedAt: story.getUpdatedAt?.getDate(),
+      createdAt: story.getCreatedAt,
+      updatedAt: story.getUpdatedAt,
+      lastActivityAt: story.getLastActivityAt,
     };
   };
 }

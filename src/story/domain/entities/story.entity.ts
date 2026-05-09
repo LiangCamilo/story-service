@@ -29,6 +29,7 @@ export class Story {
     private status?: AllowedStatus,
     private createdAt?: Date,
     private updatedAt?: Date | null,
+    private lastActivityAt?: Date | null,
   ) {}
 
   static create(params: {
@@ -50,6 +51,7 @@ export class Story {
     status?: AllowedStatus;
     createdAt?: Date;
     updatedAt?: Date | null;
+    lastActivityAt?: Date | null;
   }): Story {
     return new Story(
       new Id(params.id),
@@ -70,6 +72,7 @@ export class Story {
       params?.status,
       params.createdAt,
       params.updatedAt,
+      params.lastActivityAt,
     );
   }
 
@@ -117,6 +120,10 @@ export class Story {
     return this.updatedAt;
   }
 
+  get getLastActivityAt(): Date | undefined | null {
+    return this.lastActivityAt;
+  }
+
   get getTotalRating(): StoryTotalRating | undefined {
     return this.totalRating;
   }
@@ -155,6 +162,7 @@ export class Story {
       ratingCount: this.ratingCount?.getValue,
       createdAt: this.createdAt,
       updateAt: this.updatedAt,
+      lastActivityAt: this.lastActivityAt,
     };
   }
 }
