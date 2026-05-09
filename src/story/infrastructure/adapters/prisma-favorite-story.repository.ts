@@ -77,6 +77,7 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
       totalChapters,
       totalRating,
       totalViews,
+      tagNames,
     } = filterFavoriteStoriesDto;
 
     const favoriteStories: Array<StoryWithDetails> = [];
@@ -121,6 +122,18 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
           ...(status && {
             status,
           }),
+
+          ...(tagNames &&
+            tagNames.length > 0 && {
+              tags: {
+                some: {
+                  name: {
+                    in: tagNames,
+                    mode: 'insensitive',
+                  },
+                },
+              },
+            }),
         },
       },
       include: {

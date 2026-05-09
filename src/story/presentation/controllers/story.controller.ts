@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Res,
   UploadedFile,
   UseFilters,
   UseInterceptors,
@@ -33,6 +34,7 @@ import viewConfig from 'src/config/view.config';
 import { ConfigType } from '@nestjs/config';
 import { FindAndFilterMyStoriesUseCase } from 'src/story/application/use-cases/story-use-cases/find-and-filter-my-stories.use-case';
 import { FilterMyStoriesDto } from 'src/story/application/dtos/story-dtos/filter-my-stories.dto';
+import { Response } from 'express';
 
 @UseFilters(StoryExceptionFilter, GenreExceptionFilter)
 @Controller('api/story')
@@ -113,6 +115,7 @@ export class StoryController {
   @Get('search')
   async findAndFilterMultiple(
     @Query() filterMultipleStoryDto: FilterMultipleStoryDto,
+    @Res({ passthrough: true }) res: Response,
   ) {
     const { stories, meta } =
       await this.findAndFilterMultipleStoryUseCase.execute(
@@ -120,9 +123,10 @@ export class StoryController {
       );
 
     if (stories.length === 0) {
-      return {
+      return res.status(200).json({
+        stories: stories,
         message: 'No se han encontrado historias con los filtros especificados',
-      };
+      });
     }
 
     return {
@@ -135,6 +139,7 @@ export class StoryController {
   async findAndFilterMyStories(
     @Query() filterMyStoriesDto: FilterMyStoriesDto,
     @Param('userId') userId: string,
+    @Res({ passthrough: true }) res: Response,
   ) {
     const { stories, meta } = await this.findAndFilterMyStoriesUseCase.execute(
       userId,
@@ -142,9 +147,10 @@ export class StoryController {
     );
 
     if (stories.length === 0) {
-      return {
+      res.status(200).json({
+        stories: stories,
         message: 'No se han encontrado historias con los filtros especificados',
-      };
+      });
     }
 
     return {
