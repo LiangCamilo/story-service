@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Type, Transform } from 'class-transformer';
 import {
   IsBoolean,
   IsNumber,
@@ -7,6 +7,7 @@ import {
   IsString,
   Max,
   MaxLength,
+  IsArray,
 } from 'class-validator';
 import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
 
@@ -58,4 +59,14 @@ export class FilterMultipleStoryDto {
   @IsString()
   @IsOptional()
   userId?: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  @Transform(({ value }) => {
+    if (Array.isArray(value)) return value;
+    if (typeof value === 'string') return value.split(',').map((v) => v.trim());
+    return value;
+  })
+  tagNames?: string[];
 }

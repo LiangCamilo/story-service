@@ -7,6 +7,7 @@ import {
   IsString,
   Max,
   MaxLength,
+  IsArray,
 } from 'class-validator';
 import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
 
@@ -65,4 +66,14 @@ export class FilterMyStoriesDto {
   @IsOptional()
   @IsString()
   status?: AllowedStatus;
+
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  @Transform(({ value }) => {
+    if (Array.isArray(value)) return value;
+    if (typeof value === 'string') return value.split(',').map((v) => v.trim());
+    return value;
+  })
+  tagNames?: string[];
 }

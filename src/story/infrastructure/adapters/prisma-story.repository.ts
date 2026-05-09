@@ -115,6 +115,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       totalRating,
       totalViews,
       userId,
+      tagNames,
     } = filterMultiple;
 
     const orderBy: Array<any> = [];
@@ -141,7 +142,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       skip: offset,
       take: limit,
       where: {
-        hidden: true,
+        hidden: false,
         ...(userId && {
           userId,
         }),
@@ -170,6 +171,17 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
             },
           },
         }),
+        ...(tagNames &&
+          tagNames.length > 0 && {
+            tags: {
+              some: {
+                name: {
+                  in: tagNames,
+                  mode: 'insensitive',
+                },
+              },
+            },
+          }),
       },
       include: {
         genre: true,
@@ -197,9 +209,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       totalRating,
       totalViews,
       hidden,
+      tagNames,
     } = dto;
-
-    console.log(dto);
 
     const orderBy: Array<any> = [];
 
@@ -254,6 +265,17 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
             },
           },
         }),
+        ...(tagNames &&
+          tagNames.length > 0 && {
+            tags: {
+              some: {
+                name: {
+                  in: tagNames,
+                  mode: 'insensitive',
+                },
+              },
+            },
+          }),
       },
       include: {
         genre: true,
