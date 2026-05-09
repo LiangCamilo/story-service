@@ -52,6 +52,9 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
           },
         },
       },
+      include: {
+        story: true,
+      },
     });
 
     return FavoriteStory.create({
@@ -60,6 +63,13 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
       userId: addedStoryToFavorite.userId,
       createdAt: addedStoryToFavorite.createdAt,
       updatedAt: addedStoryToFavorite.updatedAt,
+      story: {
+        id: addedStoryToFavorite.story.id,
+        userId: addedStoryToFavorite.story.genreId,
+        description: addedStoryToFavorite.story.description,
+        genreId: addedStoryToFavorite.story.genreId,
+        title: addedStoryToFavorite.story.title,
+      },
     });
   }
 
@@ -158,22 +168,37 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
     return favoriteStories;
   }
 
-  private mapToFavoriteStoryWithDetails(favoriteStory: {
-    id: string;
-    storyId: string;
-    userId: string;
-    createdAt: Date;
-    updatedAt: Date;
-    story: any;
-  }): FavoriteStoryWithDetails {
-    return {
-      id: favoriteStory.id,
-      storyId: favoriteStory.storyId,
-      userId: favoriteStory.userId,
-      createdAt: favoriteStory.createdAt,
-      updatedAt: favoriteStory.updatedAt,
-      story: this.mapToStoryWithDetails(favoriteStory.story),
-    };
+  async removeStoryFromFavorite(
+    userId: string,
+    storyId: string,
+  ): Promise<FavoriteStory> {
+    const { id, createdAt, updatedAt, story } =
+      await this.prisma.favoriteStory.delete({
+        where: {
+          storyId_userId: {
+            userId,
+            storyId,
+          },
+        },
+        include: {
+          story: true,
+        },
+      });
+
+    return FavoriteStory.create({
+      id,
+      userId,
+      storyId,
+      createdAt,
+      updatedAt,
+      story: {
+        id: story.id,
+        userId: story.genreId,
+        description: story.description,
+        genreId: story.genreId,
+        title: story.title,
+      },
+    });
   }
 
   private mapToStoryWithDetails(story: any): StoryWithDetails {
@@ -201,6 +226,24 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
       status: story.status,
       createdAt: story.createdAt,
       updatedAt: story.updatedAt,
+    };
+  }
+
+  private mapToFavoriteStoryWithDetails(favoriteStory: {
+    id: string;
+    storyId: string;
+    userId: string;
+    createdAt: Date;
+    updatedAt: Date;
+    story: any;
+  }): FavoriteStoryWithDetails {
+    return {
+      id: favoriteStory.id,
+      storyId: favoriteStory.storyId,
+      userId: favoriteStory.userId,
+      createdAt: favoriteStory.createdAt,
+      updatedAt: favoriteStory.updatedAt,
+      story: this.mapToStoryWithDetails(favoriteStory.story),
     };
   }
 }

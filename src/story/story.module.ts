@@ -42,6 +42,7 @@ import { ToggleHiddenChapterUseCase } from './application/use-cases/chapter-use-
 import { FindChaptersByOwnedStoryIdUseCase } from './application/use-cases/chapter-use-cases/find-chapters-by-owned-story-id.use-case';
 import { FindAndFilterMyStoriesUseCase } from './application/use-cases/story-use-cases/find-and-filter-my-stories.use-case';
 import { FilterOwnFavoriteStoriesUseCase } from './application/use-cases/favorite-story-use-cases/filter-own-favorite-stories.use-case';
+import { RemoveStoryFromFavoriteUseCase } from './application/use-cases/favorite-story-use-cases/remove-story-from-favorite.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -77,7 +78,11 @@ import { FilterOwnFavoriteStoriesUseCase } from './application/use-cases/favorit
     ],
     ...[CreateViewUseCase],
     ...[CreateOrUpdateRatingUseCase],
-    ...[AddFavoriteStoryUseCase, FilterOwnFavoriteStoriesUseCase],
+    ...[
+      AddFavoriteStoryUseCase,
+      FilterOwnFavoriteStoriesUseCase,
+      RemoveStoryFromFavoriteUseCase,
+    ],
     {
       provide: STORY_REPOSITORY,
       useClass: PrismaStoryRepository,
