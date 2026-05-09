@@ -9,6 +9,7 @@ export interface FavoriteStoryRepositoryPort {
   ): Promise<FavoriteStory | undefined>;
 
   filterFavoriteStories(
+    userId: string,
     filterFavoriteStoriesDto: FilterFavoriteStoriesDto,
   ): Promise<StoryWithDetails[]>;
   findExistingFavorite(userId: string, storyId: string): Promise<boolean>;

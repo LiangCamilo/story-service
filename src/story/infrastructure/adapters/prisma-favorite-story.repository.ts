@@ -64,12 +64,12 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
   }
 
   async filterFavoriteStories(
+    userId: string,
     filterFavoriteStoriesDto: FilterFavoriteStoriesDto,
   ): Promise<StoryWithDetails[]> {
     const {
       offset,
       limit,
-      userId,
       genreName,
       secondaryGenreName,
       status,

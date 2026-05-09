@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsNotEmpty,
@@ -8,9 +8,14 @@ import {
   IsString,
   Max,
   MaxLength,
-  Min,
 } from 'class-validator';
 import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
+
+const parseBoolean = ({ value }: { value: unknown }) => {
+  if (value === true || value === 'true') return true;
+  if (value === false || value === 'false') return false;
+  return value;
+};
 
 export class FilterFavoriteStoriesDto {
   @IsNumber()
@@ -24,13 +29,6 @@ export class FilterFavoriteStoriesDto {
   @IsOptional()
   @Max(50)
   limit: number = 20;
-
-  @IsString()
-  @IsNotEmpty({
-    message:
-      'Debe proporcionar un userId para filtrar y/o encontrar sus historias',
-  })
-  userId!: string;
 
   @IsString()
   @MaxLength(120)
@@ -47,22 +45,20 @@ export class FilterFavoriteStoriesDto {
   @MaxLength(50)
   secondaryGenreName?: string;
 
+  @IsOptional()
+  @Transform(parseBoolean)
+  @IsBoolean()
+  totalViews?: boolean;
+
+  @IsOptional()
+  @Transform(parseBoolean)
+  @IsBoolean()
+  totalChapters?: boolean;
+
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
   totalRating?: boolean;
-
-  @IsBoolean()
-  @IsOptional()
-  @Type(() => Boolean)
-  totalViews?: boolean;
-
-  @IsNumber()
-  @IsOptional()
-  @Min(1)
-  @Max(999999)
-  @Type(() => Number)
-  totalChapters?: number;
 
   @IsOptional()
   @IsString()

@@ -11,6 +11,12 @@ import {
 } from 'class-validator';
 import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
 
+const parseBoolean = ({ value }: { value: unknown }) => {
+  if (value === true || value === 'true') return true;
+  if (value === false || value === 'false') return false;
+  return value;
+};
+
 export class FilterMultipleStoryDto {
   @IsNumber()
   @Type(() => Number)
@@ -37,20 +43,25 @@ export class FilterMultipleStoryDto {
   @MaxLength(50)
   secondaryGenreName?: string;
 
+  @IsOptional()
+  @Transform(parseBoolean)
+  @IsBoolean()
+  totalViews?: boolean;
+
+  @IsOptional()
+  @Transform(parseBoolean)
+  @IsBoolean()
+  totalChapters?: boolean;
+
   @IsBoolean()
   @IsOptional()
   @Type(() => Boolean)
   totalRating?: boolean;
 
-  @IsBoolean()
   @IsOptional()
-  @Type(() => Boolean)
-  totalViews?: boolean;
-
-  @IsOptional()
+  @Transform(parseBoolean)
   @IsBoolean()
-  @Type(() => Boolean)
-  totalChapters?: boolean;
+  hidden?: boolean;
 
   @IsOptional()
   @IsString()

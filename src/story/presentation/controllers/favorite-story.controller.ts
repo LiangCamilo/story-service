@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Query,
   UseFilters,
@@ -32,11 +33,13 @@ export class FavoriteStoryController {
     return addedStoryToFavorite;
   }
 
-  @Get('search')
+  @Get('search/:userId')
   async filterFavorites(
+    @Param('userId') userId: string,
     @Query() filterFavoriteStoriesDto: FilterFavoriteStoriesDto,
   ) {
     return await this.filterOwnFavoriteStoriesUseCase.execute(
+      userId,
       filterFavoriteStoriesDto,
     );
   }

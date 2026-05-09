@@ -12,11 +12,15 @@ export class FilterOwnFavoriteStoriesUseCase {
     private favoriteStoryRepository: FavoriteStoryRepositoryPort,
   ) {}
 
-  async execute(filterFavoriteStoriesDto: FilterFavoriteStoriesDto) {
+  async execute(
+    userId: string,
+    filterFavoriteStoriesDto: FilterFavoriteStoriesDto,
+  ) {
     const { limit, offset } = filterFavoriteStoriesDto;
 
     const filteredFavoriteStories =
       await this.favoriteStoryRepository.filterFavoriteStories(
+        userId,
         filterFavoriteStoriesDto,
       );
 
