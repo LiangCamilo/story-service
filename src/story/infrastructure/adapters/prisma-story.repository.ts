@@ -183,10 +183,11 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
   }
 
   async findAndFilterMyStories(
-    findMultiple: FindMultipleStoryDto,
-    filterMultiple: FilterMyStoriesDto,
+    dto: FilterMyStoriesDto,
   ): Promise<StoryWithDetails[]> {
     const {
+      limit,
+      offset,
       genreName,
       secondaryGenreName,
       status,
@@ -196,7 +197,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       totalViews,
       userId,
       hidden,
-    } = filterMultiple;
+    } = dto;
 
     const orderBy: Array<any> = [];
 
@@ -219,8 +220,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     }
 
     const rawStories = await this.prisma.story.findMany({
-      skip: findMultiple.offset,
-      take: findMultiple.limit,
+      skip: offset,
+      take: limit,
       where: {
         userId,
         ...(hidden && {

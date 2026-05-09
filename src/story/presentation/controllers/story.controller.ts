@@ -111,7 +111,7 @@ export class StoryController {
     return this.findStoryByIdUseCase.execute(id);
   }
 
-  @Post('filter')
+  @Get('search')
   async findAndFilterMultiple(
     @Query() findMultipleStoryDto: FindMultipleStoryDto,
     @Body() filterMultipleStoryDto: FilterMultipleStoryDto,
@@ -134,15 +134,12 @@ export class StoryController {
     };
   }
 
-  @Post('my-stories')
+  @Post('search')
   async findAndFilterMyStories(
-    @Query() findMultipleStoryDto: FindMultipleStoryDto,
-    @Body() filterMyStoriesDto: FilterMyStoriesDto,
+    @Query() filterMyStoriesDto: FilterMyStoriesDto,
   ) {
-    const { stories, meta } = await this.findAndFilterMyStoriesUseCase.execute(
-      findMultipleStoryDto,
-      filterMyStoriesDto,
-    );
+    const { stories, meta } =
+      await this.findAndFilterMyStoriesUseCase.execute(filterMyStoriesDto);
 
     if (stories.length === 0) {
       return {

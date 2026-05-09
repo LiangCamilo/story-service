@@ -14,6 +14,26 @@ export class PrismaStoryFavoriteRepository {}
 export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPort {
   constructor(private prisma: PrismaService) {}
 
+  async findExistingFavorite(
+    userId: string,
+    storyId: string,
+  ): Promise<boolean> {
+    const existingFavorite = await this.prisma.favoriteStory.findUnique({
+      where: {
+        storyId_userId: {
+          storyId: storyId,
+          userId: userId,
+        },
+      },
+    });
+
+    if (existingFavorite) {
+      return true;
+    }
+
+    return false;
+  }
+
   async create(
     createFavoriteStoryDto: CreateFavoriteStoryDto,
   ): Promise<FavoriteStory | undefined> {
@@ -43,37 +63,12 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
     });
   }
 
-  async findFavoriteStoriesByUserId(
-    userId: string,
-  ): Promise<FavoriteStoryWithDetails[] | undefined> {
-    const favoriteStories = await this.prisma.favoriteStory.findMany({
-      where: {
-        userId,
-      },
-      include: {
-        story: {
-          include: {
-            genre: true,
-            secondaryGenre: true,
-            tags: true,
-          },
-        },
-      },
-    });
-
-    if (!favoriteStories || favoriteStories.length === 0) {
-      return undefined;
-    }
-
-    return favoriteStories.map((favoriteStory) =>
-      this.mapToFavoriteStoryWithDetails(favoriteStory),
-    );
-  }
-
   async filterFavoriteStories(
     filterFavoriteStoriesDto: FilterFavoriteStoriesDto,
   ): Promise<StoryWithDetails[]> {
     const {
+      offset,
+      limit,
       userId,
       genreName,
       secondaryGenreName,
@@ -85,14 +80,62 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
     } = filterFavoriteStoriesDto;
 
     const favoriteStories: Array<StoryWithDetails> = [];
+    const orderBy = totalRating
+      ? { story: { totalRating: 'desc' as const } }
+      : totalViews
+        ? { story: { totalViews: 'desc' as const } }
+        : totalChapters
+          ? { story: { totalChapters: 'desc' as const } }
+          : { createdAt: 'desc' as const };
 
     const rawFavoriteStories = await this.prisma.favoriteStory.findMany({
       where: {
-        userId,
+        userId: userId,
+        story: {
+          hidden: false,
+          ...(title && {
+            title: {
+              contains: title,
+              mode: 'insensitive',
+            },
+          }),
+
+          ...(genreName && {
+            genre: {
+              name: {
+                equals: genreName,
+                mode: 'insensitive',
+              },
+            },
+          }),
+
+          ...(secondaryGenreName && {
+            secondaryGenre: {
+              name: {
+                equals: secondaryGenreName,
+                mode: 'insensitive',
+              },
+            },
+          }),
+
+          ...(status && {
+            status,
+          }),
+        },
       },
       include: {
-        story: true,
+        story: {
+          include: {
+            genre: true,
+            secondaryGenre: true,
+            tags: true,
+          },
+        },
       },
+
+      skip: offset,
+      take: limit,
+      orderBy,
     });
 
     rawFavoriteStories.map((favoriteStory) => {

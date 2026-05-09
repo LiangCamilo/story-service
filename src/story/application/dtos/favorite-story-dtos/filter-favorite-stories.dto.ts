@@ -4,6 +4,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsOptional,
+  IsPositive,
   IsString,
   Max,
   MaxLength,
@@ -12,6 +13,18 @@ import {
 import { AllowedStatus } from 'src/story/domain/constants/story-constants/story-status.constants';
 
 export class FilterFavoriteStoriesDto {
+  @IsNumber()
+  @Type(() => Number)
+  @IsOptional()
+  offset: number = 0;
+
+  @IsNumber()
+  @IsPositive()
+  @Type(() => Number)
+  @IsOptional()
+  @Max(50)
+  limit: number = 20;
+
   @IsString()
   @IsNotEmpty({
     message:

@@ -5,6 +5,7 @@ import {
 } from '../../ports/favorite-story.repository';
 import { CreateFavoriteStoryDto } from '../../dtos/favorite-story-dtos/create-favorite-story.dto';
 import { StoryNotFoundError } from '../../errors/story-errors/story-not-found.error';
+import { FavoriteStoryAlreadyAddedError } from '../../errors/favorite-story-errors/favorite-story-already-added.error';
 
 @Injectable()
 export class AddFavoriteStoryUseCase {
@@ -14,6 +15,15 @@ export class AddFavoriteStoryUseCase {
   ) {}
 
   async execute(createFavoriteStoryDto: CreateFavoriteStoryDto) {
+    const { userId, storyId } = createFavoriteStoryDto;
+
+    const existingFavorite =
+      await this.favoriteStoryRepository.findExistingFavorite(userId, storyId);
+
+    if (existingFavorite) {
+      throw new FavoriteStoryAlreadyAddedError(userId, storyId, 400);
+    }
+
     const addFavorite = await this.favoriteStoryRepository.create(
       createFavoriteStoryDto,
     );
