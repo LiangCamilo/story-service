@@ -38,9 +38,15 @@ export class FavoriteStoryController {
     @Param('userId') userId: string,
     @Query() filterFavoriteStoriesDto: FilterFavoriteStoriesDto,
   ) {
-    return await this.filterOwnFavoriteStoriesUseCase.execute(
-      userId,
-      filterFavoriteStoriesDto,
-    );
+    const favoriteStoriesFiltered =
+      await this.filterOwnFavoriteStoriesUseCase.execute(
+        userId,
+        filterFavoriteStoriesDto,
+      );
+
+    return {
+      stories: favoriteStoriesFiltered.filteredFavoriteStories,
+      meta: favoriteStoriesFiltered.meta,
+    };
   }
 }
