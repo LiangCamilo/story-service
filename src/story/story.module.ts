@@ -43,6 +43,7 @@ import { FindChaptersByOwnedStoryIdUseCase } from './application/use-cases/chapt
 import { FindAndFilterMyStoriesUseCase } from './application/use-cases/story-use-cases/find-and-filter-my-stories.use-case';
 import { FilterOwnFavoriteStoriesUseCase } from './application/use-cases/favorite-story-use-cases/filter-own-favorite-stories.use-case';
 import { RemoveStoryFromFavoriteUseCase } from './application/use-cases/favorite-story-use-cases/remove-story-from-favorite.use-case';
+import { FindLastModifiedStoryByUserIdUseCase } from './application/use-cases/story-use-cases/find-last-modified-story-by-user-id.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -64,6 +65,7 @@ import { RemoveStoryFromFavoriteUseCase } from './application/use-cases/favorite
       FindStoryByIdUseCase,
       FindAndFilterMultipleStoryUseCase,
       FindAndFilterMyStoriesUseCase,
+      FindLastModifiedStoryByUserIdUseCase,
       DeleteStoryByIdUseCase,
       UpdateStoryUseCase,
       ToggleHiddenStoryUseCase,

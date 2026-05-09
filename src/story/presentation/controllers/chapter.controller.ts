@@ -82,7 +82,12 @@ export class ChapterController {
     @Param('id') id: string,
     @Body() updateChapterDto: UpdateChapterDto,
   ) {
-    return await this.updateChapterUseCase.execute(id, updateChapterDto);
+    const updatedChapter = await this.updateChapterUseCase.execute(
+      id,
+      updateChapterDto,
+    );
+
+    return this.mapChapterToResponse(updatedChapter);
   }
 
   private mapChapterToResponse = (chapter: Chapter) => {

@@ -17,4 +17,14 @@ export interface StoryWithDetails {
   status: string;
   createdAt: Date;
   updatedAt: Date | null;
+  lastActivityAt?: Date | null;
+  chapters?: {
+    id: string;
+    title: string;
+    order: number;
+    hidden: boolean;
+    content: string;
+    createdAt: Date;
+    updatedAt: Date | null;
+  }[];
 }

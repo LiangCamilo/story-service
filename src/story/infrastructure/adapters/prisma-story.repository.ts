@@ -17,6 +17,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
   async createStory(story: Story): Promise<Story> {
     const data = story.toPrimitives();
 
+    const now = new Date();
+
     const newStory = await this.prisma.story.create({
       data: {
         id: data.id,
@@ -44,6 +46,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         }),
         totalRating: data.totalRating,
         totalChapters: data.totalChapters,
+        createdAt: now,
+        lastActivityAt: now,
       },
       include: {
         tags: true,
@@ -64,6 +68,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       id: newStory.id,
       createdAt: newStory.createdAt,
       updatedAt: newStory.updatedAt,
+      lastActivityAt: newStory.lastActivityAt,
     });
   }
 
@@ -288,6 +293,44 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     return rawStories.map((story) => this.mapToStoryWithDetails(story));
   }
 
+  async findLastModifiedStoryByUserId(
+    userId: string,
+  ): Promise<StoryWithDetails | undefined> {
+    const recentModifiedStory = await this.prisma.story.findFirst({
+      where: {
+        userId,
+      },
+      orderBy: {
+        lastActivityAt: 'desc',
+      },
+      include: {
+        genre: true,
+        secondaryGenre: true,
+        tags: true,
+        chapters: {
+          orderBy: [
+            {
+              updatedAt: {
+                sort: 'desc',
+                nulls: 'last',
+              },
+            },
+            {
+              createdAt: 'desc',
+            },
+          ],
+          take: 1,
+        },
+      },
+    });
+
+    if (!recentModifiedStory) {
+      return undefined;
+    }
+
+    return this.mapToStoryWithDetails(recentModifiedStory);
+  }
+
   async deleteStoryById(id: string): Promise<void> {
     await this.prisma.story.delete({
       where: { id },
@@ -298,6 +341,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     id: string,
     data: UpdateStoryData,
   ): Promise<StoryWithDetails> {
+    const now = new Date();
+
     const updatedStory = await this.prisma.story.update({
       where: { id },
       data: {
@@ -315,7 +360,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
             connect: { id: data.secondaryGenreId },
           },
         }),
-        updatedAt: new Date(),
+        updatedAt: now,
+        lastActivityAt: now,
       },
       include: {
         genre: true,
@@ -362,6 +408,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       status: updatedStory.status,
       createdAt: updatedStory.createdAt,
       updatedAt: updatedStory.updatedAt,
+      lastActivityAt: updatedStory.lastActivityAt,
     });
   }
 
@@ -384,6 +431,16 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     status: string;
     createdAt: Date;
     updatedAt: Date | null;
+    lastActivityAt: Date | null;
+    chapters?: {
+      id: string;
+      title: string;
+      order: number;
+      hidden: boolean;
+      content: string;
+      createdAt: Date;
+      updatedAt: Date | null;
+    }[];
   }): StoryWithDetails {
     return {
       id: story.id,
@@ -409,6 +466,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       status: story.status,
       createdAt: story.createdAt,
       updatedAt: story.updatedAt,
+      lastActivityAt: story.lastActivityAt,
+      ...(story.chapters && { chapters: story.chapters }),
     };
   }
 }

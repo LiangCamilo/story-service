@@ -32,32 +32,37 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
     });
 
     const order = allChapters.length + 1;
+    const now = new Date();
 
-    const rawChapter = await this.prisma.chapter.create({
-      data: {
-        id: data.id,
-        title: `Nueva parte #${order}`,
-        content: '',
-        order,
-        story: {
-          connect: {
-            id: data.storyId,
+    const [rawChapter] = await this.prisma.$transaction([
+      this.prisma.chapter.create({
+        data: {
+          id: data.id,
+          title: `Nueva parte #${order}`,
+          content: '',
+          order,
+          story: {
+            connect: {
+              id: data.storyId,
+            },
           },
+          createdAt: now,
         },
-      },
-      include: {
-        story: true,
-      },
-    });
+        include: {
+          story: true,
+        },
+      }),
 
-    await this.prisma.story.update({
-      where: { id: data.storyId },
-      data: {
-        totalChapters: {
-          increment: 1,
+      this.prisma.story.update({
+        where: { id: data.storyId },
+        data: {
+          totalChapters: {
+            increment: 1,
+          },
+          lastActivityAt: now,
         },
-      },
-    });
+      }),
+    ]);
 
     return this.mapToChapterWithDetails({
       id: rawChapter.id,
@@ -195,6 +200,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
           totalChapters: {
             decrement: 1,
           },
+          lastActivityAt: new Date(),
         },
       }),
     ]);
@@ -207,6 +213,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
     updateChapterDto: UpdateChapterDto,
   ): Promise<Chapter> {
     const { content, title } = updateChapterDto;
+    const now = new Date();
 
     const chapter = await this.prisma.chapter.update({
       where: { id },
@@ -217,8 +224,13 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
         ...(content && {
           content,
         }),
-        updatedAt: new Date(),
+        updatedAt: now,
       },
+    });
+
+    await this.prisma.story.update({
+      where: { id: chapter.storyId },
+      data: { lastActivityAt: now },
     });
 
     return Chapter.create({
@@ -241,12 +253,18 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       return undefined;
     }
 
+    const now = new Date();
     const updatedStory = await this.prisma.chapter.update({
       where: { id },
       data: {
         hidden: !existingChapter.hidden,
-        updatedAt: new Date(),
+        updatedAt: now,
       },
+    });
+
+    await this.prisma.story.update({
+      where: { id: updatedStory.storyId },
+      data: { lastActivityAt: now },
     });
 
     return Chapter.create({
