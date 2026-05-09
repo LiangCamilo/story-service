@@ -36,7 +36,7 @@ export class FavoriteStoryController {
     );
 
     return {
-      message: `Se ha añadido a favoritos la historia ${addedStoryToFavorite.getStory?.getTitle.getValue} `,
+      message: `Se ha añadido a favoritos la historia ${addedStoryToFavorite.getStory?.getTitle.getValue}`,
     };
   }
 
@@ -75,7 +75,7 @@ export class FavoriteStoryController {
       );
 
     return {
-      message: `Se ha removido de favoritos la historia ${removedStoryFromFavorite.getStory?.getTitle.getValue} `,
+      message: `Se ha removido de favoritos la historia ${removedStoryFromFavorite.getStory?.getTitle.getValue}`,
     };
   }
 }
