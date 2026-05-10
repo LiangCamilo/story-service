@@ -38,6 +38,6 @@ export class UpdateStoryTagsUseCase {
     const allTags = [...existingTags, ...newTags];
     const allTagIds = allTags.map((tag) => tag.getId.getValue);
 
-    return await this.storyRepository.updateStoryTags(storyId, allTagIds);
+    await this.storyRepository.updateStoryTags(storyId, allTagIds);
   }
 }

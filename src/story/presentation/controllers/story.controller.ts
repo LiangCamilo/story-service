@@ -210,7 +210,11 @@ export class StoryController {
     @Param('storyId') storyId: string,
     @Body() updateStoryTags: UpdateStoryTagsDto,
   ) {
-    return await this.updateStoryTagsUseCase.execute(storyId, updateStoryTags);
+    await this.updateStoryTagsUseCase.execute(storyId, updateStoryTags);
+
+    return {
+      message: 'Tags actualizados correctamente',
+    };
   }
 
   @Patch('cover/:id')
