@@ -411,6 +411,19 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     return this.mapToStoryWithDetails(updatedStory);
   }
 
+  async updateStoryTags(storyId: string, tagIds: string[]): Promise<void> {
+    await this.prisma.story.update({
+      where: { id: storyId },
+      data: {
+        tags: {
+          set: tagIds.map((id) => ({ id })),
+        },
+        updatedAt: new Date(),
+        lastActivityAt: new Date(),
+      },
+    });
+  }
+
   async toggleHidden(id: string): Promise<Story | undefined> {
     const existingStory = await this.prisma.story.findUnique({
       where: { id },

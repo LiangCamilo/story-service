@@ -22,10 +22,7 @@ export class UpdateStoryUseCase {
     @Inject(GENRE_REPOSITORY) private genreRepository: GenreRepositoryPort,
   ) {}
 
-  async execute(
-    id: string,
-    dto: UpdateStoryDto,
-  ): Promise<StoryWithDetails> {
+  async execute(id: string, dto: UpdateStoryDto): Promise<StoryWithDetails> {
     const existingStory = await this.storyRepository.findById(id);
 
     if (!existingStory) {
