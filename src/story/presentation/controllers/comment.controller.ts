@@ -1,4 +1,4 @@
-import { Body, Controller } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { CreateCommentDto } from 'src/story/application/dtos/comment-dtos/create-comment.dto';
 import { CreateCommentUseCase } from 'src/story/application/use-cases/comment-use-cases/create-comment.use-case';
 
@@ -6,6 +6,7 @@ import { CreateCommentUseCase } from 'src/story/application/use-cases/comment-us
 export class CommentController {
   constructor(private createCommentUseCase: CreateCommentUseCase) {}
 
+  @Post('create')
   async create(@Body() createCommentDto: CreateCommentDto) {
     const newComment =
       await this.createCommentUseCase.execute(createCommentDto);
