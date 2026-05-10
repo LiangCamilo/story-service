@@ -14,10 +14,10 @@ export class FindAndFilterMultipleStoryUseCase {
   async execute(filterDto: FilterMultipleStoryDto) {
     const { limit, offset } = filterDto;
 
-    const stories = await this.storyRepository.findAndFilterMultiple(filterDto);
+    const { stories, totalItems } =
+      await this.storyRepository.findAndFilterMultiple(filterDto);
 
     const pageSize: number = limit;
-    const totalItems = stories.length;
     const totalPages = Math.ceil(totalItems / pageSize);
     const numberPage = Math.floor(offset / limit) + 1;
 

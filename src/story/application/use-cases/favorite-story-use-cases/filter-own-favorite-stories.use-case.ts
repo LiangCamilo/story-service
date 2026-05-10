@@ -18,14 +18,13 @@ export class FilterOwnFavoriteStoriesUseCase {
   ) {
     const { limit, offset } = filterFavoriteStoriesDto;
 
-    const filteredFavoriteStories =
+    const { stories: filteredFavoriteStories, totalItems } =
       await this.favoriteStoryRepository.filterFavoriteStories(
         userId,
         filterFavoriteStoriesDto,
       );
 
     const pageSize: number = limit;
-    const totalItems = filteredFavoriteStories.length;
     const totalPages = Math.ceil(totalItems / pageSize);
     const numberPage = Math.floor(offset / limit) + 1;
 

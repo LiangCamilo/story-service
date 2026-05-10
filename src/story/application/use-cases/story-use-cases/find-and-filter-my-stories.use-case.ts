@@ -12,13 +12,10 @@ export class FindAndFilterMyStoriesUseCase {
   ) {}
 
   async execute(userId: string, dto: FilterMyStoriesDto) {
-    const stories = await this.storyRepository.findAndFilterMyStories(
-      userId,
-      dto,
-    );
+    const { stories, totalItems } =
+      await this.storyRepository.findAndFilterMyStories(userId, dto);
 
     const pageSize: number = dto.limit;
-    const totalItems = stories.length;
     const totalPages = Math.ceil(totalItems / pageSize);
     const numberPage = Math.floor(dto.offset / dto.limit) + 1;
 

@@ -46,6 +46,8 @@ import { FindAndFilterMyStoriesUseCase } from './application/use-cases/story-use
 import { FilterOwnFavoriteStoriesUseCase } from './application/use-cases/favorite-story-use-cases/filter-own-favorite-stories.use-case';
 import { RemoveStoryFromFavoriteUseCase } from './application/use-cases/favorite-story-use-cases/remove-story-from-favorite.use-case';
 import { FindLastModifiedStoryByUserIdUseCase } from './application/use-cases/story-use-cases/find-last-modified-story-by-user-id.use-case';
+import { TagController } from './presentation/controllers/tag.controller';
+import { SearchTagsBynameUseCase } from './application/use-cases/tag-use-cases/search-tags-by-name.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -56,6 +58,7 @@ import { FindLastModifiedStoryByUserIdUseCase } from './application/use-cases/st
     ViewController,
     RatingController,
     FavoriteStoryController,
+    TagController,
   ],
   providers: [
     ...[
@@ -84,6 +87,7 @@ import { FindLastModifiedStoryByUserIdUseCase } from './application/use-cases/st
     ],
     ...[CreateViewUseCase],
     ...[CreateOrUpdateRatingUseCase],
+    ...[SearchTagsBynameUseCase],
     ...[
       AddFavoriteStoryUseCase,
       FilterOwnFavoriteStoriesUseCase,

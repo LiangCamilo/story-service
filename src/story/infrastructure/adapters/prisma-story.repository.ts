@@ -108,7 +108,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
 
   async findAndFilterMultiple(
     filterMultiple: FilterMultipleStoryDto,
-  ): Promise<StoryWithDetails[]> {
+  ): Promise<{ stories: StoryWithDetails[]; totalItems: number }> {
     const {
       limit,
       offset,
@@ -143,66 +143,74 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       });
     }
 
-    const rawStories = await this.prisma.story.findMany({
-      skip: offset,
-      take: limit,
-      where: {
-        hidden: false,
-        ...(userId && {
-          userId,
-        }),
-        ...(title && {
-          title: {
-            contains: title,
-            mode: 'insensitive',
+    const where = {
+      hidden: false,
+      ...(userId && {
+        userId,
+      }),
+      ...(title && {
+        title: {
+          contains: title,
+          mode: 'insensitive' as const,
+        },
+      }),
+      ...(status && {
+        status,
+      }),
+      ...(genreName && {
+        genre: {
+          name: {
+            contains: genreName,
+            mode: 'insensitive' as const,
           },
-        }),
-        ...(status && {
-          status,
-        }),
-        ...(genreName && {
-          genre: {
-            name: {
-              contains: genreName,
-              mode: 'insensitive',
-            },
+        },
+      }),
+      ...(secondaryGenreName && {
+        secondaryGenre: {
+          name: {
+            contains: secondaryGenreName,
+            mode: 'insensitive' as const,
           },
-        }),
-        ...(secondaryGenreName && {
-          secondaryGenre: {
-            name: {
-              contains: secondaryGenreName,
-              mode: 'insensitive',
-            },
-          },
-        }),
-        ...(tagNames &&
-          tagNames.length > 0 && {
-            tags: {
-              some: {
-                name: {
-                  in: tagNames,
-                  mode: 'insensitive',
-                },
+        },
+      }),
+      ...(tagNames &&
+        tagNames.length > 0 && {
+          tags: {
+            some: {
+              name: {
+                in: tagNames,
+                mode: 'insensitive' as const,
               },
             },
-          }),
-      },
-      include: {
-        genre: true,
-        secondaryGenre: true,
-        tags: true,
-      },
-      orderBy,
-    });
+          },
+        }),
+    };
 
-    return rawStories.map((story) => this.mapToStoryWithDetails(story));
+    const [rawStories, totalItems] = await this.prisma.$transaction([
+      this.prisma.story.findMany({
+        skip: offset,
+        take: limit,
+        where,
+        include: {
+          genre: true,
+          secondaryGenre: true,
+          tags: true,
+        },
+        orderBy,
+      }),
+      this.prisma.story.count({ where }),
+    ]);
+
+    return {
+      stories: rawStories.map((story) => this.mapToStoryWithDetails(story)),
+      totalItems,
+    };
   }
 
   async findAndFilterMyStories(
     userId: string,
     dto: FilterMyStoriesDto,
-  ): Promise<StoryWithDetails[]> {
+  ): Promise<{ stories: StoryWithDetails[]; totalItems: number }> {
     const {
       limit,
       offset,
@@ -237,60 +245,68 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       });
     }
 
-    const rawStories = await this.prisma.story.findMany({
-      skip: offset,
-      take: limit,
-      where: {
-        userId,
-        ...(hidden !== undefined && {
-          hidden,
-        }),
-        ...(title && {
-          title: {
-            contains: title,
-            mode: 'insensitive',
+    const where = {
+      userId,
+      ...(hidden !== undefined && {
+        hidden,
+      }),
+      ...(title && {
+        title: {
+          contains: title,
+          mode: 'insensitive' as const,
+        },
+      }),
+      ...(status && {
+        status,
+      }),
+      ...(genreName && {
+        genre: {
+          name: {
+            contains: genreName,
+            mode: 'insensitive' as const,
           },
-        }),
-        ...(status && {
-          status,
-        }),
-        ...(genreName && {
-          genre: {
-            name: {
-              contains: genreName,
-              mode: 'insensitive',
-            },
+        },
+      }),
+      ...(secondaryGenreName && {
+        secondaryGenre: {
+          name: {
+            contains: secondaryGenreName,
+            mode: 'insensitive' as const,
           },
-        }),
-        ...(secondaryGenreName && {
-          secondaryGenre: {
-            name: {
-              contains: secondaryGenreName,
-              mode: 'insensitive',
-            },
-          },
-        }),
-        ...(tagNames &&
-          tagNames.length > 0 && {
-            tags: {
-              some: {
-                name: {
-                  in: tagNames,
-                  mode: 'insensitive',
-                },
+        },
+      }),
+      ...(tagNames &&
+        tagNames.length > 0 && {
+          tags: {
+            some: {
+              name: {
+                in: tagNames,
+                mode: 'insensitive' as const,
               },
             },
-          }),
-      },
-      include: {
-        genre: true,
-        secondaryGenre: true,
-        tags: true,
-      },
-      orderBy,
-    });
+          },
+        }),
+    };
 
-    return rawStories.map((story) => this.mapToStoryWithDetails(story));
+    const [rawStories, totalItems] = await this.prisma.$transaction([
+      this.prisma.story.findMany({
+        skip: offset,
+        take: limit,
+        where,
+        include: {
+          genre: true,
+          secondaryGenre: true,
+          tags: true,
+        },
+        orderBy,
+      }),
+      this.prisma.story.count({ where }),
+    ]);
+
+    return {
+      stories: rawStories.map((story) => this.mapToStoryWithDetails(story)),
+      totalItems,
+    };
   }
 
   async findLastModifiedStoryByUserId(

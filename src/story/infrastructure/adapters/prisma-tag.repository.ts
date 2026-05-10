@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { SearchTagsByNameDto } from 'src/story/application/dtos/tag-dtos/search-tags-by-name.dto';
 import { TagRepositoryPort } from 'src/story/application/ports/tag.repository';
 import { Tag } from 'src/story/domain/entities/tag.entity';
 import { Id } from 'src/story/domain/value-objects/id.vo';
@@ -60,5 +61,38 @@ export class PrismaTagRepository implements TagRepositoryPort {
     }
 
     await this.prisma.tag.delete({ where: { name } });
+  }
+
+  async searchTagsByName(
+    searchTagsByNameDto: SearchTagsByNameDto,
+  ): Promise<{ tags: Tag[]; totalItems: number }> {
+    const { limit, offset, tagName } = searchTagsByNameDto;
+
+    const where = {
+      name: {
+        contains: tagName,
+        mode: 'insensitive' as const,
+      },
+    };
+
+    const [filteredTags, totalItems] = await this.prisma.$transaction([
+      this.prisma.tag.findMany({
+        skip: offset,
+        take: limit,
+        where,
+      }),
+      this.prisma.tag.count({
+        where,
+      }),
+    ]);
+
+    const tags = filteredTags.map((tag) => {
+      return Tag.create({
+        id: tag.id,
+        name: tag.name,
+      });
+    });
+
+    return { tags, totalItems };
   }
 }
