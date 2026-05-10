@@ -65,6 +65,11 @@ export type Tag = Prisma.TagModel
  */
 export type Chapter = Prisma.ChapterModel
 /**
+ * Model Comment
+ * 
+ */
+export type Comment = Prisma.CommentModel
+/**
  * Model Rating
  * 
  */

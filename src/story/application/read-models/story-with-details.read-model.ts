@@ -14,6 +14,7 @@ export interface StoryWithDetails {
   totalChapters: number;
   totalViews: number;
   totalFavorites: number;
+  totalComments: number;
   status: string;
   createdAt: Date;
   updatedAt: Date | null;
@@ -24,6 +25,7 @@ export interface StoryWithDetails {
     order: number;
     hidden: boolean;
     content: string;
+    totalComments: number;
     createdAt: Date;
     updatedAt: Date | null;
   }[];

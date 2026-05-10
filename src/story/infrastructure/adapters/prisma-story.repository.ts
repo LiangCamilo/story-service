@@ -65,6 +65,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       tagIds: data.tagIds,
       totalRating: Number(newStory.totalRating),
       totalChapters: Number(newStory.totalChapters),
+      totalComments: Number(newStory.totalComments),
       id: newStory.id,
       createdAt: newStory.createdAt,
       updatedAt: newStory.updatedAt,
@@ -453,6 +454,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       ratingSum: Number(updatedStory.ratingSum),
       totalRating: Number(updatedStory.totalRating),
       totalChapters: updatedStory.totalChapters,
+      totalComments: Number(updatedStory.totalComments),
       secondaryGenreId: updatedStory.secondaryGenreId ?? undefined,
       totalFavorite: updatedStory.totalFavorite,
       totalViews: updatedStory.totalViews,
@@ -479,6 +481,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     totalChapters: number;
     totalViews: number;
     totalFavorite: number;
+    totalComments: number;
     status: string;
     createdAt: Date;
     updatedAt: Date | null;
@@ -489,6 +492,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       order: number;
       hidden: boolean;
       content: string;
+      totalComments: number;
       createdAt: Date;
       updatedAt: Date | null;
     }[];
@@ -514,6 +518,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       totalChapters: story.totalChapters,
       totalViews: story.totalViews,
       totalFavorites: story.totalFavorite,
+      totalComments: story.totalComments,
       status: story.status,
       createdAt: story.createdAt,
       updatedAt: story.updatedAt,

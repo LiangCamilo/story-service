@@ -56,6 +56,7 @@ export const ModelName = {
   Genre: 'Genre',
   Tag: 'Tag',
   Chapter: 'Chapter',
+  Comment: 'Comment',
   Rating: 'Rating',
   View: 'View'
 } as const
@@ -90,6 +91,7 @@ export const StoryScalarFieldEnum = {
   totalViews: 'totalViews',
   userId: 'userId',
   totalFavorite: 'totalFavorite',
+  totalComments: 'totalComments',
   genreId: 'genreId',
   secondaryGenreId: 'secondaryGenreId',
   createdAt: 'createdAt',
@@ -137,12 +139,27 @@ export const ChapterScalarFieldEnum = {
   order: 'order',
   content: 'content',
   hidden: 'hidden',
+  totalComments: 'totalComments',
   storyId: 'storyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ChapterScalarFieldEnum = (typeof ChapterScalarFieldEnum)[keyof typeof ChapterScalarFieldEnum]
+
+
+export const CommentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  content: 'content',
+  likes: 'likes',
+  storyId: 'storyId',
+  chapterId: 'chapterId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
 
 
 export const RatingScalarFieldEnum = {
