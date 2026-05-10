@@ -49,6 +49,10 @@ import { FindLastModifiedStoryByUserIdUseCase } from './application/use-cases/st
 import { TagController } from './presentation/controllers/tag.controller';
 import { SearchTagsBynameUseCase } from './application/use-cases/tag-use-cases/search-tags-by-name.use-case';
 import { UpdateStoryTagsUseCase } from './application/use-cases/story-use-cases/update-story-tags.use-case';
+import { COMMENT_REPOSITORY } from './application/ports/comment.repository';
+import { PrismaCommentRepository } from './infrastructure/adapters/prisma-comment.repository';
+import { CreateCommentUseCase } from './application/use-cases/comment-use-cases/create-comment.use-case';
+import { CommentController } from './presentation/controllers/comment.controller';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -60,6 +64,7 @@ import { UpdateStoryTagsUseCase } from './application/use-cases/story-use-cases/
     RatingController,
     FavoriteStoryController,
     TagController,
+    CommentController,
   ],
   providers: [
     ...[
@@ -95,6 +100,11 @@ import { UpdateStoryTagsUseCase } from './application/use-cases/story-use-cases/
       FilterOwnFavoriteStoriesUseCase,
       RemoveStoryFromFavoriteUseCase,
     ],
+    ...[CreateCommentUseCase],
+    {
+      provide: COMMENT_REPOSITORY,
+      useClass: PrismaCommentRepository,
+    },
     {
       provide: STORY_REPOSITORY,
       useClass: PrismaStoryRepository,

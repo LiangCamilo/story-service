@@ -152,7 +152,7 @@ export type FavoriteStoryGroupByOutputType = {
   storyId: string
   userId: string
   createdAt: Date
-  updatedAt: Date
+  updatedAt: Date | null
   _count: FavoriteStoryCountAggregateOutputType | null
   _min: FavoriteStoryMinAggregateOutputType | null
   _max: FavoriteStoryMaxAggregateOutputType | null
@@ -181,7 +181,7 @@ export type FavoriteStoryWhereInput = {
   storyId?: Prisma.UuidFilter<"FavoriteStory"> | string
   userId?: Prisma.UuidFilter<"FavoriteStory"> | string
   createdAt?: Prisma.DateTimeFilter<"FavoriteStory"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"FavoriteStory"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"FavoriteStory"> | Date | string | null
   story?: Prisma.XOR<Prisma.StoryScalarRelationFilter, Prisma.StoryWhereInput>
 }
 
@@ -190,7 +190,7 @@ export type FavoriteStoryOrderByWithRelationInput = {
   storyId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   story?: Prisma.StoryOrderByWithRelationInput
 }
 
@@ -203,7 +203,7 @@ export type FavoriteStoryWhereUniqueInput = Prisma.AtLeast<{
   storyId?: Prisma.UuidFilter<"FavoriteStory"> | string
   userId?: Prisma.UuidFilter<"FavoriteStory"> | string
   createdAt?: Prisma.DateTimeFilter<"FavoriteStory"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"FavoriteStory"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"FavoriteStory"> | Date | string | null
   story?: Prisma.XOR<Prisma.StoryScalarRelationFilter, Prisma.StoryWhereInput>
 }, "id" | "storyId_userId">
 
@@ -212,7 +212,7 @@ export type FavoriteStoryOrderByWithAggregationInput = {
   storyId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.FavoriteStoryCountOrderByAggregateInput
   _max?: Prisma.FavoriteStoryMaxOrderByAggregateInput
   _min?: Prisma.FavoriteStoryMinOrderByAggregateInput
@@ -226,14 +226,14 @@ export type FavoriteStoryScalarWhereWithAggregatesInput = {
   storyId?: Prisma.UuidWithAggregatesFilter<"FavoriteStory"> | string
   userId?: Prisma.UuidWithAggregatesFilter<"FavoriteStory"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"FavoriteStory"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"FavoriteStory"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"FavoriteStory"> | Date | string | null
 }
 
 export type FavoriteStoryCreateInput = {
   id: string
   userId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   story: Prisma.StoryCreateNestedOneWithoutFavoriteStoriesInput
 }
 
@@ -242,14 +242,14 @@ export type FavoriteStoryUncheckedCreateInput = {
   storyId: string
   userId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type FavoriteStoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   story?: Prisma.StoryUpdateOneRequiredWithoutFavoriteStoriesNestedInput
 }
 
@@ -258,7 +258,7 @@ export type FavoriteStoryUncheckedUpdateInput = {
   storyId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type FavoriteStoryCreateManyInput = {
@@ -266,14 +266,14 @@ export type FavoriteStoryCreateManyInput = {
   storyId: string
   userId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type FavoriteStoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type FavoriteStoryUncheckedUpdateManyInput = {
@@ -281,7 +281,7 @@ export type FavoriteStoryUncheckedUpdateManyInput = {
   storyId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type FavoriteStoryListRelationFilter = {
@@ -369,14 +369,14 @@ export type FavoriteStoryCreateWithoutStoryInput = {
   id: string
   userId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type FavoriteStoryUncheckedCreateWithoutStoryInput = {
   id: string
   userId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type FavoriteStoryCreateOrConnectWithoutStoryInput = {
@@ -413,35 +413,35 @@ export type FavoriteStoryScalarWhereInput = {
   storyId?: Prisma.UuidFilter<"FavoriteStory"> | string
   userId?: Prisma.UuidFilter<"FavoriteStory"> | string
   createdAt?: Prisma.DateTimeFilter<"FavoriteStory"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"FavoriteStory"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"FavoriteStory"> | Date | string | null
 }
 
 export type FavoriteStoryCreateManyStoryInput = {
   id: string
   userId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type FavoriteStoryUpdateWithoutStoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type FavoriteStoryUncheckedUpdateWithoutStoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type FavoriteStoryUncheckedUpdateManyWithoutStoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -502,7 +502,7 @@ export type $FavoriteStoryPayload<ExtArgs extends runtime.Types.Extensions.Inter
     storyId: string
     userId: string
     createdAt: Date
-    updatedAt: Date
+    updatedAt: Date | null
   }, ExtArgs["result"]["favoriteStory"]>
   composites: {}
 }

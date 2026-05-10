@@ -55,7 +55,7 @@ model FavoriteStory {
   userId String @db.Uuid
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime? @updatedAt
 
   story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
   @@unique([storyId, userId])
@@ -79,7 +79,7 @@ model Tag {
   stories Story[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime? @updatedAt
 }
 
 model Chapter {
@@ -106,7 +106,7 @@ model Comment {
   id String @id @db.Uuid
   userId String
   content String
-  likes Int
+  likes Int @default(0)
 
   storyId String? @db.Uuid
   chapterId String? @db.Uuid
@@ -115,7 +115,7 @@ model Comment {
   chapter Chapter? @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
-  updatedAt DateTime 
+  updatedAt DateTime? 
 }
 
 model Rating {

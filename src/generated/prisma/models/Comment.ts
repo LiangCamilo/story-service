@@ -205,7 +205,7 @@ export type CommentGroupByOutputType = {
   storyId: string | null
   chapterId: string | null
   createdAt: Date
-  updatedAt: Date
+  updatedAt: Date | null
   _count: CommentCountAggregateOutputType | null
   _avg: CommentAvgAggregateOutputType | null
   _sum: CommentSumAggregateOutputType | null
@@ -239,7 +239,7 @@ export type CommentWhereInput = {
   storyId?: Prisma.UuidNullableFilter<"Comment"> | string | null
   chapterId?: Prisma.UuidNullableFilter<"Comment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Comment"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Comment"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Comment"> | Date | string | null
   story?: Prisma.XOR<Prisma.StoryNullableScalarRelationFilter, Prisma.StoryWhereInput> | null
   chapter?: Prisma.XOR<Prisma.ChapterNullableScalarRelationFilter, Prisma.ChapterWhereInput> | null
 }
@@ -252,7 +252,7 @@ export type CommentOrderByWithRelationInput = {
   storyId?: Prisma.SortOrderInput | Prisma.SortOrder
   chapterId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   story?: Prisma.StoryOrderByWithRelationInput
   chapter?: Prisma.ChapterOrderByWithRelationInput
 }
@@ -268,7 +268,7 @@ export type CommentWhereUniqueInput = Prisma.AtLeast<{
   storyId?: Prisma.UuidNullableFilter<"Comment"> | string | null
   chapterId?: Prisma.UuidNullableFilter<"Comment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Comment"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Comment"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Comment"> | Date | string | null
   story?: Prisma.XOR<Prisma.StoryNullableScalarRelationFilter, Prisma.StoryWhereInput> | null
   chapter?: Prisma.XOR<Prisma.ChapterNullableScalarRelationFilter, Prisma.ChapterWhereInput> | null
 }, "id">
@@ -281,7 +281,7 @@ export type CommentOrderByWithAggregationInput = {
   storyId?: Prisma.SortOrderInput | Prisma.SortOrder
   chapterId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CommentCountOrderByAggregateInput
   _avg?: Prisma.CommentAvgOrderByAggregateInput
   _max?: Prisma.CommentMaxOrderByAggregateInput
@@ -300,16 +300,16 @@ export type CommentScalarWhereWithAggregatesInput = {
   storyId?: Prisma.UuidNullableWithAggregatesFilter<"Comment"> | string | null
   chapterId?: Prisma.UuidNullableWithAggregatesFilter<"Comment"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Comment"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Comment"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Comment"> | Date | string | null
 }
 
 export type CommentCreateInput = {
   id: string
   userId: string
   content: string
-  likes: number
+  likes?: number
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string | null
   story?: Prisma.StoryCreateNestedOneWithoutCommentsInput
   chapter?: Prisma.ChapterCreateNestedOneWithoutCommentsInput
 }
@@ -318,11 +318,11 @@ export type CommentUncheckedCreateInput = {
   id: string
   userId: string
   content: string
-  likes: number
+  likes?: number
   storyId?: string | null
   chapterId?: string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type CommentUpdateInput = {
@@ -331,7 +331,7 @@ export type CommentUpdateInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
   likes?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   story?: Prisma.StoryUpdateOneWithoutCommentsNestedInput
   chapter?: Prisma.ChapterUpdateOneWithoutCommentsNestedInput
 }
@@ -344,18 +344,18 @@ export type CommentUncheckedUpdateInput = {
   storyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chapterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CommentCreateManyInput = {
   id: string
   userId: string
   content: string
-  likes: number
+  likes?: number
   storyId?: string | null
   chapterId?: string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type CommentUpdateManyMutationInput = {
@@ -364,7 +364,7 @@ export type CommentUpdateManyMutationInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
   likes?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CommentUncheckedUpdateManyInput = {
@@ -375,7 +375,7 @@ export type CommentUncheckedUpdateManyInput = {
   storyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chapterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CommentListRelationFilter = {
@@ -517,9 +517,9 @@ export type CommentCreateWithoutStoryInput = {
   id: string
   userId: string
   content: string
-  likes: number
+  likes?: number
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string | null
   chapter?: Prisma.ChapterCreateNestedOneWithoutCommentsInput
 }
 
@@ -527,10 +527,10 @@ export type CommentUncheckedCreateWithoutStoryInput = {
   id: string
   userId: string
   content: string
-  likes: number
+  likes?: number
   chapterId?: string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type CommentCreateOrConnectWithoutStoryInput = {
@@ -570,16 +570,16 @@ export type CommentScalarWhereInput = {
   storyId?: Prisma.UuidNullableFilter<"Comment"> | string | null
   chapterId?: Prisma.UuidNullableFilter<"Comment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Comment"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Comment"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Comment"> | Date | string | null
 }
 
 export type CommentCreateWithoutChapterInput = {
   id: string
   userId: string
   content: string
-  likes: number
+  likes?: number
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string | null
   story?: Prisma.StoryCreateNestedOneWithoutCommentsInput
 }
 
@@ -587,10 +587,10 @@ export type CommentUncheckedCreateWithoutChapterInput = {
   id: string
   userId: string
   content: string
-  likes: number
+  likes?: number
   storyId?: string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type CommentCreateOrConnectWithoutChapterInput = {
@@ -623,10 +623,10 @@ export type CommentCreateManyStoryInput = {
   id: string
   userId: string
   content: string
-  likes: number
+  likes?: number
   chapterId?: string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type CommentUpdateWithoutStoryInput = {
@@ -635,7 +635,7 @@ export type CommentUpdateWithoutStoryInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
   likes?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapter?: Prisma.ChapterUpdateOneWithoutCommentsNestedInput
 }
 
@@ -646,7 +646,7 @@ export type CommentUncheckedUpdateWithoutStoryInput = {
   likes?: Prisma.IntFieldUpdateOperationsInput | number
   chapterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CommentUncheckedUpdateManyWithoutStoryInput = {
@@ -656,17 +656,17 @@ export type CommentUncheckedUpdateManyWithoutStoryInput = {
   likes?: Prisma.IntFieldUpdateOperationsInput | number
   chapterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CommentCreateManyChapterInput = {
   id: string
   userId: string
   content: string
-  likes: number
+  likes?: number
   storyId?: string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type CommentUpdateWithoutChapterInput = {
@@ -675,7 +675,7 @@ export type CommentUpdateWithoutChapterInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
   likes?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   story?: Prisma.StoryUpdateOneWithoutCommentsNestedInput
 }
 
@@ -686,7 +686,7 @@ export type CommentUncheckedUpdateWithoutChapterInput = {
   likes?: Prisma.IntFieldUpdateOperationsInput | number
   storyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CommentUncheckedUpdateManyWithoutChapterInput = {
@@ -696,7 +696,7 @@ export type CommentUncheckedUpdateManyWithoutChapterInput = {
   likes?: Prisma.IntFieldUpdateOperationsInput | number
   storyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -779,7 +779,7 @@ export type $CommentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     storyId: string | null
     chapterId: string | null
     createdAt: Date
-    updatedAt: Date
+    updatedAt: Date | null
   }, ExtArgs["result"]["comment"]>
   composites: {}
 }
