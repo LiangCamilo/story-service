@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateCommentDto {
   @IsUUID()
@@ -10,8 +16,10 @@ export class CreateCommentDto {
   content!: string;
 
   @IsUUID()
+  @IsOptional()
   storyId?: string;
 
   @IsUUID()
+  @IsOptional()
   chapterId?: string;
 }
