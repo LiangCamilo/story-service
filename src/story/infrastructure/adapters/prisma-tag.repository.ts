@@ -10,6 +10,28 @@ import { TagName } from 'src/story/domain/value-objects/tag-vo/tag-name.vo';
 export class PrismaTagRepository implements TagRepositoryPort {
   constructor(private prisma: PrismaService) {}
 
+  async findTagsByStoryId(storyId: string): Promise<Tag[]> {
+    const story = await this.prisma.story.findUnique({
+      where: {
+        id: storyId,
+      },
+      select: {
+        tags: true,
+      },
+    });
+
+    if (story?.tags) {
+      return story.tags.map((tag) => {
+        return Tag.create({
+          id: tag.id,
+          name: tag.name,
+        });
+      });
+    }
+
+    return [];
+  }
+
   async findTagsByName(tagNames: string[]): Promise<Tag[]> {
     const existingRawTags = await this.prisma.tag.findMany({
       where: {

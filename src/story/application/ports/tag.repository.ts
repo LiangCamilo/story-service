@@ -3,6 +3,7 @@ import { SearchTagsByNameDto } from '../dtos/tag-dtos/search-tags-by-name.dto';
 
 export interface TagRepositoryPort {
   findTagsByName(tagNames: string[]): Promise<Tag[]>;
+  findTagsByStoryId(storyId: string): Promise<Tag[]>;
   createTag(name: string): Promise<Tag>;
   createMultipleTags(tagNames: Tag[]): Promise<Tag[]>;
   deleteTagById(id: string): Promise<void | null>;

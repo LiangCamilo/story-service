@@ -48,6 +48,7 @@ import { RemoveStoryFromFavoriteUseCase } from './application/use-cases/favorite
 import { FindLastModifiedStoryByUserIdUseCase } from './application/use-cases/story-use-cases/find-last-modified-story-by-user-id.use-case';
 import { TagController } from './presentation/controllers/tag.controller';
 import { SearchTagsBynameUseCase } from './application/use-cases/tag-use-cases/search-tags-by-name.use-case';
+import { UpdateStoryTagsUseCase } from './application/use-cases/story-use-cases/update-story-tags.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -74,6 +75,7 @@ import { SearchTagsBynameUseCase } from './application/use-cases/tag-use-cases/s
       DeleteStoryByIdUseCase,
       UpdateStoryUseCase,
       UpdateStoryCoverUseCase,
+      UpdateStoryTagsUseCase,
       RemoveStoryCoverUseCase,
       ToggleHiddenStoryUseCase,
     ],

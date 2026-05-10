@@ -38,6 +38,8 @@ import { FindAndFilterMyStoriesUseCase } from 'src/story/application/use-cases/s
 import { FilterMyStoriesDto } from 'src/story/application/dtos/story-dtos/filter-my-stories.dto';
 import { Response } from 'express';
 import { FindLastModifiedStoryByUserIdUseCase } from 'src/story/application/use-cases/story-use-cases/find-last-modified-story-by-user-id.use-case';
+import { UpdateStoryTagsDto } from 'src/story/application/dtos/story-dtos/update-story-tags.dto';
+import { UpdateStoryTagsUseCase } from 'src/story/application/use-cases/story-use-cases/update-story-tags.use-case';
 
 @UseFilters(StoryExceptionFilter, GenreExceptionFilter)
 @Controller('api/story')
@@ -54,6 +56,7 @@ export class StoryController {
     private toggleHiddenStoryUseCase: ToggleHiddenStoryUseCase,
     private findAndFilterMyStoriesUseCase: FindAndFilterMyStoriesUseCase,
     private findLastModifiedStoryByUserIdUseCase: FindLastModifiedStoryByUserIdUseCase,
+    private updateStoryTagsUseCase: UpdateStoryTagsUseCase,
     @Inject(viewConfig.KEY)
     private readonly viewEnvs: ConfigType<typeof viewConfig>,
   ) {}
@@ -200,6 +203,18 @@ export class StoryController {
     @Body() updateStoryDto: UpdateStoryDto,
   ) {
     return this.updateStoryUseCase.execute(id, updateStoryDto);
+  }
+
+  @Put('update/:storyId/tags')
+  async updateStoryTags(
+    @Param('storyId') storyId: string,
+    @Body() updateStoryTags: UpdateStoryTagsDto,
+  ) {
+    await this.updateStoryTagsUseCase.execute(storyId, updateStoryTags);
+
+    return {
+      message: 'Tags actualizados correctamente',
+    };
   }
 
   @Patch('cover/:id')

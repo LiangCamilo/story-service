@@ -25,6 +25,7 @@ export interface StoryRepositoryPort {
   deleteStoryById(id: string): Promise<void>;
   updateStory(id: string, data: UpdateStoryData): Promise<StoryWithDetails>;
   updateCoverUrl(id: string, coverUrl: string): Promise<StoryWithDetails>;
+  updateStoryTags(storyId: string, tagIds: string[]): Promise<void>;
   toggleHidden(id: string): Promise<Story | undefined>;
   findLastModifiedStoryByUserId(
     userId: string,
