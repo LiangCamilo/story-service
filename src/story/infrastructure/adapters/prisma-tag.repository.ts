@@ -65,25 +65,34 @@ export class PrismaTagRepository implements TagRepositoryPort {
 
   async searchTagsByName(
     searchTagsByNameDto: SearchTagsByNameDto,
-  ): Promise<Tag[]> {
+  ): Promise<{ tags: Tag[]; totalItems: number }> {
     const { limit, offset, tagName } = searchTagsByNameDto;
 
-    const filteredTags = await this.prisma.tag.findMany({
-      skip: offset,
-      take: limit,
-      where: {
-        name: {
-          contains: tagName,
-          mode: 'insensitive',
-        },
+    const where = {
+      name: {
+        contains: tagName,
+        mode: 'insensitive' as const,
       },
-    });
+    };
 
-    return filteredTags.map((tag) => {
+    const [filteredTags, totalItems] = await this.prisma.$transaction([
+      this.prisma.tag.findMany({
+        skip: offset,
+        take: limit,
+        where,
+      }),
+      this.prisma.tag.count({
+        where,
+      }),
+    ]);
+
+    const tags = filteredTags.map((tag) => {
       return Tag.create({
         id: tag.id,
         name: tag.name,
       });
     });
+
+    return { tags, totalItems };
   }
 }

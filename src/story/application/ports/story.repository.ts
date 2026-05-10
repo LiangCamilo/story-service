@@ -17,11 +17,11 @@ export interface StoryRepositoryPort {
   findById(id: string): Promise<StoryWithDetails | undefined>;
   findAndFilterMultiple(
     filterMultiple: FilterMultipleStoryDto,
-  ): Promise<StoryWithDetails[]>;
+  ): Promise<{ stories: StoryWithDetails[]; totalItems: number }>;
   findAndFilterMyStories(
     userId: string,
     filterMultiple: FilterMyStoriesDto,
-  ): Promise<StoryWithDetails[]>;
+  ): Promise<{ stories: StoryWithDetails[]; totalItems: number }>;
   deleteStoryById(id: string): Promise<void>;
   updateStory(id: string, data: UpdateStoryData): Promise<StoryWithDetails>;
   updateCoverUrl(id: string, coverUrl: string): Promise<StoryWithDetails>;

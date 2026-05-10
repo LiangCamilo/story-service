@@ -11,7 +11,7 @@ export interface FavoriteStoryRepositoryPort {
   filterFavoriteStories(
     userId: string,
     filterFavoriteStoriesDto: FilterFavoriteStoriesDto,
-  ): Promise<StoryWithDetails[]>;
+  ): Promise<{ stories: StoryWithDetails[]; totalItems: number }>;
 
   findExistingFavorite(userId: string, storyId: string): Promise<boolean>;
 

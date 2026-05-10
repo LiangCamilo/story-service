@@ -11,11 +11,10 @@ export class SearchTagsBynameUseCase {
   async execute(searchTagsByNameDto: SearchTagsByNameDto) {
     const { limit, offset } = searchTagsByNameDto;
 
-    const tagsByName =
+    const { tags: tagsByName, totalItems } =
       await this.tagRepository.searchTagsByName(searchTagsByNameDto);
 
     const pageSize: number = limit;
-    const totalItems = tagsByName.length;
     const totalPages = Math.ceil(totalItems / pageSize);
     const numberPage = Math.floor(offset / limit) + 1;
 

@@ -7,7 +7,9 @@ export interface TagRepositoryPort {
   createMultipleTags(tagNames: Tag[]): Promise<Tag[]>;
   deleteTagById(id: string): Promise<void | null>;
   deleteTagByName(name: string): Promise<void | null>;
-  searchTagsByName(searchTagsByNameDto: SearchTagsByNameDto): Promise<Tag[]>;
+  searchTagsByName(
+    searchTagsByNameDto: SearchTagsByNameDto,
+  ): Promise<{ tags: Tag[]; totalItems: number }>;
 }
 
 export const TAG_REPOSITORY = Symbol('TAG_REPOSITORY');
