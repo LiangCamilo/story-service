@@ -8,7 +8,7 @@ import {
   CHAPTER_REPOSITORY,
   ChapterRepositoryPort,
 } from '../../ports/chapter.repository';
-import { UncertainOriginCommentError } from './uncertain-origin-comment.error';
+import { UncertainOriginCommentError } from '../../errors/comment-errors/uncertain-origin-comment.error';
 import { ChapterNotFoundError } from '../../errors/chapter-errors/chapter-not-found.error';
 import {
   STORY_REPOSITORY,

@@ -1,4 +1,4 @@
-import { CommentError } from '../../errors/comment-errors/comment.error';
+import { CommentError } from './comment.error';
 
 export class UncertainOriginCommentError extends CommentError {
   constructor(

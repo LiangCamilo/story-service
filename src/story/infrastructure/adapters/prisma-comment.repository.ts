@@ -18,10 +18,7 @@ export class PrismaCommentRepository implements CommentRepositoryPort {
 
     const { id, userId, content, storyId, chapterId } = data;
 
-    const hasStoryId = storyId !== undefined;
-    const hasChapterId = chapterId !== undefined;
-
-    if ((hasStoryId && hasChapterId) || (!hasStoryId && !hasChapterId)) {
+    if ((storyId && chapterId) || (!storyId && !chapterId)) {
       return undefined;
     }
 

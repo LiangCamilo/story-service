@@ -17,9 +17,9 @@ export class CreateCommentDto {
 
   @IsUUID()
   @IsOptional()
-  storyId?: string;
+  storyId?: string = undefined;
 
   @IsUUID()
   @IsOptional()
-  chapterId?: string;
+  chapterId?: string = undefined;
 }
