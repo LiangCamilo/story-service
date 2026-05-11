@@ -87,7 +87,7 @@ export class CommentController {
     );
 
     return {
-      comments: comments.map((comment) => {
+      data: comments.map((comment) => {
         return comment.toPrimitives();
       }),
       meta,
@@ -105,7 +105,7 @@ export class CommentController {
     );
 
     return {
-      comments: comments.map((comment) => {
+      data: comments.map((comment) => {
         return comment.toPrimitives();
       }),
       meta,

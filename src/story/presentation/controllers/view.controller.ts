@@ -15,10 +15,11 @@ export class ViewController {
   ) {}
 
   @Post('create')
-  async createView(
-    @Body() createViewDto: CreateViewDto,
-  ) {
-    const newView = await this.createViewUseCase.execute(createViewDto.storyId, createViewDto.userId);
+  async createView(@Body() createViewDto: CreateViewDto) {
+    const newView = await this.createViewUseCase.execute(
+      createViewDto.storyId,
+      createViewDto.userId,
+    );
 
     const viewUrl = this.viewEnvs.viewUrl;
 
