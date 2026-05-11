@@ -57,3 +57,8 @@ export type Rating = Prisma.RatingModel
  * 
  */
 export type View = Prisma.ViewModel
+/**
+ * Model CommentLike
+ * 
+ */
+export type CommentLike = Prisma.CommentLikeModel

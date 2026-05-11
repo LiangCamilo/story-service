@@ -114,6 +114,7 @@ model Comment {
 
   story Story? @relation(fields: [storyId], references: [id], onDelete: Cascade)
   chapter Chapter? @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  commentLikes CommentLike[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime? 
@@ -144,4 +145,16 @@ model View {
   updatedAt DateTime @updatedAt
 
   @@unique([storyId, userId])
+}
+
+model CommentLike {
+  id String @id @db.Uuid
+  commentId String @db.Uuid
+  userId String @db.Uuid
+
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([commentId, userId])
 }

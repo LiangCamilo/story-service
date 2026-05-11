@@ -55,6 +55,9 @@ import { CreateCommentUseCase } from './application/use-cases/comment-use-cases/
 import { CommentController } from './presentation/controllers/comment.controller';
 import { DeleteCommentUseCase } from './application/use-cases/comment-use-cases/delete-comment.use-case';
 import { UpdateCommentUseCase } from './application/use-cases/comment-use-cases/update-comment.use-case';
+import { ToggleCommentLikeUseCase } from './application/use-cases/comment-use-cases/toggle-comment-like.use-case';
+import { SearchChapterCommentsUseCase } from './application/use-cases/comment-use-cases/search-chapter-comments.use-case';
+import { SearchStoryCommentsUseCase } from './application/use-cases/comment-use-cases/search-story-comments.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -102,7 +105,14 @@ import { UpdateCommentUseCase } from './application/use-cases/comment-use-cases/
       FilterOwnFavoriteStoriesUseCase,
       RemoveStoryFromFavoriteUseCase,
     ],
-    ...[CreateCommentUseCase, DeleteCommentUseCase, UpdateCommentUseCase],
+    ...[
+      CreateCommentUseCase,
+      DeleteCommentUseCase,
+      UpdateCommentUseCase,
+      ToggleCommentLikeUseCase,
+      SearchChapterCommentsUseCase,
+      SearchStoryCommentsUseCase,
+    ],
     {
       provide: COMMENT_REPOSITORY,
       useClass: PrismaCommentRepository,

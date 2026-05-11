@@ -250,6 +250,7 @@ export type CommentWhereInput = {
   updatedAt?: Prisma.DateTimeNullableFilter<"Comment"> | Date | string | null
   story?: Prisma.XOR<Prisma.StoryNullableScalarRelationFilter, Prisma.StoryWhereInput> | null
   chapter?: Prisma.XOR<Prisma.ChapterNullableScalarRelationFilter, Prisma.ChapterWhereInput> | null
+  commentLikes?: Prisma.CommentLikeListRelationFilter
 }
 
 export type CommentOrderByWithRelationInput = {
@@ -264,6 +265,7 @@ export type CommentOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   story?: Prisma.StoryOrderByWithRelationInput
   chapter?: Prisma.ChapterOrderByWithRelationInput
+  commentLikes?: Prisma.CommentLikeOrderByRelationAggregateInput
 }
 
 export type CommentWhereUniqueInput = Prisma.AtLeast<{
@@ -281,6 +283,7 @@ export type CommentWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeNullableFilter<"Comment"> | Date | string | null
   story?: Prisma.XOR<Prisma.StoryNullableScalarRelationFilter, Prisma.StoryWhereInput> | null
   chapter?: Prisma.XOR<Prisma.ChapterNullableScalarRelationFilter, Prisma.ChapterWhereInput> | null
+  commentLikes?: Prisma.CommentLikeListRelationFilter
 }, "id">
 
 export type CommentOrderByWithAggregationInput = {
@@ -325,6 +328,7 @@ export type CommentCreateInput = {
   updatedAt?: Date | string | null
   story?: Prisma.StoryCreateNestedOneWithoutCommentsInput
   chapter?: Prisma.ChapterCreateNestedOneWithoutCommentsInput
+  commentLikes?: Prisma.CommentLikeCreateNestedManyWithoutCommentInput
 }
 
 export type CommentUncheckedCreateInput = {
@@ -337,6 +341,7 @@ export type CommentUncheckedCreateInput = {
   chapterId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  commentLikes?: Prisma.CommentLikeUncheckedCreateNestedManyWithoutCommentInput
 }
 
 export type CommentUpdateInput = {
@@ -349,6 +354,7 @@ export type CommentUpdateInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   story?: Prisma.StoryUpdateOneWithoutCommentsNestedInput
   chapter?: Prisma.ChapterUpdateOneWithoutCommentsNestedInput
+  commentLikes?: Prisma.CommentLikeUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentUncheckedUpdateInput = {
@@ -361,6 +367,7 @@ export type CommentUncheckedUpdateInput = {
   chapterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  commentLikes?: Prisma.CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentCreateManyInput = {
@@ -451,6 +458,11 @@ export type CommentSumOrderByAggregateInput = {
   likes?: Prisma.SortOrder
 }
 
+export type CommentScalarRelationFilter = {
+  is?: Prisma.CommentWhereInput
+  isNot?: Prisma.CommentWhereInput
+}
+
 export type CommentCreateNestedManyWithoutStoryInput = {
   create?: Prisma.XOR<Prisma.CommentCreateWithoutStoryInput, Prisma.CommentUncheckedCreateWithoutStoryInput> | Prisma.CommentCreateWithoutStoryInput[] | Prisma.CommentUncheckedCreateWithoutStoryInput[]
   connectOrCreate?: Prisma.CommentCreateOrConnectWithoutStoryInput | Prisma.CommentCreateOrConnectWithoutStoryInput[]
@@ -535,6 +547,20 @@ export type CommentUncheckedUpdateManyWithoutChapterNestedInput = {
   deleteMany?: Prisma.CommentScalarWhereInput | Prisma.CommentScalarWhereInput[]
 }
 
+export type CommentCreateNestedOneWithoutCommentLikesInput = {
+  create?: Prisma.XOR<Prisma.CommentCreateWithoutCommentLikesInput, Prisma.CommentUncheckedCreateWithoutCommentLikesInput>
+  connectOrCreate?: Prisma.CommentCreateOrConnectWithoutCommentLikesInput
+  connect?: Prisma.CommentWhereUniqueInput
+}
+
+export type CommentUpdateOneRequiredWithoutCommentLikesNestedInput = {
+  create?: Prisma.XOR<Prisma.CommentCreateWithoutCommentLikesInput, Prisma.CommentUncheckedCreateWithoutCommentLikesInput>
+  connectOrCreate?: Prisma.CommentCreateOrConnectWithoutCommentLikesInput
+  upsert?: Prisma.CommentUpsertWithoutCommentLikesInput
+  connect?: Prisma.CommentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CommentUpdateToOneWithWhereWithoutCommentLikesInput, Prisma.CommentUpdateWithoutCommentLikesInput>, Prisma.CommentUncheckedUpdateWithoutCommentLikesInput>
+}
+
 export type CommentCreateWithoutStoryInput = {
   id: string
   username: string
@@ -544,6 +570,7 @@ export type CommentCreateWithoutStoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   chapter?: Prisma.ChapterCreateNestedOneWithoutCommentsInput
+  commentLikes?: Prisma.CommentLikeCreateNestedManyWithoutCommentInput
 }
 
 export type CommentUncheckedCreateWithoutStoryInput = {
@@ -555,6 +582,7 @@ export type CommentUncheckedCreateWithoutStoryInput = {
   chapterId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  commentLikes?: Prisma.CommentLikeUncheckedCreateNestedManyWithoutCommentInput
 }
 
 export type CommentCreateOrConnectWithoutStoryInput = {
@@ -607,6 +635,7 @@ export type CommentCreateWithoutChapterInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   story?: Prisma.StoryCreateNestedOneWithoutCommentsInput
+  commentLikes?: Prisma.CommentLikeCreateNestedManyWithoutCommentInput
 }
 
 export type CommentUncheckedCreateWithoutChapterInput = {
@@ -618,6 +647,7 @@ export type CommentUncheckedCreateWithoutChapterInput = {
   storyId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  commentLikes?: Prisma.CommentLikeUncheckedCreateNestedManyWithoutCommentInput
 }
 
 export type CommentCreateOrConnectWithoutChapterInput = {
@@ -646,6 +676,70 @@ export type CommentUpdateManyWithWhereWithoutChapterInput = {
   data: Prisma.XOR<Prisma.CommentUpdateManyMutationInput, Prisma.CommentUncheckedUpdateManyWithoutChapterInput>
 }
 
+export type CommentCreateWithoutCommentLikesInput = {
+  id: string
+  username: string
+  userId: string
+  content: string
+  likes?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  story?: Prisma.StoryCreateNestedOneWithoutCommentsInput
+  chapter?: Prisma.ChapterCreateNestedOneWithoutCommentsInput
+}
+
+export type CommentUncheckedCreateWithoutCommentLikesInput = {
+  id: string
+  username: string
+  userId: string
+  content: string
+  likes?: number
+  storyId?: string | null
+  chapterId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+}
+
+export type CommentCreateOrConnectWithoutCommentLikesInput = {
+  where: Prisma.CommentWhereUniqueInput
+  create: Prisma.XOR<Prisma.CommentCreateWithoutCommentLikesInput, Prisma.CommentUncheckedCreateWithoutCommentLikesInput>
+}
+
+export type CommentUpsertWithoutCommentLikesInput = {
+  update: Prisma.XOR<Prisma.CommentUpdateWithoutCommentLikesInput, Prisma.CommentUncheckedUpdateWithoutCommentLikesInput>
+  create: Prisma.XOR<Prisma.CommentCreateWithoutCommentLikesInput, Prisma.CommentUncheckedCreateWithoutCommentLikesInput>
+  where?: Prisma.CommentWhereInput
+}
+
+export type CommentUpdateToOneWithWhereWithoutCommentLikesInput = {
+  where?: Prisma.CommentWhereInput
+  data: Prisma.XOR<Prisma.CommentUpdateWithoutCommentLikesInput, Prisma.CommentUncheckedUpdateWithoutCommentLikesInput>
+}
+
+export type CommentUpdateWithoutCommentLikesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  likes?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  story?: Prisma.StoryUpdateOneWithoutCommentsNestedInput
+  chapter?: Prisma.ChapterUpdateOneWithoutCommentsNestedInput
+}
+
+export type CommentUncheckedUpdateWithoutCommentLikesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  likes?: Prisma.IntFieldUpdateOperationsInput | number
+  storyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chapterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
 export type CommentCreateManyStoryInput = {
   id: string
   username: string
@@ -666,6 +760,7 @@ export type CommentUpdateWithoutStoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   chapter?: Prisma.ChapterUpdateOneWithoutCommentsNestedInput
+  commentLikes?: Prisma.CommentLikeUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentUncheckedUpdateWithoutStoryInput = {
@@ -677,6 +772,7 @@ export type CommentUncheckedUpdateWithoutStoryInput = {
   chapterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  commentLikes?: Prisma.CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentUncheckedUpdateManyWithoutStoryInput = {
@@ -710,6 +806,7 @@ export type CommentUpdateWithoutChapterInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   story?: Prisma.StoryUpdateOneWithoutCommentsNestedInput
+  commentLikes?: Prisma.CommentLikeUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentUncheckedUpdateWithoutChapterInput = {
@@ -721,6 +818,7 @@ export type CommentUncheckedUpdateWithoutChapterInput = {
   storyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  commentLikes?: Prisma.CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentUncheckedUpdateManyWithoutChapterInput = {
@@ -735,6 +833,35 @@ export type CommentUncheckedUpdateManyWithoutChapterInput = {
 }
 
 
+/**
+ * Count Type CommentCountOutputType
+ */
+
+export type CommentCountOutputType = {
+  commentLikes: number
+}
+
+export type CommentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  commentLikes?: boolean | CommentCountOutputTypeCountCommentLikesArgs
+}
+
+/**
+ * CommentCountOutputType without action
+ */
+export type CommentCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CommentCountOutputType
+   */
+  select?: Prisma.CommentCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * CommentCountOutputType without action
+ */
+export type CommentCountOutputTypeCountCommentLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CommentLikeWhereInput
+}
+
 
 export type CommentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -748,6 +875,8 @@ export type CommentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updatedAt?: boolean
   story?: boolean | Prisma.Comment$storyArgs<ExtArgs>
   chapter?: boolean | Prisma.Comment$chapterArgs<ExtArgs>
+  commentLikes?: boolean | Prisma.Comment$commentLikesArgs<ExtArgs>
+  _count?: boolean | Prisma.CommentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["comment"]>
 
 export type CommentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -794,6 +923,8 @@ export type CommentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type CommentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   story?: boolean | Prisma.Comment$storyArgs<ExtArgs>
   chapter?: boolean | Prisma.Comment$chapterArgs<ExtArgs>
+  commentLikes?: boolean | Prisma.Comment$commentLikesArgs<ExtArgs>
+  _count?: boolean | Prisma.CommentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CommentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   story?: boolean | Prisma.Comment$storyArgs<ExtArgs>
@@ -809,6 +940,7 @@ export type $CommentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     story: Prisma.$StoryPayload<ExtArgs> | null
     chapter: Prisma.$ChapterPayload<ExtArgs> | null
+    commentLikes: Prisma.$CommentLikePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1216,6 +1348,7 @@ export interface Prisma__CommentClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   story<T extends Prisma.Comment$storyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Comment$storyArgs<ExtArgs>>): Prisma.Prisma__StoryClient<runtime.Types.Result.GetResult<Prisma.$StoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   chapter<T extends Prisma.Comment$chapterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Comment$chapterArgs<ExtArgs>>): Prisma.Prisma__ChapterClient<runtime.Types.Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  commentLikes<T extends Prisma.Comment$commentLikesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Comment$commentLikesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1690,6 +1823,30 @@ export type Comment$chapterArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   include?: Prisma.ChapterInclude<ExtArgs> | null
   where?: Prisma.ChapterWhereInput
+}
+
+/**
+ * Comment.commentLikes
+ */
+export type Comment$commentLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CommentLike
+   */
+  select?: Prisma.CommentLikeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CommentLike
+   */
+  omit?: Prisma.CommentLikeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CommentLikeInclude<ExtArgs> | null
+  where?: Prisma.CommentLikeWhereInput
+  orderBy?: Prisma.CommentLikeOrderByWithRelationInput | Prisma.CommentLikeOrderByWithRelationInput[]
+  cursor?: Prisma.CommentLikeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CommentLikeScalarFieldEnum | Prisma.CommentLikeScalarFieldEnum[]
 }
 
 /**

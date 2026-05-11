@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCommentDto } from 'src/story/application/dtos/comment-dtos/create-comment.dto';
+import { SearchCommentDto } from 'src/story/application/dtos/comment-dtos/search-comment.dto';
 import { CommentRepositoryPort } from 'src/story/application/ports/comment.repository';
 import { Comment } from 'src/story/domain/entities/comment.entity';
+import { Id } from 'src/story/domain/value-objects/id.vo';
 
 @Injectable()
 export class PrismaCommentRepository implements CommentRepositoryPort {
@@ -195,6 +197,154 @@ export class PrismaCommentRepository implements CommentRepositoryPort {
         updatedAt: new Date(),
       },
     });
+
+    return Comment.create({
+      id: updatedComment.id,
+      userId: updatedComment.userId,
+      username: updatedComment.username,
+      content: updatedComment.content,
+      likes: updatedComment.likes,
+      storyId: updatedComment.storyId ?? undefined,
+      chapterId: updatedComment.chapterId ?? undefined,
+      createdAt: updatedComment.createdAt,
+      updatedAt: updatedComment.updatedAt ?? undefined,
+    });
+  }
+
+  async searchChapterComments(
+    chapterId: string,
+    searchCommentDto: SearchCommentDto,
+  ): Promise<{ comments: Comment[]; totalItems: number }> {
+    const { limit, offset } = searchCommentDto;
+
+    const where = {
+      chapterId,
+    };
+
+    const [rawComments, totalItems] = await this.prisma.$transaction([
+      this.prisma.comment.findMany({
+        skip: offset,
+        take: limit,
+        where,
+      }),
+      this.prisma.comment.count({ where }),
+    ]);
+
+    return {
+      comments: rawComments.map((comment) =>
+        Comment.create({
+          id: comment.id,
+          content: comment.content,
+          userId: comment.userId,
+          username: comment.username,
+          likes: comment.likes,
+          chapterId: comment.chapterId ?? undefined,
+          createdAt: comment.createdAt,
+          updatedAt: comment.updatedAt ?? undefined,
+        }),
+      ),
+      totalItems,
+    };
+  }
+
+  async searchStoryComments(
+    storyId: string,
+    searchCommentDto: SearchCommentDto,
+  ): Promise<{ comments: Comment[]; totalItems: number }> {
+    const { limit, offset } = searchCommentDto;
+
+    const where = {
+      storyId,
+    };
+
+    const [rawComments, totalItems] = await this.prisma.$transaction([
+      this.prisma.comment.findMany({
+        skip: offset,
+        take: limit,
+        where,
+      }),
+      this.prisma.comment.count({ where }),
+    ]);
+
+    return {
+      comments: rawComments.map((comment) =>
+        Comment.create({
+          id: comment.id,
+          content: comment.content,
+          userId: comment.userId,
+          username: comment.username,
+          likes: comment.likes,
+          storyId: comment.storyId ?? undefined,
+          createdAt: comment.createdAt,
+          updatedAt: comment.updatedAt ?? undefined,
+        }),
+      ),
+      totalItems,
+    };
+  }
+
+  async toggleLike(
+    commentId: string,
+    userId: string,
+  ): Promise<Comment | undefined> {
+    const commentFound = await this.prisma.comment.findUnique({
+      where: { id: commentId },
+    });
+
+    if (!commentFound) {
+      return undefined;
+    }
+
+    const likeFound = await this.prisma.commentLike.findUnique({
+      where: {
+        commentId_userId: {
+          commentId,
+          userId,
+        },
+      },
+    });
+
+    let updatedComment;
+
+    if (likeFound) {
+      await this.prisma.$transaction([
+        this.prisma.commentLike.delete({
+          where: { id: likeFound.id },
+        }),
+        this.prisma.comment.update({
+          where: { id: commentId },
+          data: {
+            likes: { decrement: 1 },
+          },
+        }),
+      ]);
+
+      updatedComment = await this.prisma.comment.findUnique({
+        where: { id: commentId },
+      });
+    } else {
+      await this.prisma.$transaction([
+        this.prisma.commentLike.create({
+          data: {
+            id: new Id().getValue,
+            commentId,
+            userId,
+          },
+        }),
+        this.prisma.comment.update({
+          where: { id: commentId },
+          data: {
+            likes: { increment: 1 },
+          },
+        }),
+      ]);
+
+      updatedComment = await this.prisma.comment.findUnique({
+        where: { id: commentId },
+      });
+    }
+
+    if (!updatedComment) return undefined;
 
     return Comment.create({
       id: updatedComment.id,
