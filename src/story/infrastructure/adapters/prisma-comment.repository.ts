@@ -175,4 +175,37 @@ export class PrismaCommentRepository implements CommentRepositoryPort {
       });
     });
   }
+
+  async update(
+    commentId: string,
+    content: string,
+  ): Promise<Comment | undefined> {
+    const commentFound = await this.prisma.comment.findUnique({
+      where: { id: commentId },
+    });
+
+    if (!commentFound) {
+      return undefined;
+    }
+
+    const updatedComment = await this.prisma.comment.update({
+      where: { id: commentId },
+      data: {
+        content,
+        updatedAt: new Date(),
+      },
+    });
+
+    return Comment.create({
+      id: updatedComment.id,
+      userId: updatedComment.userId,
+      username: updatedComment.username,
+      content: updatedComment.content,
+      likes: updatedComment.likes,
+      storyId: updatedComment.storyId ?? undefined,
+      chapterId: updatedComment.chapterId ?? undefined,
+      createdAt: updatedComment.createdAt,
+      updatedAt: updatedComment.updatedAt ?? undefined,
+    });
+  }
 }
