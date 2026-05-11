@@ -15,6 +15,7 @@ export class CommentExceptionFilter implements ExceptionFilter {
     const type = exception.getType;
     const storyId = exception.getStoryId;
     const userId = exception.getUserId;
+    const commentId = exception.getCommentId;
     const likes = exception.getLikes;
 
     response.status(status).json({
@@ -27,6 +28,7 @@ export class CommentExceptionFilter implements ExceptionFilter {
         chapterId: chapterId ?? '',
         storyId: storyId ?? '',
         userId: userId ?? '',
+        commentId: commentId ?? '',
         likes: likes ?? '',
       },
     });

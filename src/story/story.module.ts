@@ -53,6 +53,7 @@ import { COMMENT_REPOSITORY } from './application/ports/comment.repository';
 import { PrismaCommentRepository } from './infrastructure/adapters/prisma-comment.repository';
 import { CreateCommentUseCase } from './application/use-cases/comment-use-cases/create-comment.use-case';
 import { CommentController } from './presentation/controllers/comment.controller';
+import { DeleteCommentUseCase } from './application/use-cases/comment-use-cases/delete-comment.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -100,7 +101,7 @@ import { CommentController } from './presentation/controllers/comment.controller
       FilterOwnFavoriteStoriesUseCase,
       RemoveStoryFromFavoriteUseCase,
     ],
-    ...[CreateCommentUseCase],
+    ...[CreateCommentUseCase, DeleteCommentUseCase],
     {
       provide: COMMENT_REPOSITORY,
       useClass: PrismaCommentRepository,

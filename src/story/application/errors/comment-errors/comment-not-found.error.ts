@@ -1,17 +1,16 @@
 import { CommentError } from './comment.error';
 
-export class UncertainOriginCommentError extends CommentError {
+export class CommentNotFoundError extends CommentError {
   constructor(
     status: number,
-    commentId?: string,
+    commentId: string,
     userId?: string,
     likes?: number,
     chapterId?: string,
     storyId?: string,
   ) {
     super({
-      message:
-        'El comentario debe ser creado para una historia o un capitulo, pero no para ambos ',
+      message: 'La acción no se puede realizar porque el comentario no existe',
       commentId,
       likes,
       status,

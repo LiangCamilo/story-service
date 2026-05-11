@@ -4,6 +4,7 @@ export class CommentError extends Error {
       message: string;
       likes?: number;
       type?: string;
+      commentId?: string;
       chapterId?: string;
       storyId?: string;
       userId?: string;
@@ -41,5 +42,9 @@ export class CommentError extends Error {
 
   get getStatus() {
     return this.param.status;
+  }
+
+  get getCommentId() {
+    return this.param.commentId;
   }
 }

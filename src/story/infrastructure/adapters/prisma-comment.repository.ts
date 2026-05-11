@@ -117,4 +117,62 @@ export class PrismaCommentRepository implements CommentRepositoryPort {
 
     return undefined;
   }
+
+  async delete(commentId: string): Promise<Comment | undefined> {
+    return await this.prisma.$transaction(async (tx) => {
+      const commentFound = await tx.comment.findUnique({
+        where: {
+          id: commentId,
+        },
+      });
+
+      if (!commentFound) {
+        return undefined;
+      }
+
+      const deletedComment = await tx.comment.delete({
+        where: {
+          id: commentId,
+        },
+      });
+
+      if (deletedComment.storyId) {
+        await tx.story.update({
+          where: {
+            id: deletedComment.storyId,
+          },
+          data: {
+            totalComments: {
+              decrement: 1,
+            },
+          },
+        });
+      }
+
+      if (deletedComment.chapterId) {
+        await tx.chapter.update({
+          where: {
+            id: deletedComment.chapterId,
+          },
+          data: {
+            totalComments: {
+              decrement: 1,
+            },
+          },
+        });
+      }
+
+      return Comment.create({
+        id: deletedComment.id,
+        userId: deletedComment.userId,
+        username: deletedComment.username,
+        content: deletedComment.content,
+        likes: deletedComment.likes,
+        storyId: deletedComment.storyId ?? undefined,
+        chapterId: deletedComment.chapterId ?? undefined,
+        createdAt: deletedComment.createdAt,
+        updatedAt: deletedComment.updatedAt ?? undefined,
+      });
+    });
+  }
 }

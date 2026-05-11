@@ -60,6 +60,7 @@ export class CreateCommentUseCase {
     if (!newComment) {
       throw new UncertainOriginCommentError(
         404,
+        undefined,
         createCommentDto.userId,
         undefined,
         createCommentDto.chapterId,
