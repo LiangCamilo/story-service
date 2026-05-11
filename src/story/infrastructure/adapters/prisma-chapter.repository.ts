@@ -74,6 +74,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       hidden: rawChapter.hidden,
       content: rawChapter.content,
       order: rawChapter.order,
+      totalComments: rawChapter.totalComments,
       createdAt: rawChapter.createdAt,
       updatedAt: rawChapter.updatedAt,
     });
@@ -105,6 +106,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       story,
       content: chapter.content,
       hidden: chapter.hidden,
+      totalComments: chapter.totalComments,
       createdAt: chapter.createdAt,
       updatedAt: chapter.updatedAt,
     });
@@ -133,6 +135,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
         hidden: chapter.hidden,
         content: chapter.content,
         order: chapter.order,
+        totalComments: chapter.totalComments,
         createdAt: chapter.createdAt,
         updatedAt: chapter.updatedAt,
       });
@@ -161,6 +164,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
         hidden: chapter.hidden,
         content: chapter.content,
         order: chapter.order,
+        totalComments: chapter.totalComments,
         createdAt: chapter.createdAt,
         updatedAt: chapter.updatedAt,
       });
@@ -239,6 +243,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       order: chapter.order,
       storyId: chapter.storyId,
       title: chapter.title,
+      totalComments: chapter.totalComments,
       createdAt: chapter.createdAt,
       updatedAt: chapter.updatedAt,
     });
@@ -274,6 +279,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       order: updatedStory.order,
       storyId: updatedStory.storyId,
       title: updatedStory.title,
+      totalComments: updatedStory.totalComments,
       createdAt: updatedStory.createdAt,
       updatedAt: updatedStory.updatedAt,
     });
@@ -289,6 +295,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
     };
     hidden: boolean;
     content: string;
+    totalComments: number;
     createdAt: Date;
     updatedAt: Date | null;
   }): ChapterWithDetails {
@@ -299,6 +306,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       story: chapter.story,
       hidden: chapter.hidden ?? true,
       content: chapter.content,
+      totalComments: chapter.totalComments,
       createdAt: chapter.createdAt,
       updatedAt: chapter.updatedAt,
     };

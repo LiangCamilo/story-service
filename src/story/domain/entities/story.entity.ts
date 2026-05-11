@@ -27,6 +27,7 @@ export class Story {
     private totalFavorites?: StoryTotalFavorites,
     private secondaryGenreId?: string,
     private status?: AllowedStatus,
+    private totalComments?: number,
     private createdAt?: Date,
     private updatedAt?: Date | null,
     private lastActivityAt?: Date | null,
@@ -49,6 +50,7 @@ export class Story {
     totalFavorite?: number;
     id?: string;
     status?: AllowedStatus;
+    totalComments?: number;
     createdAt?: Date;
     updatedAt?: Date | null;
     lastActivityAt?: Date | null;
@@ -70,6 +72,7 @@ export class Story {
       new StoryTotalFavorites(params.totalFavorite ?? 0),
       params?.secondaryGenreId,
       params?.status,
+      params.totalComments ?? 0,
       params.createdAt,
       params.updatedAt,
       params.lastActivityAt,
@@ -144,6 +147,10 @@ export class Story {
     return this.status;
   }
 
+  get getTotalComments(): number | undefined {
+    return this.totalComments;
+  }
+
   toPrimitives() {
     return {
       id: this.id.getValue,
@@ -160,6 +167,7 @@ export class Story {
       totalFavorites: this.totalFavorites?.getValue,
       ratingSum: this.ratingSum?.getValue,
       ratingCount: this.ratingCount?.getValue,
+      totalComments: this.totalComments,
       createdAt: this.createdAt,
       updateAt: this.updatedAt,
       lastActivityAt: this.lastActivityAt,

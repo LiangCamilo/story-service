@@ -8,6 +8,7 @@ export interface ChapterWithDetails {
   };
   hidden: boolean;
   content: string;
+  totalComments: number;
   createdAt: Date;
   updatedAt: Date | null;
 }

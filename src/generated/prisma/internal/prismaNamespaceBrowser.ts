@@ -56,8 +56,10 @@ export const ModelName = {
   Genre: 'Genre',
   Tag: 'Tag',
   Chapter: 'Chapter',
+  Comment: 'Comment',
   Rating: 'Rating',
-  View: 'View'
+  View: 'View',
+  CommentLike: 'CommentLike'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -90,6 +92,7 @@ export const StoryScalarFieldEnum = {
   totalViews: 'totalViews',
   userId: 'userId',
   totalFavorite: 'totalFavorite',
+  totalComments: 'totalComments',
   genreId: 'genreId',
   secondaryGenreId: 'secondaryGenreId',
   createdAt: 'createdAt',
@@ -137,12 +140,28 @@ export const ChapterScalarFieldEnum = {
   order: 'order',
   content: 'content',
   hidden: 'hidden',
+  totalComments: 'totalComments',
   storyId: 'storyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ChapterScalarFieldEnum = (typeof ChapterScalarFieldEnum)[keyof typeof ChapterScalarFieldEnum]
+
+
+export const CommentScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  userId: 'userId',
+  content: 'content',
+  likes: 'likes',
+  storyId: 'storyId',
+  chapterId: 'chapterId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
 
 
 export const RatingScalarFieldEnum = {
@@ -166,6 +185,16 @@ export const ViewScalarFieldEnum = {
 } as const
 
 export type ViewScalarFieldEnum = (typeof ViewScalarFieldEnum)[keyof typeof ViewScalarFieldEnum]
+
+
+export const CommentLikeScalarFieldEnum = {
+  id: 'id',
+  commentId: 'commentId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type CommentLikeScalarFieldEnum = (typeof CommentLikeScalarFieldEnum)[keyof typeof CommentLikeScalarFieldEnum]
 
 
 export const SortOrder = {

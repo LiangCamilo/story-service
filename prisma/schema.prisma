@@ -29,6 +29,7 @@ model Story{
   totalViews Int @default(0)
   userId String @db.Uuid
   totalFavorite Int @default(0)
+  totalComments Int @default(0)
 
   genreId String @db.Uuid
   secondaryGenreId  String? @db.Uuid
@@ -37,6 +38,7 @@ model Story{
   genre Genre @relation("MainGenre", fields: [genreId], references: [id] )
   secondaryGenre Genre? @relation("SecondaryGenre", fields: [secondaryGenreId], references: [id])
 
+  comments Comment[]
   tags Tag[]
   ratings Rating[]
   views View[]
@@ -53,7 +55,7 @@ model FavoriteStory {
   userId String @db.Uuid
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime? @updatedAt
 
   story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
   @@unique([storyId, userId])
@@ -77,7 +79,7 @@ model Tag {
   stories Story[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime? @updatedAt
 }
 
 model Chapter {
@@ -86,15 +88,36 @@ model Chapter {
   order Int
   content String @db.Text
   hidden Boolean @default(true)
+  totalComments Int @default(0)
 
   storyId String @db.Uuid
   @@unique([storyId, order])
+
+  comments Comment[]
 
   story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime?
 
+}
+
+model Comment {
+  id String @id @db.Uuid
+  username String
+  userId String
+  content String
+  likes Int @default(0)
+
+  storyId String? @db.Uuid
+  chapterId String? @db.Uuid
+
+  story Story? @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  chapter Chapter? @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  commentLikes CommentLike[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime? 
 }
 
 model Rating {
@@ -122,4 +145,16 @@ model View {
   updatedAt DateTime @updatedAt
 
   @@unique([storyId, userId])
+}
+
+model CommentLike {
+  id String @id @db.Uuid
+  commentId String @db.Uuid
+  userId String @db.Uuid
+
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([commentId, userId])
 }

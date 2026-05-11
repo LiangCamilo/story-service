@@ -10,6 +10,7 @@ export class Chapter {
     private storyId: string,
     private content: string,
     private hidden?: boolean,
+    private totalComments?: number,
     private createdAt?: Date,
     private updatedAt?: Date | null,
   ) {}
@@ -21,6 +22,7 @@ export class Chapter {
     content: string;
     id?: string;
     hidden?: boolean;
+    totalComments?: number;
     createdAt?: Date;
     updatedAt?: Date | null;
   }) {
@@ -31,6 +33,7 @@ export class Chapter {
       params.storyId,
       params.content,
       params.hidden ?? true,
+      params.totalComments ?? 0,
       params.createdAt,
       params.updatedAt,
     );
@@ -56,6 +59,10 @@ export class Chapter {
     return this.content;
   }
 
+  get getTotalComments() {
+    return this.totalComments;
+  }
+
   get getCreatedAt() {
     return this.createdAt;
   }
@@ -71,6 +78,7 @@ export class Chapter {
       content: this.getContent,
       storyId: this.getStoryId,
       order: this.getOrder.getValue,
+      totalComments: this.getTotalComments,
     };
   }
 }

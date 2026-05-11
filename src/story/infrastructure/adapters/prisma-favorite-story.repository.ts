@@ -62,7 +62,7 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
       storyId: data.storyId,
       userId: addedStoryToFavorite.userId,
       createdAt: addedStoryToFavorite.createdAt,
-      updatedAt: addedStoryToFavorite.updatedAt,
+      updatedAt: addedStoryToFavorite.updatedAt ?? undefined,
       story: {
         id: addedStoryToFavorite.story.id,
         userId: addedStoryToFavorite.story.genreId,
@@ -194,7 +194,7 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
       userId,
       storyId,
       createdAt,
-      updatedAt,
+      updatedAt: updatedAt ?? undefined,
       story: {
         id: story.id,
         userId: story.genreId,
