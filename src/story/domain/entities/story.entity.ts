@@ -62,7 +62,7 @@ export class Story {
       params.hidden ?? false,
       params.userId,
       params.genreId,
-      (params.coverUrl = ''),
+      params.coverUrl === '' ? null : (params.coverUrl ?? null),
       params.tagIds ? params.tagIds : [],
       new StoryTotalRating(params.totalRating),
       new StoryRatingSum(params.ratingSum),
