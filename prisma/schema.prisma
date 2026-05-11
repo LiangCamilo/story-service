@@ -104,6 +104,7 @@ model Chapter {
 
 model Comment {
   id String @id @db.Uuid
+  username String
   userId String
   content String
   likes Int @default(0)

@@ -4,6 +4,7 @@ export class Comment {
   constructor(
     private id: Id,
     private userId: string,
+    private username: string,
     private content: string,
     private likes: number,
     private storyId?: string,
@@ -15,6 +16,7 @@ export class Comment {
   static create(params: {
     id?: string;
     userId: string;
+    username: string;
     content: string;
     likes?: number;
     storyId?: string;
@@ -25,6 +27,7 @@ export class Comment {
     return new Comment(
       new Id(params.id),
       params.userId,
+      params.username,
       params.content,
       params.likes ?? 0,
       params.storyId,
@@ -66,10 +69,15 @@ export class Comment {
     return this.updatedAt;
   }
 
+  get getUsername(): string {
+    return this.username;
+  }
+
   toPrimitives() {
     return {
       id: this.id.getValue,
       userId: this.userId,
+      username: this.username,
       content: this.content,
       likes: this.likes,
       storyId: this.storyId ?? null,

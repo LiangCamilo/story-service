@@ -1115,6 +1115,7 @@ export type ChapterScalarFieldEnum = (typeof ChapterScalarFieldEnum)[keyof typeo
 
 export const CommentScalarFieldEnum = {
   id: 'id',
+  username: 'username',
   userId: 'userId',
   content: 'content',
   likes: 'likes',

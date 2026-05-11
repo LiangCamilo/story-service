@@ -12,6 +12,10 @@ export class CreateCommentDto {
   userId!: string;
 
   @IsString()
+  @IsNotEmpty()
+  username!: string;
+
+  @IsString()
   @MaxLength(1000)
   content!: string;
 

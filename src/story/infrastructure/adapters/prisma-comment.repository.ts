@@ -11,12 +11,13 @@ export class PrismaCommentRepository implements CommentRepositoryPort {
   async create(dto: CreateCommentDto): Promise<Comment | undefined> {
     const data = Comment.create({
       userId: dto.userId,
+      username: dto.username,
       storyId: dto.storyId,
       chapterId: dto.chapterId,
       content: dto.content,
     }).toPrimitives();
 
-    const { id, userId, content, storyId, chapterId } = data;
+    const { id, userId, username, content, storyId, chapterId } = data;
 
     if ((storyId && chapterId) || (!storyId && !chapterId)) {
       return undefined;
@@ -38,6 +39,7 @@ export class PrismaCommentRepository implements CommentRepositoryPort {
         this.prisma.comment.create({
           data: {
             id,
+            username,
             userId,
             content,
             storyId,
@@ -58,6 +60,7 @@ export class PrismaCommentRepository implements CommentRepositoryPort {
       return Comment.create({
         id: newComment.id,
         userId: newComment.userId,
+        username: newComment.username,
         content: newComment.content,
         likes: newComment.likes,
         storyId: newComment.storyId ?? undefined,
@@ -81,6 +84,7 @@ export class PrismaCommentRepository implements CommentRepositoryPort {
         this.prisma.comment.create({
           data: {
             id,
+            username,
             userId,
             content,
             chapterId,
@@ -102,6 +106,7 @@ export class PrismaCommentRepository implements CommentRepositoryPort {
         id: newComment.id,
         userId: newComment.userId,
         content: newComment.content,
+        username: newComment.username,
         likes: newComment.likes,
         storyId: newComment.storyId ?? undefined,
         chapterId: newComment.chapterId ?? undefined,
