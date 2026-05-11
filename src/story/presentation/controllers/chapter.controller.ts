@@ -44,9 +44,11 @@ export class ChapterController {
   @Get('my-chapters/:storyId')
   async findOwnedChaptersByStoryId(@Param('storyId') storyId: string) {
     const allChapters = await this.findChaptersByOwnedStoryId.execute(storyId);
-    return allChapters.map((chapter) => {
-      return chapter;
-    });
+    return {
+      data: allChapters.map((chapter) => {
+        return chapter;
+      }),
+    };
   }
 
   @Post('create')

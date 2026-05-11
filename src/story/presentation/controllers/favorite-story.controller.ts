@@ -54,7 +54,7 @@ export class FavoriteStoryController {
 
     if (favoriteStoriesFiltered.filteredFavoriteStories.length === 0) {
       return res.status(200).json({
-        stories: favoriteStoriesFiltered.filteredFavoriteStories,
+        data: favoriteStoriesFiltered.filteredFavoriteStories,
         message: 'No se han encontrado historias con los filtros especificados',
       });
     }

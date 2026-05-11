@@ -12,7 +12,7 @@ export class TagController {
       await this.searchTagsByNameUseCase.execute(searchTagsByNameDto);
 
     return {
-      tags: tags.map((tag) => {
+      data: tags.map((tag) => {
         return tag.toPrimitives();
       }),
       meta,
