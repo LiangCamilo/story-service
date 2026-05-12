@@ -55,7 +55,7 @@ export class FilterMultipleStoryDto {
 
   @IsBoolean()
   @IsOptional()
-  @Type(() => Boolean)
+  @Transform(parseBoolean)
   totalRating?: boolean;
 
   @IsOptional()
@@ -80,4 +80,9 @@ export class FilterMultipleStoryDto {
     return value;
   })
   tagNames?: string[];
+
+  @IsBoolean()
+  @IsOptional()
+  @Transform(parseBoolean)
+  newestFirst!: boolean;
 }

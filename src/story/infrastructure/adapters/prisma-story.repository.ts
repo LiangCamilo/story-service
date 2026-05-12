@@ -122,6 +122,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       totalViews,
       userId,
       tagNames,
+      newestFirst,
     } = filterMultiple;
 
     const orderBy: Array<any> = [];
@@ -141,6 +142,12 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     if (totalChapters !== undefined) {
       orderBy.push({
         totalChapters: totalChapters ? 'desc' : 'asc',
+      });
+    }
+
+    if (newestFirst !== undefined) {
+      orderBy.push({
+        createdAt: newestFirst ? 'desc' : 'asc',
       });
     }
 
@@ -224,6 +231,7 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       totalViews,
       hidden,
       tagNames,
+      newestFirst,
     } = dto;
 
     const orderBy: Array<any> = [];
@@ -243,6 +251,12 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     if (totalChapters !== undefined) {
       orderBy.push({
         totalChapters: totalChapters ? 'desc' : 'asc',
+      });
+    }
+
+    if (newestFirst !== undefined) {
+      orderBy.push({
+        createdAt: newestFirst ? 'desc' : 'asc',
       });
     }
 

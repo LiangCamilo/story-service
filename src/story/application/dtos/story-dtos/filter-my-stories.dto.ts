@@ -76,4 +76,9 @@ export class FilterMyStoriesDto {
     return value;
   })
   tagNames?: string[];
+
+  @IsBoolean()
+  @IsOptional()
+  @Transform(parseBoolean)
+  newestFirst!: boolean;
 }
