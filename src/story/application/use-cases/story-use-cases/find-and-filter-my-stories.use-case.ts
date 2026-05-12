@@ -17,7 +17,7 @@ export class FindAndFilterMyStoriesUseCase {
 
     const pageSize: number = dto.limit;
     const totalPages = Math.ceil(totalItems / pageSize);
-    const numberPage = Math.floor(dto.offset / dto.limit) + 1;
+    const numberPage = dto.offset;
 
     return {
       stories,

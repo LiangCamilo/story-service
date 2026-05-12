@@ -90,6 +90,11 @@ export class PrismaTagRepository implements TagRepositoryPort {
   ): Promise<{ tags: Tag[]; totalItems: number }> {
     const { limit, offset, tagName } = searchTagsByNameDto;
 
+    const page = (offset - 1) * limit;
+    const skip = page;
+
+    const take = limit;
+
     const where = {
       name: {
         contains: tagName,
@@ -99,8 +104,8 @@ export class PrismaTagRepository implements TagRepositoryPort {
 
     const [filteredTags, totalItems] = await this.prisma.$transaction([
       this.prisma.tag.findMany({
-        skip: offset,
-        take: limit,
+        skip,
+        take,
         where,
       }),
       this.prisma.tag.count({

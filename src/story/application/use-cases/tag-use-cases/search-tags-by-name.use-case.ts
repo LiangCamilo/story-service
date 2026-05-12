@@ -16,7 +16,7 @@ export class SearchTagsBynameUseCase {
 
     const pageSize: number = limit;
     const totalPages = Math.ceil(totalItems / pageSize);
-    const numberPage = Math.floor(offset / limit) + 1;
+    const numberPage = offset;
 
     return {
       tags: tagsByName,
