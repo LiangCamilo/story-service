@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseFilters,
 } from '@nestjs/common';
 import { CreateChapterDto } from '../../application/dtos/chapter-dtos/create-chapter.dto';
@@ -19,6 +20,7 @@ import { UpdateChapterUseCase } from '../../application/use-cases/chapter-use-ca
 import { UpdateChapterDto } from '../../application/dtos/chapter-dtos/update-chapter.dto';
 import { ToggleHiddenChapterUseCase } from 'src/story/application/use-cases/chapter-use-cases/toggle-hidden-chapter.use-case';
 import { FindChaptersByOwnedStoryIdUseCase } from 'src/story/application/use-cases/chapter-use-cases/find-chapters-by-owned-story-id.use-case';
+import { FindAllChaptersDto } from 'src/story/application/dtos/chapter-dtos/find-all-chapters.dto';
 
 @UseFilters(StoryExceptionFilter, ChapterExceptionFilter)
 @Controller('api/chapter')
@@ -33,21 +35,33 @@ export class ChapterController {
   ) {}
 
   @Get(':storyId')
-  async findAllChaptersByStoryId(@Param('storyId') storyId: string) {
-    const allChapters =
-      await this.findAllChaptersByStoryIdUseCase.execute(storyId);
-    return allChapters.map((chapter) => {
-      return chapter;
-    });
+  async findAllChaptersByStoryId(
+    @Param('storyId') storyId: string,
+    @Query() findAllChaptersDto: FindAllChaptersDto,
+  ) {
+    const { chapters, meta } =
+      await this.findAllChaptersByStoryIdUseCase.execute(
+        storyId,
+        findAllChaptersDto,
+      );
+    return {
+      data: chapters,
+      meta,
+    };
   }
 
   @Get('my-chapters/:storyId')
-  async findOwnedChaptersByStoryId(@Param('storyId') storyId: string) {
-    const allChapters = await this.findChaptersByOwnedStoryId.execute(storyId);
+  async findOwnedChaptersByStoryId(
+    @Param('storyId') storyId: string,
+    @Query() findAllChaptersDto: FindAllChaptersDto,
+  ) {
+    const { chapters, meta } = await this.findChaptersByOwnedStoryId.execute(
+      storyId,
+      findAllChaptersDto,
+    );
     return {
-      data: allChapters.map((chapter) => {
-        return chapter;
-      }),
+      data: chapters,
+      meta,
     };
   }
 
@@ -99,6 +113,7 @@ export class ChapterController {
       title: chapter.getTitle.getValue,
       storyId: chapter.getStoryId,
       content: chapter.getContent,
+      hidden: chapter.getHidden,
       createdAt: chapter.getCreatedAt,
       updatedAt: chapter.getUpdatedAt,
     };

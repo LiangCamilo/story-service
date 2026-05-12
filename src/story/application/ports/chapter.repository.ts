@@ -1,12 +1,22 @@
 import { Chapter } from 'src/story/domain/entities/chapter.entity';
 import { ChapterWithDetails } from '../read-models/chapter-with-details.read-model';
 import { UpdateChapterDto } from '../dtos/chapter-dtos/update-chapter.dto';
+import { FindAllChaptersDto } from '../dtos/chapter-dtos/find-all-chapters.dto';
 
 export interface ChapterRepositoryPort {
   create(chapter: Chapter): Promise<ChapterWithDetails | undefined>;
   findChapterById(id: string): Promise<ChapterWithDetails | undefined>;
-  findAllChaptersByStoryId(storyId: string): Promise<ChapterWithDetails[]>;
-  findChaptersByOwnedStoryId(storyId: string): Promise<ChapterWithDetails[]>;
+  findAllChaptersByStoryId(
+    storyId: string,
+    findALlChaptersDto: FindAllChaptersDto,
+  ): Promise<{
+    chapters: ChapterWithDetails[];
+    totalItems: number;
+  }>;
+  findChaptersByOwnedStoryId(
+    storyId: string,
+    findAllChaptersDto: FindAllChaptersDto,
+  ): Promise<{ chapters: ChapterWithDetails[]; totalItems: number }>;
   deleteChapterById(
     chapterId: string,
     storyId: string,

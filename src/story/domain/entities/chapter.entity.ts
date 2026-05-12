@@ -71,6 +71,10 @@ export class Chapter {
     return this.updatedAt;
   }
 
+  get getHidden() {
+    return this.hidden;
+  }
+
   toPrimitives() {
     return {
       id: this.getId.getValue,
