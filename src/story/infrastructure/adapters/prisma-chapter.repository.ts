@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { FindAllChaptersDto } from 'src/story/application/dtos/chapter-dtos/find-all-chapters.dto';
 import { UpdateChapterDto } from 'src/story/application/dtos/chapter-dtos/update-chapter.dto';
 import { ChapterRepositoryPort } from 'src/story/application/ports/chapter.repository';
 import { ChapterWithDetails } from 'src/story/application/read-models/chapter-with-details.read-model';
@@ -114,61 +115,141 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
 
   async findAllChaptersByStoryId(
     storyId: string,
-  ): Promise<ChapterWithDetails[]> {
-    const chaptersFromStory = await this.prisma.chapter.findMany({
-      where: {
-        storyId,
-        hidden: false,
-      },
-      include: {
-        story: true,
-      },
-    });
-    return chaptersFromStory.map((chapter) => {
-      return this.mapToChapterWithDetails({
-        id: chapter.id,
-        story: {
-          id: chapter.story.id,
-          title: chapter.story.title,
+    findAllChaptersDto: FindAllChaptersDto,
+  ): Promise<{ chapters: ChapterWithDetails[]; totalItems: number }> {
+    const { limit, offset, newestFirst } = findAllChaptersDto;
+    const where = {
+      storyId,
+      hidden: false,
+    };
+
+    const page = (offset - 1) * limit;
+    const skip = page;
+
+    const take = limit;
+
+    const orderBy =
+      newestFirst !== undefined
+        ? [
+            {
+              createdAt: newestFirst ? ('desc' as const) : ('asc' as const),
+            },
+            {
+              id: 'asc' as const,
+            },
+          ]
+        : [
+            {
+              order: 'asc' as const,
+            },
+            {
+              id: 'asc' as const,
+            },
+          ];
+
+    const [rawChapters, totalItems] = await this.prisma.$transaction([
+      this.prisma.chapter.findMany({
+        skip,
+        take,
+        where,
+        include: {
+          story: true,
         },
-        title: chapter.title,
-        hidden: chapter.hidden,
-        content: chapter.content,
-        order: chapter.order,
-        totalComments: chapter.totalComments,
-        createdAt: chapter.createdAt,
-        updatedAt: chapter.updatedAt,
-      });
-    });
+        orderBy,
+      }),
+      this.prisma.chapter.count({
+        where,
+      }),
+    ]);
+
+    return {
+      chapters: rawChapters.map((chapter) => {
+        return this.mapToChapterWithDetails({
+          id: chapter.id,
+          story: {
+            id: chapter.story.id,
+            title: chapter.story.title,
+          },
+          title: chapter.title,
+          hidden: chapter.hidden,
+          content: chapter.content,
+          order: chapter.order,
+          totalComments: chapter.totalComments,
+          createdAt: chapter.createdAt,
+          updatedAt: chapter.updatedAt,
+        });
+      }),
+      totalItems,
+    };
   }
 
   async findChaptersByOwnedStoryId(
     storyId: string,
-  ): Promise<ChapterWithDetails[]> {
-    const chaptersFromStory = await this.prisma.chapter.findMany({
-      where: {
-        storyId,
-      },
-      include: {
-        story: true,
-      },
-    });
-    return chaptersFromStory.map((chapter) => {
-      return this.mapToChapterWithDetails({
-        id: chapter.id,
-        story: {
-          id: chapter.story.id,
-          title: chapter.story.title,
+    findAllChaptersDto: FindAllChaptersDto,
+  ): Promise<{ chapters: ChapterWithDetails[]; totalItems: number }> {
+    const { limit, offset, newestFirst } = findAllChaptersDto;
+
+    const take = Math.max(limit ?? 10, 1);
+    const page = Math.max(offset ?? 1, 1);
+    const skip = (page - 1) * take;
+
+    const where = {
+      storyId,
+    };
+
+    const orderBy =
+      newestFirst !== undefined
+        ? [
+            {
+              createdAt: newestFirst ? ('desc' as const) : ('asc' as const),
+            },
+            {
+              id: 'asc' as const,
+            },
+          ]
+        : [
+            {
+              order: 'asc' as const,
+            },
+            {
+              id: 'asc' as const,
+            },
+          ];
+
+    const [rawChapters, totalItems] = await this.prisma.$transaction([
+      this.prisma.chapter.findMany({
+        skip,
+        take,
+        where,
+        include: {
+          story: true,
         },
-        title: chapter.title,
-        hidden: chapter.hidden,
-        content: chapter.content,
-        order: chapter.order,
-        totalComments: chapter.totalComments,
-        createdAt: chapter.createdAt,
-        updatedAt: chapter.updatedAt,
-      });
-    });
+        orderBy,
+      }),
+      this.prisma.chapter.count({
+        where,
+      }),
+    ]);
+
+    return {
+      chapters: rawChapters.map((chapter) => {
+        return this.mapToChapterWithDetails({
+          id: chapter.id,
+          story: {
+            id: chapter.story.id,
+            title: chapter.story.title,
+          },
+          title: chapter.title,
+          hidden: chapter.hidden,
+          content: chapter.content,
+          order: chapter.order,
+          totalComments: chapter.totalComments,
+          createdAt: chapter.createdAt,
+          updatedAt: chapter.updatedAt,
+        });
+      }),
+      totalItems,
+    };
   }
 
   async deleteChapterById(
@@ -244,6 +325,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       storyId: chapter.storyId,
       title: chapter.title,
       totalComments: chapter.totalComments,
+      hidden: chapter.hidden,
       createdAt: chapter.createdAt,
       updatedAt: chapter.updatedAt,
     });

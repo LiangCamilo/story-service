@@ -125,6 +125,11 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       newestFirst,
     } = filterMultiple;
 
+    const page = (offset - 1) * limit;
+    const skip = page;
+
+    const take = limit;
+
     const orderBy: Array<any> = [];
 
     if (totalViews !== undefined) {
@@ -196,8 +201,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
 
     const [rawStories, totalItems] = await this.prisma.$transaction([
       this.prisma.story.findMany({
-        skip: offset,
-        take: limit,
+        skip,
+        take,
         where,
         include: {
           genre: true,
@@ -233,6 +238,11 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
       tagNames,
       newestFirst,
     } = dto;
+
+    const page = (offset - 1) * limit;
+    const skip = page;
+
+    const take = limit;
 
     const orderBy: Array<any> = [];
 
@@ -305,8 +315,8 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
 
     const [rawStories, totalItems] = await this.prisma.$transaction([
       this.prisma.story.findMany({
-        skip: offset,
-        take: limit,
+        skip,
+        take,
         where,
         include: {
           genre: true,

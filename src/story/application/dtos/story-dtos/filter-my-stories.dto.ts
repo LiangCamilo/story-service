@@ -20,7 +20,8 @@ const parseBoolean = ({ value }: { value: unknown }) => {
 export class FilterMyStoriesDto {
   @IsNumber()
   @Type(() => Number)
-  offset: number = 0;
+  @IsPositive()
+  offset: number = 1;
 
   @IsNumber()
   @IsPositive()
