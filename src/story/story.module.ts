@@ -58,6 +58,7 @@ import { UpdateCommentUseCase } from './application/use-cases/comment-use-cases/
 import { ToggleCommentLikeUseCase } from './application/use-cases/comment-use-cases/toggle-comment-like.use-case';
 import { SearchChapterCommentsUseCase } from './application/use-cases/comment-use-cases/search-chapter-comments.use-case';
 import { SearchStoryCommentsUseCase } from './application/use-cases/comment-use-cases/search-story-comments.use-case';
+import { ExistsRatingByStoryIdUseCase } from './application/use-cases/rating-use-cases/exists-rating-by-story-id.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -98,7 +99,7 @@ import { SearchStoryCommentsUseCase } from './application/use-cases/comment-use-
       ToggleHiddenChapterUseCase,
     ],
     ...[CreateViewUseCase],
-    ...[CreateOrUpdateRatingUseCase],
+    ...[CreateOrUpdateRatingUseCase, ExistsRatingByStoryIdUseCase],
     ...[SearchTagsBynameUseCase],
     ...[
       AddFavoriteStoryUseCase,

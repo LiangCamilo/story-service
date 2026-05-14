@@ -16,6 +16,7 @@ export class CreateOrUpdateRatingDto {
   @IsString({ message: 'El storyId debe ser un string' })
   @IsNotEmpty({ message: 'El storyId no puede estar vacío' })
   storyId!: string;
+
   @Max(10, {
     message: 'El puntaje no puede ser mayor a 10',
   })
