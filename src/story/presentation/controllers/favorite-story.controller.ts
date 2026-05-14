@@ -17,6 +17,8 @@ import { FavoriteStoryExceptionFilter } from '../filters/favorite-story-exceptio
 import { Response } from 'express';
 import { RemoveStoryFromFavoriteDto } from 'src/story/application/dtos/favorite-story-dtos/remove-story-from-favorite.dto';
 import { RemoveStoryFromFavoriteUseCase } from 'src/story/application/use-cases/favorite-story-use-cases/remove-story-from-favorite.use-case';
+import { ExistsFavoriteStoryDto } from 'src/story/application/dtos/favorite-story-dtos/exists-favorite-story.dto';
+import { ExistsFavoriteStoryByStoryIdUseCase } from 'src/story/application/use-cases/favorite-story-use-cases/exists-favorite-story-by-story-id.use-case';
 @Controller('api/favorite')
 @UseFilters(FavoriteStoryExceptionFilter)
 export class FavoriteStoryController {
@@ -24,6 +26,7 @@ export class FavoriteStoryController {
     private addFavoriteStoryUseCase: AddFavoriteStoryUseCase,
     private filterOwnFavoriteStoriesUseCase: FilterOwnFavoriteStoriesUseCase,
     private removeStoryFromFavoriteUseCase: RemoveStoryFromFavoriteUseCase,
+    private existsFavoriteStoryByStoryIdUseCase: ExistsFavoriteStoryByStoryIdUseCase,
   ) {}
 
   @Delete()
@@ -65,7 +68,7 @@ export class FavoriteStoryController {
     };
   }
 
-  @Delete('remove/:userId/:storyId')
+  @Delete('remove/:userId/story/:storyId')
   async removeStoryFromFavorite(
     @Param() removeStoryFromFavoriteDto: RemoveStoryFromFavoriteDto,
   ) {
@@ -76,6 +79,20 @@ export class FavoriteStoryController {
 
     return {
       message: `Se ha removido de favoritos la historia ${removedStoryFromFavorite.getStory?.getTitle.getValue}`,
+    };
+  }
+
+  @Get('exists/:userId/story/:storyId')
+  async existsFavoriteStoryByStoryId(
+    @Param() existsFavoriteStoryDto: ExistsFavoriteStoryDto,
+  ) {
+    const existsFavoriteStory =
+      await this.existsFavoriteStoryByStoryIdUseCase.execute(
+        existsFavoriteStoryDto,
+      );
+
+    return {
+      data: existsFavoriteStory,
     };
   }
 }
