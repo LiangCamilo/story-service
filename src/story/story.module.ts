@@ -59,6 +59,7 @@ import { ToggleCommentLikeUseCase } from './application/use-cases/comment-use-ca
 import { SearchChapterCommentsUseCase } from './application/use-cases/comment-use-cases/search-chapter-comments.use-case';
 import { SearchStoryCommentsUseCase } from './application/use-cases/comment-use-cases/search-story-comments.use-case';
 import { ExistsRatingByStoryIdUseCase } from './application/use-cases/rating-use-cases/exists-rating-by-story-id.use-case';
+import { ExistsFavoriteStoryByStoryIdUseCase } from './application/use-cases/favorite-story-use-cases/exists-favorite-story-by-story-id.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -105,6 +106,7 @@ import { ExistsRatingByStoryIdUseCase } from './application/use-cases/rating-use
       AddFavoriteStoryUseCase,
       FilterOwnFavoriteStoriesUseCase,
       RemoveStoryFromFavoriteUseCase,
+      ExistsFavoriteStoryByStoryIdUseCase,
     ],
     ...[
       CreateCommentUseCase,
