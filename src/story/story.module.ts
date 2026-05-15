@@ -60,6 +60,7 @@ import { SearchChapterCommentsUseCase } from './application/use-cases/comment-us
 import { SearchStoryCommentsUseCase } from './application/use-cases/comment-use-cases/search-story-comments.use-case';
 import { ExistsRatingByStoryIdUseCase } from './application/use-cases/rating-use-cases/exists-rating-by-story-id.use-case';
 import { ExistsFavoriteStoryByStoryIdUseCase } from './application/use-cases/favorite-story-use-cases/exists-favorite-story-by-story-id.use-case';
+import { FindChapterByIdUseCase } from './application/use-cases/chapter-use-cases/find-chapter-by-id.use-case';
 
 @Module({
   imports: [PrismaModule, CloudinaryModule],
@@ -94,6 +95,7 @@ import { ExistsFavoriteStoryByStoryIdUseCase } from './application/use-cases/fav
     ...[
       CreateChapterUseCase,
       FindAllChaptersByStoryIdUseCase,
+      FindChapterByIdUseCase,
       FindChaptersByOwnedStoryIdUseCase,
       DeleteChapterByIdUseCase,
       UpdateChapterUseCase,

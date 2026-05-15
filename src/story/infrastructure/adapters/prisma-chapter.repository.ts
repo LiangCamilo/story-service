@@ -39,7 +39,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       this.prisma.chapter.create({
         data: {
           id: data.id,
-          title: `Nueva parte #${order}`,
+          title: '',
           content: '',
           order,
           story: {
@@ -71,7 +71,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
         id: rawChapter.story.id,
         title: rawChapter.story.title,
       },
-      title: rawChapter.title,
+      title: rawChapter.title === '' ? null : rawChapter.title,
       hidden: rawChapter.hidden,
       content: rawChapter.content,
       order: rawChapter.order,
@@ -102,7 +102,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
 
     return this.mapToChapterWithDetails({
       id: chapter.id,
-      title: chapter.title,
+      title: chapter.title !== '' ? chapter.title : null,
       order: chapter.order,
       story,
       content: chapter.content,
@@ -239,7 +239,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
             id: chapter.story.id,
             title: chapter.story.title,
           },
-          title: chapter.title,
+          title: chapter.title !== '' ? chapter.title : null,
           hidden: chapter.hidden,
           content: chapter.content,
           order: chapter.order,
@@ -369,7 +369,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
 
   private mapToChapterWithDetails(chapter: {
     id: string;
-    title: string;
+    title: string | null;
     order: number;
     story: {
       id: string;

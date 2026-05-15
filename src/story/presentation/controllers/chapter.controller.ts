@@ -21,6 +21,7 @@ import { UpdateChapterDto } from '../../application/dtos/chapter-dtos/update-cha
 import { ToggleHiddenChapterUseCase } from 'src/story/application/use-cases/chapter-use-cases/toggle-hidden-chapter.use-case';
 import { FindChaptersByOwnedStoryIdUseCase } from 'src/story/application/use-cases/chapter-use-cases/find-chapters-by-owned-story-id.use-case';
 import { FindAllChaptersDto } from 'src/story/application/dtos/chapter-dtos/find-all-chapters.dto';
+import { FindChapterByIdUseCase } from 'src/story/application/use-cases/chapter-use-cases/find-chapter-by-id.use-case';
 
 @UseFilters(StoryExceptionFilter, ChapterExceptionFilter)
 @Controller('api/chapter')
@@ -32,6 +33,7 @@ export class ChapterController {
     private updateChapterUseCase: UpdateChapterUseCase,
     private toggleHiddenChapterUseCase: ToggleHiddenChapterUseCase,
     private findChaptersByOwnedStoryId: FindChaptersByOwnedStoryIdUseCase,
+    private findChapterByIdUseCase: FindChapterByIdUseCase,
   ) {}
 
   @Get(':storyId')
@@ -63,6 +65,11 @@ export class ChapterController {
       data: chapters,
       meta,
     };
+  }
+
+  @Get('id/:chapterId')
+  async findChapterById(@Param('chapterId') chapterId: string) {
+    return await this.findChapterByIdUseCase.execute(chapterId);
   }
 
   @Post('create')
