@@ -1,6 +1,6 @@
 export interface ChapterWithDetails {
   id: string;
-  title: string;
+  title: string | null;
   order: number;
   story: {
     id: string;
