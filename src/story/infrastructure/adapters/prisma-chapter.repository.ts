@@ -127,15 +127,17 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
     const skip = page;
 
     const take = limit;
+    const orderDirection =
+      newestFirst === false ? ('asc' as const) : ('desc' as const);
 
     const orderBy =
       newestFirst !== undefined
         ? [
             {
-              createdAt: newestFirst ? ('desc' as const) : ('asc' as const),
+              createdAt: orderDirection,
             },
             {
-              id: 'asc' as const,
+              id: orderDirection,
             },
           ]
         : [
@@ -197,14 +199,16 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       storyId,
     };
 
+    const orderDirection = newestFirst ? ('desc' as const) : ('asc' as const);
+
     const orderBy =
       newestFirst !== undefined
         ? [
             {
-              createdAt: newestFirst ? ('desc' as const) : ('asc' as const),
+              createdAt: orderDirection,
             },
             {
-              id: 'asc' as const,
+              id: orderDirection,
             },
           ]
         : [
