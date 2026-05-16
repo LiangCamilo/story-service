@@ -130,7 +130,19 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
 
     const take = limit;
 
+    const orderDirection = newestFirst ? ('desc' as const) : ('asc' as const);
+
     const orderBy: Array<any> = [];
+
+    if (newestFirst !== undefined) {
+      orderBy.push({
+        createdAt: orderDirection,
+      });
+
+      orderBy.push({
+        id: orderDirection,
+      });
+    }
 
     if (totalViews !== undefined) {
       orderBy.push({
@@ -147,12 +159,6 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     if (totalChapters !== undefined) {
       orderBy.push({
         totalChapters: totalChapters ? 'desc' : 'asc',
-      });
-    }
-
-    if (newestFirst !== undefined) {
-      orderBy.push({
-        createdAt: newestFirst ? 'desc' : 'asc',
       });
     }
 
@@ -243,8 +249,19 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     const skip = page;
 
     const take = limit;
+    const orderDirection = newestFirst ? ('desc' as const) : ('asc' as const);
 
     const orderBy: Array<any> = [];
+
+    if (newestFirst !== undefined) {
+      orderBy.push({
+        createdAt: orderDirection,
+      });
+
+      orderBy.push({
+        id: orderDirection,
+      });
+    }
 
     if (totalViews !== undefined) {
       orderBy.push({
@@ -261,12 +278,6 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
     if (totalChapters !== undefined) {
       orderBy.push({
         totalChapters: totalChapters ? 'desc' : 'asc',
-      });
-    }
-
-    if (newestFirst !== undefined) {
-      orderBy.push({
-        createdAt: newestFirst ? 'desc' : 'asc',
       });
     }
 
