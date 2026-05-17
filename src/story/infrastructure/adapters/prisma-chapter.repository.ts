@@ -317,6 +317,9 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
         updatedAt: now,
         lastActivityAt: now,
       },
+      include: {
+        story: true,
+      },
     });
 
     await this.prisma.story.update({
@@ -327,8 +330,8 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
     return this.mapToChapterWithDetails({
       id: chapter.id,
       story: {
-        id: chapter.storyId,
-        title: '', // Prisma update doesn't include story relation by default unless we query it, but we can query it!
+        id: chapter.story.id,
+        title: chapter.story.title,
       },
       title: chapter.title === '' ? null : chapter.title,
       hidden: chapter.hidden,
