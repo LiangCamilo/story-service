@@ -46,6 +46,7 @@ export type ChapterMinAggregateOutputType = {
   storyId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  lastActivityAt: Date | null
 }
 
 export type ChapterMaxAggregateOutputType = {
@@ -58,6 +59,7 @@ export type ChapterMaxAggregateOutputType = {
   storyId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  lastActivityAt: Date | null
 }
 
 export type ChapterCountAggregateOutputType = {
@@ -70,6 +72,7 @@ export type ChapterCountAggregateOutputType = {
   storyId: number
   createdAt: number
   updatedAt: number
+  lastActivityAt: number
   _all: number
 }
 
@@ -94,6 +97,7 @@ export type ChapterMinAggregateInputType = {
   storyId?: true
   createdAt?: true
   updatedAt?: true
+  lastActivityAt?: true
 }
 
 export type ChapterMaxAggregateInputType = {
@@ -106,6 +110,7 @@ export type ChapterMaxAggregateInputType = {
   storyId?: true
   createdAt?: true
   updatedAt?: true
+  lastActivityAt?: true
 }
 
 export type ChapterCountAggregateInputType = {
@@ -118,6 +123,7 @@ export type ChapterCountAggregateInputType = {
   storyId?: true
   createdAt?: true
   updatedAt?: true
+  lastActivityAt?: true
   _all?: true
 }
 
@@ -217,6 +223,7 @@ export type ChapterGroupByOutputType = {
   storyId: string
   createdAt: Date
   updatedAt: Date | null
+  lastActivityAt: Date | null
   _count: ChapterCountAggregateOutputType | null
   _avg: ChapterAvgAggregateOutputType | null
   _sum: ChapterSumAggregateOutputType | null
@@ -252,6 +259,7 @@ export type ChapterWhereInput = {
   storyId?: Prisma.UuidFilter<"Chapter"> | string
   createdAt?: Prisma.DateTimeFilter<"Chapter"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
+  lastActivityAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
   comments?: Prisma.CommentListRelationFilter
   story?: Prisma.XOR<Prisma.StoryScalarRelationFilter, Prisma.StoryWhereInput>
 }
@@ -266,6 +274,7 @@ export type ChapterOrderByWithRelationInput = {
   storyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastActivityAt?: Prisma.SortOrderInput | Prisma.SortOrder
   comments?: Prisma.CommentOrderByRelationAggregateInput
   story?: Prisma.StoryOrderByWithRelationInput
 }
@@ -284,6 +293,7 @@ export type ChapterWhereUniqueInput = Prisma.AtLeast<{
   storyId?: Prisma.UuidFilter<"Chapter"> | string
   createdAt?: Prisma.DateTimeFilter<"Chapter"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
+  lastActivityAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
   comments?: Prisma.CommentListRelationFilter
   story?: Prisma.XOR<Prisma.StoryScalarRelationFilter, Prisma.StoryWhereInput>
 }, "id" | "storyId_order">
@@ -298,6 +308,7 @@ export type ChapterOrderByWithAggregationInput = {
   storyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastActivityAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ChapterCountOrderByAggregateInput
   _avg?: Prisma.ChapterAvgOrderByAggregateInput
   _max?: Prisma.ChapterMaxOrderByAggregateInput
@@ -318,6 +329,7 @@ export type ChapterScalarWhereWithAggregatesInput = {
   storyId?: Prisma.UuidWithAggregatesFilter<"Chapter"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Chapter"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Chapter"> | Date | string | null
+  lastActivityAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Chapter"> | Date | string | null
 }
 
 export type ChapterCreateInput = {
@@ -329,6 +341,7 @@ export type ChapterCreateInput = {
   totalComments?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  lastActivityAt?: Date | string | null
   comments?: Prisma.CommentCreateNestedManyWithoutChapterInput
   story: Prisma.StoryCreateNestedOneWithoutChaptersInput
 }
@@ -343,6 +356,7 @@ export type ChapterUncheckedCreateInput = {
   storyId: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  lastActivityAt?: Date | string | null
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutChapterInput
 }
 
@@ -355,6 +369,7 @@ export type ChapterUpdateInput = {
   totalComments?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   comments?: Prisma.CommentUpdateManyWithoutChapterNestedInput
   story?: Prisma.StoryUpdateOneRequiredWithoutChaptersNestedInput
 }
@@ -369,6 +384,7 @@ export type ChapterUncheckedUpdateInput = {
   storyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   comments?: Prisma.CommentUncheckedUpdateManyWithoutChapterNestedInput
 }
 
@@ -382,6 +398,7 @@ export type ChapterCreateManyInput = {
   storyId: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  lastActivityAt?: Date | string | null
 }
 
 export type ChapterUpdateManyMutationInput = {
@@ -393,6 +410,7 @@ export type ChapterUpdateManyMutationInput = {
   totalComments?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ChapterUncheckedUpdateManyInput = {
@@ -405,6 +423,7 @@ export type ChapterUncheckedUpdateManyInput = {
   storyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ChapterListRelationFilter = {
@@ -432,6 +451,7 @@ export type ChapterCountOrderByAggregateInput = {
   storyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  lastActivityAt?: Prisma.SortOrder
 }
 
 export type ChapterAvgOrderByAggregateInput = {
@@ -449,6 +469,7 @@ export type ChapterMaxOrderByAggregateInput = {
   storyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  lastActivityAt?: Prisma.SortOrder
 }
 
 export type ChapterMinOrderByAggregateInput = {
@@ -461,6 +482,7 @@ export type ChapterMinOrderByAggregateInput = {
   storyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  lastActivityAt?: Prisma.SortOrder
 }
 
 export type ChapterSumOrderByAggregateInput = {
@@ -540,6 +562,7 @@ export type ChapterCreateWithoutStoryInput = {
   totalComments?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  lastActivityAt?: Date | string | null
   comments?: Prisma.CommentCreateNestedManyWithoutChapterInput
 }
 
@@ -552,6 +575,7 @@ export type ChapterUncheckedCreateWithoutStoryInput = {
   totalComments?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  lastActivityAt?: Date | string | null
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutChapterInput
 }
 
@@ -594,6 +618,7 @@ export type ChapterScalarWhereInput = {
   storyId?: Prisma.UuidFilter<"Chapter"> | string
   createdAt?: Prisma.DateTimeFilter<"Chapter"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
+  lastActivityAt?: Prisma.DateTimeNullableFilter<"Chapter"> | Date | string | null
 }
 
 export type ChapterCreateWithoutCommentsInput = {
@@ -605,6 +630,7 @@ export type ChapterCreateWithoutCommentsInput = {
   totalComments?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  lastActivityAt?: Date | string | null
   story: Prisma.StoryCreateNestedOneWithoutChaptersInput
 }
 
@@ -618,6 +644,7 @@ export type ChapterUncheckedCreateWithoutCommentsInput = {
   storyId: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  lastActivityAt?: Date | string | null
 }
 
 export type ChapterCreateOrConnectWithoutCommentsInput = {
@@ -645,6 +672,7 @@ export type ChapterUpdateWithoutCommentsInput = {
   totalComments?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   story?: Prisma.StoryUpdateOneRequiredWithoutChaptersNestedInput
 }
 
@@ -658,6 +686,7 @@ export type ChapterUncheckedUpdateWithoutCommentsInput = {
   storyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ChapterCreateManyStoryInput = {
@@ -669,6 +698,7 @@ export type ChapterCreateManyStoryInput = {
   totalComments?: number
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  lastActivityAt?: Date | string | null
 }
 
 export type ChapterUpdateWithoutStoryInput = {
@@ -680,6 +710,7 @@ export type ChapterUpdateWithoutStoryInput = {
   totalComments?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   comments?: Prisma.CommentUpdateManyWithoutChapterNestedInput
 }
 
@@ -692,6 +723,7 @@ export type ChapterUncheckedUpdateWithoutStoryInput = {
   totalComments?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   comments?: Prisma.CommentUncheckedUpdateManyWithoutChapterNestedInput
 }
 
@@ -704,6 +736,7 @@ export type ChapterUncheckedUpdateManyWithoutStoryInput = {
   totalComments?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -747,6 +780,7 @@ export type ChapterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   storyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  lastActivityAt?: boolean
   comments?: boolean | Prisma.Chapter$commentsArgs<ExtArgs>
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ChapterCountOutputTypeDefaultArgs<ExtArgs>
@@ -762,6 +796,7 @@ export type ChapterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   storyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  lastActivityAt?: boolean
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["chapter"]>
 
@@ -775,6 +810,7 @@ export type ChapterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   storyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  lastActivityAt?: boolean
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["chapter"]>
 
@@ -788,9 +824,10 @@ export type ChapterSelectScalar = {
   storyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  lastActivityAt?: boolean
 }
 
-export type ChapterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "order" | "content" | "hidden" | "totalComments" | "storyId" | "createdAt" | "updatedAt", ExtArgs["result"]["chapter"]>
+export type ChapterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "order" | "content" | "hidden" | "totalComments" | "storyId" | "createdAt" | "updatedAt" | "lastActivityAt", ExtArgs["result"]["chapter"]>
 export type ChapterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   comments?: boolean | Prisma.Chapter$commentsArgs<ExtArgs>
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
@@ -819,6 +856,7 @@ export type $ChapterPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     storyId: string
     createdAt: Date
     updatedAt: Date | null
+    lastActivityAt: Date | null
   }, ExtArgs["result"]["chapter"]>
   composites: {}
 }
@@ -1253,6 +1291,7 @@ export interface ChapterFieldRefs {
   readonly storyId: Prisma.FieldRef<"Chapter", 'String'>
   readonly createdAt: Prisma.FieldRef<"Chapter", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Chapter", 'DateTime'>
+  readonly lastActivityAt: Prisma.FieldRef<"Chapter", 'DateTime'>
 }
     
 

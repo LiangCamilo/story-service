@@ -1182,7 +1182,8 @@ export const ChapterScalarFieldEnum = {
   totalComments: 'totalComments',
   storyId: 'storyId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  lastActivityAt: 'lastActivityAt'
 } as const
 
 export type ChapterScalarFieldEnum = (typeof ChapterScalarFieldEnum)[keyof typeof ChapterScalarFieldEnum]

@@ -48,6 +48,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
             },
           },
           createdAt: now,
+          lastActivityAt: now,
         },
         include: {
           story: true,
@@ -314,6 +315,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
           content,
         }),
         updatedAt: now,
+        lastActivityAt: now,
       },
     });
 
