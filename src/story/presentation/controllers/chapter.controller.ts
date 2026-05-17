@@ -13,7 +13,6 @@ import { CreateChapterDto } from '../../application/dtos/chapter-dtos/create-cha
 import { CreateChapterUseCase } from '../../application/use-cases/chapter-use-cases/create-chapter.use-case';
 import { StoryExceptionFilter } from '../filters/story-exception.filter';
 import { FindAllChaptersByStoryIdUseCase } from '../../application/use-cases/chapter-use-cases/find-all-chapters-by-story-id.use-case';
-import { Chapter } from '../../domain/entities/chapter.entity';
 import { DeleteChapterByIdUseCase } from '../../application/use-cases/chapter-use-cases/delete-chapter-by-id.use-case';
 import { ChapterExceptionFilter } from '../filters/chapter-exception.filter';
 import { UpdateChapterUseCase } from '../../application/use-cases/chapter-use-cases/update-chapter.use-case';
@@ -82,7 +81,7 @@ export class ChapterController {
   @Patch('toggle-hidden/:id')
   async toggleHiddenStory(@Param('id') id: string) {
     const updatedChapter = await this.toggleHiddenChapterUseCase.execute(id);
-    return this.mapChapterToResponse(updatedChapter);
+    return updatedChapter;
   }
 
   @Delete(':storyId/chapter/:chapterId')
@@ -110,19 +109,6 @@ export class ChapterController {
       updateChapterDto,
     );
 
-    return this.mapChapterToResponse(updatedChapter);
+    return updatedChapter;
   }
-
-  private mapChapterToResponse = (chapter: Chapter) => {
-    return {
-      id: chapter.getId.getValue,
-      order: chapter.getOrder.getValue,
-      title: chapter.getTitle.getValue,
-      storyId: chapter.getStoryId,
-      content: chapter.getContent,
-      hidden: chapter.getHidden,
-      createdAt: chapter.getCreatedAt,
-      updatedAt: chapter.getUpdatedAt,
-    };
-  };
 }

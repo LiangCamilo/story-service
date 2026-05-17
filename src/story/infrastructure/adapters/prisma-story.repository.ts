@@ -362,13 +362,10 @@ export class PrismaStoryRepository implements StoryRepositoryPort {
         chapters: {
           orderBy: [
             {
-              updatedAt: {
+              lastActivityAt: {
                 sort: 'desc',
                 nulls: 'last',
               },
-            },
-            {
-              createdAt: 'desc',
             },
           ],
           take: 1,

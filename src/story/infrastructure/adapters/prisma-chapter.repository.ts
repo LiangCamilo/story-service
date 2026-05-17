@@ -48,6 +48,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
             },
           },
           createdAt: now,
+          lastActivityAt: now,
         },
         include: {
           story: true,
@@ -300,7 +301,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
   async updateChapter(
     id: string,
     updateChapterDto: UpdateChapterDto,
-  ): Promise<Chapter> {
+  ): Promise<ChapterWithDetails> {
     const { content, title } = updateChapterDto;
     const now = new Date();
 
@@ -314,6 +315,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
           content,
         }),
         updatedAt: now,
+        lastActivityAt: now,
       },
     });
 
@@ -322,14 +324,17 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       data: { lastActivityAt: now },
     });
 
-    return Chapter.create({
+    return this.mapToChapterWithDetails({
       id: chapter.id,
+      story: {
+        id: chapter.storyId,
+        title: '', // Prisma update doesn't include story relation by default unless we query it, but we can query it!
+      },
+      title: chapter.title === '' ? null : chapter.title,
+      hidden: chapter.hidden,
       content: chapter.content,
       order: chapter.order,
-      storyId: chapter.storyId,
-      title: chapter.title,
       totalComments: chapter.totalComments,
-      hidden: chapter.hidden,
       createdAt: chapter.createdAt,
       updatedAt: chapter.updatedAt,
     });
@@ -358,13 +363,16 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       data: { lastActivityAt: now },
     });
 
-    return Chapter.create({
+    return this.mapToChapterWithDetails({
       id: updatedStory.id,
-      content: updatedStory.content,
+      story: {
+        id: updatedStory.storyId,
+        title: '',
+      },
+      title: updatedStory.title === '' ? null : updatedStory.title,
       hidden: updatedStory.hidden,
+      content: updatedStory.content,
       order: updatedStory.order,
-      storyId: updatedStory.storyId,
-      title: updatedStory.title,
       totalComments: updatedStory.totalComments,
       createdAt: updatedStory.createdAt,
       updatedAt: updatedStory.updatedAt,

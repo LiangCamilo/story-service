@@ -99,7 +99,7 @@ model Chapter {
 
   createdAt DateTime @default(now())
   updatedAt DateTime?
-
+  lastActivityAt DateTime?
 }
 
 model Comment {
