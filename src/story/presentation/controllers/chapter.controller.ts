@@ -95,7 +95,7 @@ export class ChapterController {
     );
 
     return {
-      message: `El capitulo de titulo ${deletedChapter} fue eliminado exitosamente`,
+      message: deletedChapter,
     };
   }
 

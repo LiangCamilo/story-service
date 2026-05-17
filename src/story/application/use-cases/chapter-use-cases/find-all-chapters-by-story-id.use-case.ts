@@ -21,9 +21,9 @@ export class FindAllChaptersByStoryIdUseCase {
         findAllChaptersDto,
       );
 
-    const pageSize: number = limit;
+    const pageSize: number = limit ?? 20;
     const totalPages = Math.ceil(totalItems / pageSize);
-    const numberPage = offset;
+    const numberPage = Math.max(offset ?? 1, 1);
 
     return {
       chapters,

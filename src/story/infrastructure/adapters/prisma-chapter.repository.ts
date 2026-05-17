@@ -124,10 +124,9 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       hidden: false,
     };
 
-    const page = (offset - 1) * limit;
-    const skip = page;
-
-    const take = limit;
+    const take = Math.max(limit ?? 20, 1);
+    const pageNumber = Math.max(offset ?? 1, 1);
+    const skip = (pageNumber - 1) * take;
     const orderDirection =
       newestFirst === false ? ('asc' as const) : ('desc' as const);
 
@@ -173,7 +172,7 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
             id: chapter.story.id,
             title: chapter.story.title,
           },
-          title: chapter.title,
+          title: chapter.title !== '' ? chapter.title : null,
           hidden: chapter.hidden,
           content: chapter.content,
           order: chapter.order,
@@ -295,7 +294,11 @@ export class PrismaChapterRepository implements ChapterRepositoryPort {
       }),
     ]);
 
-    return operation[0].title;
+    if (operation[0].title.length === 0) {
+      return 'El capitulo ha sido eliminado exitosamente';
+    }
+
+    return `El capitulo de nombre "${operation[0].title}" ha sido elimiando exitosamente`;
   }
 
   async updateChapter(
