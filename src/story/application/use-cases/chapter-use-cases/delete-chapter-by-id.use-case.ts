@@ -18,7 +18,7 @@ export class DeleteChapterByIdUseCase {
       storyId,
     );
 
-    if (!deletedChapter) {
+    if (deletedChapter === undefined) {
       throw new DeleteChapterError(404, undefined, chapterId, storyId);
     }
 

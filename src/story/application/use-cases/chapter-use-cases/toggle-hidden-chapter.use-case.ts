@@ -3,7 +3,7 @@ import {
   CHAPTER_REPOSITORY,
   ChapterRepositoryPort,
 } from '../../ports/chapter.repository';
-import { StoryNotFoundChapterError } from '../../errors/chapter-errors/story-not-found-chapter.error';
+import { ChapterNotFoundError } from '../../errors/chapter-errors/chapter-not-found.error';
 
 @Injectable()
 export class ToggleHiddenChapterUseCase {
@@ -16,7 +16,7 @@ export class ToggleHiddenChapterUseCase {
     const toggledPublication = await this.chapterRepository.toggleHidden(id);
 
     if (!toggledPublication) {
-      throw new StoryNotFoundChapterError(404, undefined, id);
+      throw new ChapterNotFoundError(404, undefined, id);
     }
 
     return toggledPublication;
