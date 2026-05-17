@@ -17,7 +17,7 @@ export class UpdateChapterUseCase {
     try {
       return await this.chapterRepository.updateChapter(id, updateChapterDto);
     } catch {
-      throw new UpdateChapterError(404, undefined, undefined, id);
+      throw new UpdateChapterError(404, undefined, id, undefined);
     }
   }
 }
