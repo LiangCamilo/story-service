@@ -133,7 +133,7 @@ export class StoryController {
 
     if (stories.length === 0) {
       return res.status(200).json({
-        stories: stories,
+        data: stories,
         message: 'No se han encontrado historias con los filtros especificados',
       });
     }
