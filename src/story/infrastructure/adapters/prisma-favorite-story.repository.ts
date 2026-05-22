@@ -65,7 +65,7 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
       updatedAt: addedStoryToFavorite.updatedAt ?? undefined,
       story: {
         id: addedStoryToFavorite.story.id,
-        userId: addedStoryToFavorite.story.genreId,
+        userId: addedStoryToFavorite.story.userId,
         description: addedStoryToFavorite.story.description,
         genreId: addedStoryToFavorite.story.genreId,
         title: addedStoryToFavorite.story.title,
@@ -197,7 +197,7 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
       updatedAt: updatedAt ?? undefined,
       story: {
         id: story.id,
-        userId: story.genreId,
+        userId: story.userId,
         description: story.description,
         genreId: story.genreId,
         title: story.title,
@@ -227,9 +227,11 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
       totalChapters: story.totalChapters,
       totalViews: story.totalViews,
       totalFavorites: story.totalFavorite,
+      totalComments: story.totalComments,
       status: story.status,
       createdAt: story.createdAt,
       updatedAt: story.updatedAt,
+      lastActivityAt: story.lastActivityAt,
     };
   }
 
