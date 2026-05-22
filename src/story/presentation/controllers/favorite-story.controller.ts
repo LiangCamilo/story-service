@@ -63,7 +63,7 @@ export class FavoriteStoryController {
     }
 
     return {
-      stories: favoriteStoriesFiltered.filteredFavoriteStories,
+      data: favoriteStoriesFiltered.filteredFavoriteStories,
       meta: favoriteStoriesFiltered.meta,
     };
   }
