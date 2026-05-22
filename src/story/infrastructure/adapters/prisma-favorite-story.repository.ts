@@ -227,9 +227,11 @@ export class PrismaFavoriteStoryRepository implements FavoriteStoryRepositoryPor
       totalChapters: story.totalChapters,
       totalViews: story.totalViews,
       totalFavorites: story.totalFavorite,
+      totalComments: story.totalComments,
       status: story.status,
       createdAt: story.createdAt,
       updatedAt: story.updatedAt,
+      lastActivityAt: story.lastActivityAt,
     };
   }
 
